@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Program Piket OSIS</title>
+    <style>
+        /* --- CSS Styling --- */
+        :root {
+            --primary-blue: #007bff; /* Biru utama */
+            --secondary-yellow: #ffc107; /* Kuning */
+            --light-bg: #f8f9fa; /* Putih keabuan */
+            --white: #ffffff;
+            --dark-text: #333;
+            --blue-text: #0056b3;
+            --border-color: #dee2e6;
+            --danger-red: #dc3545;
+            --success-green: #28a745;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0; /* Remove padding for full screen login */
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            display: flex; /* Used for centering login */
+            justify-content: center; /* Used for centering login */
+            align-items: center; /* Used for centering login */
+            min-height: 100vh; /* Ensure body takes full height */
+        }
+
+        /* --- Login Screen Styling --- */
+        #login-screen {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--primary-blue);
+            text-align: center;
+        }
+
+        #login-screen h2 {
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--secondary-yellow);
+            padding-bottom: 10px;
+        }
+
+        #login-screen label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--blue-text);
+            text-align: left;
+        }
+
+        #login-screen input[type="text"],
+        #login-screen input[type="password"] {
+            width: calc(100% - 22px); /* Full width minus padding/border */
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        #login-screen button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Full width button */
+        }
+
+        #login-screen button:hover {
+            background-color: var(--blue-text);
+        }
+
+        #login-error {
+            color: var(--danger-red);
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 1.2em; /* Reserve space for error message */
+        }
+
+
+        /* --- Main App Styling (Sama seperti sebelumnya, tapi dibungkus #main-app) --- */
+        #main-app {
+            width: 100%; /* Take full width available */
+            max-width: 900px;
+            margin: 20px auto; /* Center container horizontally */
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--primary-blue);
+            display: none; /* Initially hidden */
+        }
+
+        /* Styling lainnya (h1, h2, section, label, input, button, etc.) tetap sama */
+        #main-app h1, #main-app h2 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--secondary-yellow);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: #fdfdff;
+        }
+
+        #main-app label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--blue-text);
+        }
+
+        #main-app input[type="text"],
+        #main-app input[type="date"],
+        #main-app select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        #main-app button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        #main-app button:hover {
+            background-color: var(--blue-text);
+        }
+
+        #main-app button.secondary {
+             background-color: var(--secondary-yellow);
+             color: var(--dark-text);
+        }
+
+        #main-app button.secondary:hover {
+             background-color: #e0a800;
+        }
+         #main-app button.danger {
+              background-color: var(--danger-red);
+         }
+          #main-app button.danger:hover {
+               background-color: #c82333;
+          }
+
+        #main-app ul, #memberListDisplay li, #scheduleDisplay div, #attendanceMarking div, #reportDisplay div {
+             list-style: none;
+             padding: 0;
+        }
+
+        #memberListDisplay li, #scheduleDisplay div, #attendanceMarking div, .report-item {
+            background-color: var(--light-bg);
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #scheduleDisplay strong, #attendanceStatus strong {
+             color: var(--primary-blue);
+             min-width: 80px;
+             display: inline-block;
+        }
+
+        #attendanceMarking label {
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 20px;
+            font-weight: normal;
+            color: var(--dark-text);
+        }
+        #attendanceMarking input[type="checkbox"] {
+            margin-right: 5px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .member-checkbox-list label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .member-checkbox-list input[type="checkbox"] {
+             margin-right: 8px;
+        }
+
+        .report-bar-container {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .report-bar {
+            height: 20px;
+            background-color: var(--primary-blue);
+            border-radius: 3px;
+            margin-right: 10px;
+            min-width: 10px;
+            transition: width 0.5s ease-out;
+        }
+         .report-bar.low {
+              background-color: var(--secondary-yellow);
+         }
+
+        .report-text {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        #attendanceStatus {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed var(--primary-blue);
+            border-radius: 5px;
+        }
+        #attendanceStatus ul {
+             margin-top: 10px;
+        }
+         #attendanceStatus li {
+             margin-bottom: 5px;
+             padding-left: 15px;
+         }
+        #attendanceStatus .present { color: var(--success-green); font-weight: bold; }
+        #attendanceStatus .absent { color: var(--danger-red); font-weight: bold; }
+
+        small {
+             color: #6c757d;
+             display: block;
+             margin-top: -10px;
+             margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. Login Screen -->
+    <div id="login-screen">
+        <h2>Login Admin Piket OSIS</h2>
+        <form onsubmit="event.preventDefault(); handleLogin();">
+             <div>
+                 <label for="username">Username:</label>
+                 <input type="text" id="username" required>
+             </div>
+             <div>
+                 <label for="password">Password:</label>
+                 <input type="password" id="password" required>
+             </div>
+             <button type="submit">Login</button>
+             <p id="login-error"></p>
+        </form>
+    </div>
+
+    <!-- 2. Main Application (Initially Hidden) -->
+    <div id="main-app">
+        <div class="container"> <!-- Existing container wrapped -->
+            <h1>📋 Program Piket OSIS</h1>
+
+            <!-- 1. Input Anggota OSIS -->
+            <div class="section">
+                <h2>Anggota OSIS</h2>
+                <label for="newMemberName">Nama Lengkap Anggota Baru:</label>
+                <input type="text" id="newMemberName" placeholder="Masukkan nama lengkap...">
+                <button onclick="addMember()">Tambah Anggota</button>
+
+                <h3>Daftar Anggota Saat Ini:</h3>
+                <ul id="memberListDisplay">
+                    <!-- Daftar anggota akan muncul di sini -->
+                </ul>
+            </div>
+
+            <!-- 2. Input Jadwal Piket -->
+            <div class="section">
+                <h2>Jadwal Piket Mingguan</h2>
+                <label for="scheduleDay">Pilih Hari:</label>
+                <select id="scheduleDay">
+                    <option value="Senin">Senin</option>
+                    <option value="Selasa">Selasa</option>
+                    <option value="Rabu">Rabu</option>
+                    <option value="Kamis">Kamis</option>
+                    <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
+                    <option value="Minggu">Minggu</option>
+                </select>
+
+                <label>Pilih Anggota untuk Hari Ini:</label>
+                <div id="memberCheckboxList" class="member-checkbox-list">
+                    <!-- Checkbox anggota akan muncul di sini -->
+                </div>
+                <button onclick="saveScheduleForDay()">Simpan Jadwal Hari Ini</button>
+                <button class="secondary" onclick="clearScheduleForDay()">Kosongkan Jadwal Hari Ini</button>
+
+                <h3>Jadwal Tersimpan:</h3>
+                <div id="scheduleDisplay">
+                    <!-- Jadwal mingguan akan muncul di sini -->
+                </div>
+            </div>
+
+            <!-- 3. Input Kehadiran Piket -->
+            <div class="section">
+                <h2>Catat Kehadiran Piket</h2>
+                <label for="attendanceDate">Pilih Tanggal Piket:</label>
+                <input type="date" id="attendanceDate">
+                <button onclick="showAttendanceForm()">Pilih Tanggal & Tampilkan Form</button>
+
+                <div id="attendanceMarking" style="display: none;">
+                    <h3>Tandai Kehadiran untuk <span id="selectedDateDisplay"></span> (<span id="selectedDayDisplay"></span>):</h3>
+                    <p id="noScheduleMessage" style="display:none; color: orange;">Tidak ada jadwal piket untuk hari ini.</p>
+                    <div id="attendanceCheckboxes">
+                        <!-- Checkbox untuk menandai kehadiran akan muncul di sini -->
+                    </div>
+                    <button onclick="saveAttendance()" id="saveAttendanceButton" style="display:none;">Simpan Kehadiran</button>
+                    <div id="attendanceStatus">
+                        <!-- Status kehadiran (Piket/Tidak Piket) akan muncul di sini -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Laporan Kerajinan -->
+            <div class="section">
+                <h2>Laporan Kerajinan</h2>
+                <button onclick="generateReport()">Buat Laporan</button>
+                <small>Laporan didasarkan pada data kehadiran yang sudah disimpan.</small>
+                <div id="reportDisplay">
+                    <!-- Laporan grafik sederhana akan muncul di sini -->
+                </div>
+            </div>
+
+        </div> <!-- End of .container -->
+    </div> <!-- End of #main-app -->
+
+    <script>
+        // --- JavaScript Logic ---
+
+        // --- Global Variables & Constants ---
+        const daysInIndonesian = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        let members = [];
+        let schedule = {};
+        let attendance = {};
+
+        // --- DOM Element References (Cache them for performance) ---
+        const loginScreen = document.getElementById('login-screen');
+        const mainApp = document.getElementById('main-app');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('login-error');
+
+        const newMemberNameInput = document.getElementById('newMemberName');
+        const memberListDisplay = document.getElementById('memberListDisplay');
+        const scheduleDaySelect = document.getElementById('scheduleDay');
+        const memberCheckboxContainer = document.getElementById('memberCheckboxList');
+        const scheduleDisplay = document.getElementById('scheduleDisplay');
+        const attendanceDateInput = document.getElementById('attendanceDate');
+        const attendanceMarkingDiv = document.getElementById('attendanceMarking');
+        const attendanceCheckboxesDiv = document.getElementById('attendanceCheckboxes');
+        const noScheduleMessage = document.getElementById('noScheduleMessage');
+        const saveAttendanceButton = document.getElementById('saveAttendanceButton');
+        const attendanceStatusDiv = document.getElementById('attendanceStatus');
+        const reportDisplay = document.getElementById('reportDisplay');
+        const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+        const selectedDayDisplay = document.getElementById('selectedDayDisplay');
+
+
+        // --- Login Logic ---
+        function handleLogin() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value; // No trim for password
+
+            // Simple hardcoded credentials
+            if (username === "Admin" && password === "Admin123") {
+                loginError.textContent = ''; // Clear error
+                loginScreen.style.display = 'none'; // Hide login
+                mainApp.style.display = 'block';   // Show main app
+                 // Adjust body style after login if needed (e.g., remove centering)
+                 document.body.style.display = 'block'; // Back to default block display
+                 document.body.style.justifyContent = '';
+                 document.body.style.alignItems = '';
+                 document.body.style.minHeight = '';
+                 document.body.style.padding = '20px'; // Restore padding
+
+
+                initializeAppMainApp(); // Load data and setup the main application
+            } else {
+                loginError.textContent = 'Username atau Password salah.';
+                passwordInput.value = ''; // Clear password field on failure
+            }
+        }
+
+        // --- Main Application Initialization ---
+        function initializeAppMainApp() {
+            console.log("Initializing main application...");
+            // Load data from localStorage
+            members = loadData('osisMembers', []);
+            schedule = loadData('osisSchedule', {});
+            attendance = loadData('osisAttendance', {});
+
+            // Initial display setup
+            displayMembers();
+            updateMemberCheckboxesForScheduling(); // Populate scheduling checkboxes
+            loadScheduleForDay(scheduleDaySelect.value); // Load schedule for default day
+            displaySchedule();
+
+            // Set default date to today for attendance
+             try {
+                 attendanceDateInput.valueAsDate = new Date();
+             } catch (e) {
+                 // Fallback for browsers not supporting valueAsDate well or if Date is invalid
+                 const today = new Date();
+                 const yyyy = today.getFullYear();
+                 const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                 const dd = String(today.getDate()).padStart(2, '0');
+                 attendanceDateInput.value = `${yyyy}-${mm}-${dd}`;
+                  console.warn("Using fallback for setting date input value.");
+             }
+
+
+            // Add event listener to scheduleDay select to load current schedule
+            scheduleDaySelect.addEventListener('change', (event) => {
+                loadScheduleForDay(event.target.value);
+            });
+             console.log("Main application initialized.");
+        }
+
+
+        // --- Data Management (using localStorage with error handling) ---
+        function loadData(key, defaultValue = []) {
+            const data = localStorage.getItem(key);
+            if (data === null) return defaultValue; // No data saved yet
+            try {
+                return JSON.parse(data);
+            } catch (e) {
+                console.error(`Error parsing localStorage key "${key}":`, e);
+                alert(`Gagal memuat data untuk ${key}. Data mungkin rusak. Menggunakan nilai default.`);
+                return defaultValue; // Return default value if parsing fails
+            }
+        }
+
+        function saveData(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.error(`Error saving data to localStorage for key "${key}":`, e);
+                alert("Gagal menyimpan data. Penyimpanan lokal mungkin penuh atau tidak didukung.");
+            }
+        }
+
+        // --- 1. Member Management ---
+        function addMember() {
+            const name = newMemberNameInput.value.trim();
+            if (name && !members.includes(name)) {
+                members.push(name);
+                members.sort(); // Keep the list sorted alphabetically
+                saveData('osisMembers', members);
+                displayMembers();
+                updateMemberCheckboxesForScheduling(); // Update checkboxes in schedule section
+                newMemberNameInput.value = ''; // Clear input
+                 alert(`Anggota "${name}" berhasil ditambahkan.`);
+            } else if (members.includes(name)) {
+                alert('Nama anggota sudah ada.');
+            } else {
+                alert('Nama anggota tidak boleh kosong.');
+            }
+        }
+
+        function displayMembers() {
+            memberListDisplay.innerHTML = ''; // Clear list
+            if (members.length === 0) {
+                memberListDisplay.innerHTML = '<li>Belum ada anggota.</li>';
+                return;
+            }
+            members.forEach(member => {
+                const li = document.createElement('li');
+                li.textContent = member;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Hapus';
+                removeBtn.classList.add('danger'); // Use red color for delete
+                removeBtn.style.marginLeft = '10px';
+                removeBtn.style.padding = '5px 10px';
+                 removeBtn.style.fontSize = '0.9em'; // Smaller button
+                removeBtn.onclick = () => removeMember(member);
+                li.appendChild(removeBtn);
+
+                memberListDisplay.appendChild(li);
+            });
+        }
+
+        function removeMember(nameToRemove) {
+            // Confirmation Dialog
+            if (confirm(`Yakin ingin menghapus anggota "${nameToRemove}"?\nIni juga akan menghapusnya dari semua jadwal piket dan catatan kehadiran yang ada.`)) {
+                // Remove from members list
+                members = members.filter(member => member !== nameToRemove);
+
+                // Remove from schedule object
+                Object.keys(schedule).forEach(day => {
+                    if (schedule[day]) { // Check if day exists
+                        schedule[day] = schedule[day].filter(m => m !== nameToRemove);
+                    }
+                });
+
+                // Remove from attendance records
+                Object.keys(attendance).forEach(date => {
+                    if (attendance[date] && attendance[date][nameToRemove] !== undefined) {
+                        delete attendance[date][nameToRemove];
+                        // Optional: If the attendance object for a date becomes empty, delete the date entry itself
+                        if (Object.keys(attendance[date]).length === 0) {
+                            delete attendance[date];
+                        }
+                    }
+                });
+
+                // Save all updated data
+                saveData('osisMembers', members);
+                saveData('osisSchedule', schedule);
+                saveData('osisAttendance', attendance);
+
+                // Update UI
+                displayMembers();
+                updateMemberCheckboxesForScheduling();
+                displaySchedule();
+                // Clear attendance form if it was open and potentially showing the removed member
+                attendanceMarkingDiv.style.display = 'none';
+                attendanceStatusDiv.innerHTML = '';
+                // Optionally regenerate report if it was visible
+                if (reportDisplay.innerHTML !== '' && reportDisplay.innerHTML !== '<p>Belum ada anggota OSIS untuk dilaporkan.</p>') {
+                    generateReport();
+                }
+                 alert(`Anggota "${nameToRemove}" berhasil dihapus.`);
+            }
+        }
+
+        // --- 2. Schedule Management ---
+        function updateMemberCheckboxesForScheduling() {
+            memberCheckboxContainer.innerHTML = ''; // Clear existing checkboxes
+            if (members.length === 0) {
+                memberCheckboxContainer.innerHTML = '<p>Tambahkan anggota terlebih dahulu.</p>';
+                return;
+            }
+            members.forEach(member => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = member;
+                // Use a consistent ID format, removing special chars that might break selectors
+                const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
+                checkbox.id = `schedule-cb-${safeMemberId}`; // Unique ID for scheduling checkbox
+
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(` ${member}`));
+                label.htmlFor = checkbox.id; // Associate label with checkbox
+
+                memberCheckboxContainer.appendChild(label);
+            });
+        }
+
+        function saveScheduleForDay() {
+            const day = scheduleDaySelect.value;
+            const checkboxes = memberCheckboxContainer.querySelectorAll('input[type="checkbox"]:checked');
+            const scheduledMembers = Array.from(checkboxes).map(cb => cb.value);
+
+            schedule[day] = scheduledMembers;
+            saveData('osisSchedule', schedule);
+            displaySchedule();
+            alert(`Jadwal untuk hari ${day} berhasil disimpan.`);
+        }
+
+        function clearScheduleForDay() {
+            const day = scheduleDaySelect.value;
+            if (confirm(`Yakin ingin mengosongkan jadwal piket untuk hari ${day}?`)) {
+                schedule[day] = []; // Set to empty array
+                saveData('osisSchedule', schedule);
+                displaySchedule();
+                alert(`Jadwal untuk hari ${day} telah dikosongkan.`);
+                // Clear checkboxes for the current view if it matches the cleared day
+                loadScheduleForDay(day);
+            }
+        }
+
+        function displaySchedule() {
+            scheduleDisplay.innerHTML = ''; // Clear display
+            const daysOrder = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+
+            let hasSchedule = false;
+            daysOrder.forEach(day => {
+                // Check if the key exists and the array is not empty
+                if (schedule[day] && Array.isArray(schedule[day]) && schedule[day].length > 0) {
+                    hasSchedule = true;
+                    const div = document.createElement('div');
+                     const memberNames = schedule[day].join(', ') || '<i>(Kosong)</i>'; // Handle empty array just in case
+                    div.innerHTML = `<strong>${day}:</strong> ${memberNames}`;
+                    scheduleDisplay.appendChild(div);
+                }
+            });
+
+            if (!hasSchedule) {
+                scheduleDisplay.innerHTML = '<div>Belum ada jadwal yang diatur.</div>';
+            }
+        }
+
+        function loadScheduleForDay(day) {
+            const scheduledMembers = schedule[day] || [];
+            const checkboxes = memberCheckboxContainer.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                // Check if this member is in the schedule for the selected day
+                checkbox.checked = scheduledMembers.includes(checkbox.value);
+            });
+        }
+
+
+        // --- 3. Attendance Tracking ---
+        function showAttendanceForm() {
+            const selectedDate = attendanceDateInput.value; // Format: YYYY-MM-DD
+
+            if (!selectedDate) {
+                alert('Silakan pilih tanggal terlebih dahulu.');
+                return;
+            }
+
+            // Validate date format simple check
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
+                 alert("Format tanggal tidak valid. Gunakan format YYYY-MM-DD.");
+                 return;
+            }
+
+            const dateObj = new Date(selectedDate + 'T00:00:00'); // Use T00:00:00 to avoid timezone issues affecting the day
+             if (isNaN(dateObj.getTime())) {
+                 alert("Tanggal tidak valid.");
+                 return; // Invalid date object
+             }
+
+            const dayOfWeekIndex = dateObj.getDay();
+            const dayOfWeekName = daysInIndonesian[dayOfWeekIndex];
+
+            selectedDateDisplay.textContent = selectedDate;
+            selectedDayDisplay.textContent = dayOfWeekName;
+            attendanceMarkingDiv.style.display = 'block'; // Show the section
+            attendanceCheckboxesDiv.innerHTML = ''; // Clear previous checkboxes
+            attendanceStatusDiv.innerHTML = ''; // Clear previous status
+            saveAttendanceButton.style.display = 'none'; // Hide save button initially
+            noScheduleMessage.style.display = 'none'; // Hide no schedule message
+
+
+            const membersScheduledToday = schedule[dayOfWeekName] || [];
+
+            if (membersScheduledToday.length === 0) {
+                noScheduleMessage.style.display = 'block';
+                attendanceCheckboxesDiv.innerHTML = '<p>Tidak ada anggota yang dijadwalkan piket pada hari ini.</p>';
+                 attendanceStatusDiv.innerHTML = ''; // Also clear status display area
+
+            } else {
+                saveAttendanceButton.style.display = 'inline-block'; // Show save button
+                // Load existing attendance for this date, if any
+                const existingAttendance = attendance[selectedDate] || {};
+
+                membersScheduledToday.forEach(member => {
+                    // Double check if the member still exists in the main list
+                    if (!members.includes(member)) return; // Skip if member was deleted
+
+                    const isPresent = existingAttendance[member] === true;
+
+                    const div = document.createElement('div');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = member;
+                     // Use a consistent ID format
+                     const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
+                     checkbox.id = `att-${selectedDate}-${safeMemberId}`;
+                    checkbox.checked = isPresent; // Set checkbox based on saved data
+
+                    const label = document.createElement('label');
+                    label.htmlFor = checkbox.id;
+                    label.appendChild(document.createTextNode(member));
+
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    attendanceCheckboxesDiv.appendChild(div);
+                });
+                // Display current status after loading form
+                displayAttendanceStatus(selectedDate, dayOfWeekName);
+            }
+        }
+
+        function saveAttendance() {
+            const selectedDate = attendanceDateInput.value;
+            const checkboxes = attendanceCheckboxesDiv.querySelectorAll('input[type="checkbox"]'); // Get checkboxes from the correct container
+
+            if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
+                alert("Tanggal tidak valid.");
+                return;
+            }
+             const dateObj = new Date(selectedDate + 'T00:00:00');
+             if (isNaN(dateObj.getTime())) {
+                 alert("Tanggal tidak valid.");
+                 return;
+             }
+             const dayOfWeekName = daysInIndonesian[dateObj.getDay()];
+
+            // Initialize attendance object for the date if it doesn't exist
+            if (!attendance[selectedDate]) {
+                attendance[selectedDate] = {};
+            }
+
+            // Get members scheduled for this specific day according to the current schedule
+            const membersScheduledToday = schedule[dayOfWeekName] || [];
+
+            // Update attendance only for members currently scheduled today
+            membersScheduledToday.forEach(member => {
+                 // Check if the member still exists globally
+                 if (!members.includes(member)) return;
+
+                  // Find the checkbox for this member
+                  const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
+                  const checkbox = document.getElementById(`att-${selectedDate}-${safeMemberId}`);
+
+                  if (checkbox) { // If a checkbox exists for this scheduled member
+                      attendance[selectedDate][member] = checkbox.checked; // Store true (present) or false (absent)
+                  } else {
+                       // This case should ideally not happen if the form is generated correctly,
+                       // but as a safeguard, we might decide not to store anything or mark as absent.
+                       // Let's mark as absent (false) if they were scheduled but no checkbox was found (or interacted with)
+                       // However, it's safer to only update based on actual checkboxes present.
+                       console.warn(`Checkbox not found for scheduled member: ${member} on ${selectedDate}. Attendance not updated.`);
+                  }
+            });
+
+              // Optional: Clean up entries in attendance[selectedDate] for members who are *no longer* scheduled on this day
+             Object.keys(attendance[selectedDate]).forEach(memberInRecord => {
+                  if (!membersScheduledToday.includes(memberInRecord)) {
+                       delete attendance[selectedDate][memberInRecord];
+                  }
+             });
+             // If the date record becomes empty after cleanup, delete it
+             if (Object.keys(attendance[selectedDate]).length === 0) {
+                   delete attendance[selectedDate];
+             }
+
+
+            saveData('osisAttendance', attendance);
+            alert(`Kehadiran untuk tanggal ${selectedDate} berhasil disimpan.`);
+            displayAttendanceStatus(selectedDate, dayOfWeekName); // Update status display
+        }
+
+        function displayAttendanceStatus(selectedDate, dayOfWeekName) {
+            attendanceStatusDiv.innerHTML = ''; // Clear previous status
+
+            const membersScheduledToday = schedule[dayOfWeekName] || [];
+            // Filter scheduled members to only include those still in the main members list
+            const validScheduledMembers = membersScheduledToday.filter(m => members.includes(m));
+
+            const attendanceData = attendance[selectedDate] || {};
+
+
+            if (validScheduledMembers.length === 0) {
+                // Check if there *was* a schedule but members were deleted
+                if (membersScheduledToday.length > 0) {
+                     attendanceStatusDiv.innerHTML = '<p>Anggota yang dijadwalkan untuk hari ini mungkin telah dihapus.</p>';
+                } else {
+                     // No schedule was ever set or it's empty
+                     attendanceStatusDiv.innerHTML = '<p>Tidak ada jadwal piket untuk ditampilkan.</p>';
+                }
+                return;
+            }
+
+            attendanceStatusDiv.innerHTML = `<strong>Status Kehadiran ${selectedDate} (${dayOfWeekName}):</strong>`;
+            const presentList = document.createElement('ul');
+            const absentList = document.createElement('ul');
+            let presentCount = 0;
+            let absentCount = 0;
+
+            validScheduledMembers.forEach(member => {
+                const li = document.createElement('li');
+                li.textContent = member;
+
+                if (attendanceData[member] === true) {
+                    li.classList.add('present');
+                    li.textContent += " (Piket)";
+                    presentList.appendChild(li);
+                    presentCount++;
+                } else { // Includes false (explicitly absent) and undefined (not marked yet)
+                    li.classList.add('absent');
+                    li.textContent += " (Tidak Piket)";
+                    absentList.appendChild(li);
+                    absentCount++;
+                }
+            });
+
+            const summary = document.createElement('p');
+            summary.innerHTML = `Total Piket: <span class="present">${presentCount}</span>, Total Tidak Piket: <span class="absent">${absentCount}</span>`;
+            attendanceStatusDiv.appendChild(summary);
+
+            if (presentList.hasChildNodes()) {
+                const presentHeader = document.createElement('strong');
+                presentHeader.textContent = 'Daftar Hadir (Piket):';
+                presentHeader.style.color = 'var(--success-green)';
+                attendanceStatusDiv.appendChild(presentHeader);
+                attendanceStatusDiv.appendChild(presentList);
+            }
+            if (absentList.hasChildNodes()) {
+                const absentHeader = document.createElement('strong');
+                absentHeader.textContent = 'Daftar Tidak Hadir (Tidak Piket):';
+                 absentHeader.style.color = 'var(--danger-red)';
+                 absentHeader.style.display = 'block'; // Ensure it's on a new line
+                 absentHeader.style.marginTop = '10px'; // Add some space
+                attendanceStatusDiv.appendChild(absentHeader);
+                attendanceStatusDiv.appendChild(absentList);
+            }
+        }
+
+
+        // --- 4. Reporting ---
+        function generateReport() {
+            reportDisplay.innerHTML = ''; // Clear previous report
+
+            if (members.length === 0) {
+                reportDisplay.innerHTML = '<p>Tidak ada anggota OSIS untuk dilaporkan.</p>';
+                return;
+            }
+             if (Object.keys(attendance).length === 0 && Object.keys(schedule).every(day => schedule[day].length === 0)) {
+                  reportDisplay.innerHTML = '<p>Belum ada data jadwal atau kehadiran yang dicatat untuk membuat laporan.</p>';
+                  return;
+             }
+
+
+            const memberStats = {};
+            members.forEach(member => {
+                memberStats[member] = { scheduled: 0, attended: 0 };
+            });
+
+            let totalPiketOpportunities = 0;
+
+            // Iterate through all days with schedules first to count total scheduled instances
+             Object.keys(schedule).forEach(day => {
+                 const scheduledMembersOnDay = schedule[day] || [];
+                 scheduledMembersOnDay.forEach(member => {
+                      // Only count if the member still exists
+                     if (memberStats[member]) {
+                          // This counts potential schedules. We refine with actual attendance dates below.
+                          // We need a better way: Count based on *actual recorded attendance dates* where a schedule existed.
+                     }
+                 });
+             });
+
+             // Iterate through recorded attendance dates
+            Object.keys(attendance).forEach(date => {
+                const dateObj = new Date(date + 'T00:00:00');
+                if (isNaN(dateObj.getTime())) {
+                    console.warn(`Skipping invalid date format in attendance data: ${date}`);
+                    return; // Skip invalid date entries
+                }
+                const dayOfWeekName = daysInIndonesian[dateObj.getDay()];
+                const scheduledMembersOnDate = schedule[dayOfWeekName] || [];
+                const attendanceRecord = attendance[date]; // { member1: true, member2: false }
+
+                scheduledMembersOnDate.forEach(member => {
+                    // Increment scheduled count *only if* the member exists and there's an attendance record for this date.
+                    if (memberStats[member] && attendanceRecord) {
+                        memberStats[member].scheduled++;
+                        totalPiketOpportunities++; // Increment total count based on actual checked days
+                        // Increment attended count if they were marked present (true)
+                        if (attendanceRecord[member] === true) {
+                            memberStats[member].attended++;
+                        }
+                    }
+                });
+            });
+
+
+             if (totalPiketOpportunities === 0) {
+                   reportDisplay.innerHTML = '<p>Belum ada data kehadiran yang relevan dengan jadwal yang tersimpan untuk membuat laporan.</p>';
+                   return;
+              }
+
+
+            // Calculate percentage and sort members
+            const sortedMembers = members.map(member => {
+                const stats = memberStats[member];
+                const percentage = stats.scheduled > 0 ? (stats.attended / stats.scheduled) * 100 : 0;
+                return {
+                    name: member,
+                    attended: stats.attended,
+                    scheduled: stats.scheduled, // This now reflects days checked for attendance where they were scheduled
+                    percentage: percentage
+                };
+            }).sort((a, b) => {
+                // Sort logic: Percentage DESC, then Attended DESC, then Name ASC
+                if (b.percentage !== a.percentage) return b.percentage - a.percentage;
+                if (b.attended !== a.attended) return b.attended - a.attended;
+                return a.name.localeCompare(b.name);
+            });
+
+
+            // Display the report
+            sortedMembers.forEach(member => {
+                const div = document.createElement('div');
+                div.classList.add('report-item');
+
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = `${member.name}: `;
+                nameSpan.style.fontWeight = 'bold';
+
+                const statsSpan = document.createElement('span');
+                 // Clarify the meaning of 'scheduled' count
+                 statsSpan.innerHTML = `Hadir <strong>${member.attended}</strong> dari <strong>${member.scheduled}</strong> kali piket tercatat.`;
+
+                 div.appendChild(nameSpan);
+                 div.appendChild(statsSpan); // Place text first
+
+                // Only show bar if they were scheduled at least once on a recorded day
+                if (member.scheduled > 0) {
+                    const barContainer = document.createElement('div');
+                    barContainer.classList.add('report-bar-container');
+
+                    const bar = document.createElement('div');
+                    bar.classList.add('report-bar');
+                    bar.style.width = `${member.percentage}%`;
+                    if (member.percentage < 50) {
+                        bar.classList.add('low'); // Yellow bar
+                    }
+
+                    const percentageText = document.createElement('span');
+                    percentageText.classList.add('report-text');
+                    percentageText.textContent = `(${member.percentage.toFixed(1)}%)`;
+
+                    barContainer.appendChild(bar);
+                    barContainer.appendChild(percentageText);
+                    div.appendChild(barContainer); // Add the bar below the text
+                 } else {
+                      const noDataText = document.createElement('span');
+                      noDataText.classList.add('report-text');
+                       noDataText.style.marginLeft = '10px';
+                      noDataText.textContent = "(Tidak ada data piket tercatat)";
+                      div.appendChild(noDataText);
+                 }
+
+                reportDisplay.appendChild(div);
+            });
+
+             // Add summary for most/least diligent based on members with recorded schedules
+             const membersWithData = sortedMembers.filter(m => m.scheduled > 0);
+             if (membersWithData.length > 0) {
+                 const summaryDiv = document.createElement('div');
+                 summaryDiv.style.marginTop = '20px';
+                 summaryDiv.style.paddingTop = '15px';
+                 summaryDiv.style.borderTop = '1px solid var(--border-color)';
+
+                 const mostDiligent = membersWithData[0];
+                 const leastDiligent = membersWithData[membersWithData.length - 1];
+
+                 let summaryText = `👏 <strong>Paling Rajin:</strong> ${mostDiligent.name} (${mostDiligent.percentage.toFixed(1)}%)<br>`;
+
+                 // Only show least diligent if there's more than one person with data and they are different people
+                 if (membersWithData.length > 1 && mostDiligent.name !== leastDiligent.name) {
+                     summaryText += `🤔 <strong>Kurang Rajin:</strong> ${leastDiligent.name} (${leastDiligent.percentage.toFixed(1)}%)`;
+                 } else if (membersWithData.length === 1) {
+                      summaryText += `🤔 <strong>Kurang Rajin:</strong> (Hanya satu anggota dengan data)`;
+                 } else { // All have same percentage (and > 0 scheduled)
+                      summaryText += `🤔 <strong>Kurang Rajin:</strong> (Beberapa anggota memiliki tingkat kerajinan yang sama)`;
+                 }
+
+                 summaryDiv.innerHTML = summaryText;
+                 reportDisplay.insertBefore(summaryDiv, reportDisplay.firstChild); // Add summary at the top
+             } else if(members.length > 0) {
+                 // Case where members exist but no relevant attendance/schedule data yet
+                 const noReportData = document.createElement('p');
+                 noReportData.textContent = "Belum ada cukup data kehadiran yang sesuai jadwal untuk menentukan peringkat kerajinan.";
+                 reportDisplay.insertBefore(noReportData, reportDisplay.firstChild);
+             }
+        }
+
+        // --- Event Listeners (Login handled by form submit) ---
+         // Initial check: If the script runs, hide the main app by default (CSS does this, but JS ensures it)
+         mainApp.style.display = 'none';
+         loginScreen.style.display = 'block';
+
+
+    </script>
+
+</body>
+</html>
