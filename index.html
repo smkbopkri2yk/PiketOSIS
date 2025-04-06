@@ -15,20 +15,23 @@
             --blue-text: #0056b3;
             --border-color: #dee2e6;
             --danger-red: #dc3545;
+            --warning-orange: #fd7e14;
             --success-green: #28a745;
+            --info-cyan: #17a2b8;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0; /* Remove padding for full screen login */
+            padding: 0;
             background-color: var(--light-bg);
             color: var(--dark-text);
             line-height: 1.6;
-            display: flex; /* Used for centering login */
-            justify-content: center; /* Used for centering login */
-            align-items: center; /* Used for centering login */
-            min-height: 100vh; /* Ensure body takes full height */
+            /* Initial state for centering login */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         /* --- Login Screen Styling --- */
@@ -42,61 +45,20 @@
             border-top: 5px solid var(--primary-blue);
             text-align: center;
         }
-
-        #login-screen h2 {
-            color: var(--primary-blue);
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--secondary-yellow);
-            padding-bottom: 10px;
-        }
-
-        #login-screen label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--blue-text);
-            text-align: left;
-        }
-
-        #login-screen input[type="text"],
-        #login-screen input[type="password"] {
-            width: calc(100% - 22px); /* Full width minus padding/border */
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        #login-screen button {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease;
-            width: 100%; /* Full width button */
-        }
-
-        #login-screen button:hover {
-            background-color: var(--blue-text);
-        }
-
-        #login-error {
-            color: var(--danger-red);
-            margin-top: 15px;
-            font-weight: bold;
-            min-height: 1.2em; /* Reserve space for error message */
-        }
+        /* ... (Login styles remain the same) ... */
+         #login-screen h2 { color: var(--primary-blue); margin-bottom: 25px; border-bottom: 2px solid var(--secondary-yellow); padding-bottom: 10px; }
+         #login-screen label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--blue-text); text-align: left; }
+         #login-screen input[type="text"], #login-screen input[type="password"] { width: calc(100% - 22px); padding: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; }
+         #login-screen button { background-color: var(--primary-blue); color: var(--white); border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; transition: background-color 0.3s ease; width: 100%; }
+         #login-screen button:hover { background-color: var(--blue-text); }
+         #login-error { color: var(--danger-red); margin-top: 15px; font-weight: bold; min-height: 1.2em; }
 
 
-        /* --- Main App Styling (Sama seperti sebelumnya, tapi dibungkus #main-app) --- */
+        /* --- Main App Styling --- */
         #main-app {
-            width: 100%; /* Take full width available */
+            width: 100%;
             max-width: 900px;
-            margin: 20px auto; /* Center container horizontally */
+            margin: 20px auto;
             background-color: var(--white);
             padding: 30px;
             border-radius: 8px;
@@ -105,161 +67,114 @@
             display: none; /* Initially hidden */
         }
 
-        /* Styling lainnya (h1, h2, section, label, input, button, etc.) tetap sama */
-        #main-app h1, #main-app h2 {
-            color: var(--primary-blue);
-            border-bottom: 2px solid var(--secondary-yellow);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
+        /* ... (General styles remain the same) ... */
+        #main-app h1, #main-app h2, #main-app h3 { color: var(--primary-blue); }
+        #main-app h1 { border-bottom: 2px solid var(--secondary-yellow); padding-bottom: 10px; margin-bottom: 20px;}
+        #main-app h2 { border-bottom: 1px solid var(--secondary-yellow); padding-bottom: 8px; margin-bottom: 15px; margin-top: 30px;}
+        #main-app h3 { margin-top: 20px; margin-bottom: 10px; color: var(--blue-text); font-size: 1.1em; }
 
-        .section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background-color: #fdfdff;
-        }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px; background-color: #fdfdff;}
+        #main-app label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--blue-text); }
+        #main-app input[type="text"], #main-app input[type="date"], #main-app select, #main-app textarea { width: calc(100% - 22px); padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; }
+        #main-app textarea { min-height: 80px; }
+        #main-app button { background-color: var(--primary-blue); color: var(--white); border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s ease; margin-right: 10px; margin-bottom: 10px; }
+        #main-app button:hover { background-color: var(--blue-text); }
+        #main-app button.secondary { background-color: var(--secondary-yellow); color: var(--dark-text); }
+        #main-app button.secondary:hover { background-color: #e0a800; }
+        #main-app button.danger { background-color: var(--danger-red); }
+        #main-app button.danger:hover { background-color: #c82333; }
+        #main-app button.warning { background-color: var(--warning-orange); }
+        #main-app button.warning:hover { background-color: #e46d0f; }
+        #main-app button.info { background-color: var(--info-cyan); }
+        #main-app button.info:hover { background-color: #138496; }
+         #main-app button.small-btn { padding: 5px 10px; font-size: 0.9em; margin-left: 5px; }
 
-        #main-app label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--blue-text);
-        }
+        #main-app ul, #memberListDisplay li, #scheduleDisplay div, #attendanceMarking div, #reportDisplay div { list-style: none; padding: 0; }
+        #memberListDisplay li, #scheduleDisplay div, #attendanceMarking div, .report-item { background-color: var(--light-bg); padding: 10px 15px; margin-bottom: 8px; border: 1px solid var(--border-color); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+         #memberListDisplay li span.member-name { flex-grow: 1; margin-right: 10px; } /* Allow name to grow */
+         #memberListDisplay li .edit-controls input[type="text"] { width: auto; flex-grow: 1; margin-right: 5px;} /* Input for editing */
+         .edit-controls { display: none; align-items: center; width: 100%;} /* Initially hidden edit state */
 
-        #main-app input[type="text"],
-        #main-app input[type="date"],
-        #main-app select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
 
-        #main-app button {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
+        #scheduleDisplay strong, #attendanceStatus strong { color: var(--primary-blue); min-width: 80px; display: inline-block; }
 
-        #main-app button:hover {
-            background-color: var(--blue-text);
-        }
-
-        #main-app button.secondary {
-             background-color: var(--secondary-yellow);
-             color: var(--dark-text);
-        }
-
-        #main-app button.secondary:hover {
-             background-color: #e0a800;
-        }
-         #main-app button.danger {
-              background-color: var(--danger-red);
-         }
-          #main-app button.danger:hover {
-               background-color: #c82333;
-          }
-
-        #main-app ul, #memberListDisplay li, #scheduleDisplay div, #attendanceMarking div, #reportDisplay div {
-             list-style: none;
-             padding: 0;
-        }
-
-        #memberListDisplay li, #scheduleDisplay div, #attendanceMarking div, .report-item {
-            background-color: var(--light-bg);
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #scheduleDisplay strong, #attendanceStatus strong {
-             color: var(--primary-blue);
-             min-width: 80px;
-             display: inline-block;
-        }
-
-        #attendanceMarking label {
-            display: inline-block;
-            margin-left: 5px;
-            margin-right: 20px;
-            font-weight: normal;
-            color: var(--dark-text);
-        }
-        #attendanceMarking input[type="checkbox"] {
-            margin-right: 5px;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-
-        .member-checkbox-list label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        .member-checkbox-list input[type="checkbox"] {
-             margin-right: 8px;
-        }
-
-        .report-bar-container {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .report-bar {
-            height: 20px;
-            background-color: var(--primary-blue);
-            border-radius: 3px;
-            margin-right: 10px;
-            min-width: 10px;
-            transition: width 0.5s ease-out;
-        }
-         .report-bar.low {
-              background-color: var(--secondary-yellow);
-         }
-
-        .report-text {
+        /* Attendance specific */
+        #attendanceCheckboxes .attendance-item { display: flex; align-items: center; margin-bottom: 8px; padding: 5px; border-radius: 4px; transition: background-color 0.2s; }
+        #attendanceCheckboxes .attendance-item:hover { background-color: #e9ecef;}
+        #attendanceCheckboxes label { display: inline-flex; align-items: center; margin-left: 0; margin-right: 15px; font-weight: normal; color: var(--dark-text); cursor: pointer; flex-grow: 1;}
+        #attendanceCheckboxes input[type="checkbox"] { margin-right: 8px; transform: scale(1.2); cursor: pointer; }
+        #attendanceCheckboxes input[type="text"].reason-input { /* Style for reason input */
+            display: none; /* Initially hidden */
+            margin-left: 10px;
+            padding: 4px 8px;
             font-size: 0.9em;
-            color: #555;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+             width: auto; /* Adjust width as needed */
+             flex-basis: 200px; /* Give it some base width */
         }
 
-        #attendanceStatus {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed var(--primary-blue);
-            border-radius: 5px;
-        }
-        #attendanceStatus ul {
-             margin-top: 10px;
-        }
-         #attendanceStatus li {
-             margin-bottom: 5px;
-             padding-left: 15px;
-         }
+        #attendanceStatus { margin-top: 20px; padding: 15px; border: 1px dashed var(--primary-blue); border-radius: 5px; }
+        #attendanceStatus ul { margin-top: 10px; }
+        #attendanceStatus li { margin-bottom: 5px; padding-left: 15px; }
         #attendanceStatus .present { color: var(--success-green); font-weight: bold; }
         #attendanceStatus .absent { color: var(--danger-red); font-weight: bold; }
+         #attendanceStatus .reason-text { font-size: 0.9em; color: #555; margin-left: 5px; }
 
-        small {
-             color: #6c757d;
-             display: block;
-             margin-top: -10px;
-             margin-bottom: 15px;
+         /* Report specific */
+        .report-bar-container { display: flex; align-items: center; margin-top: 5px; }
+        .report-bar { height: 20px; background-color: var(--primary-blue); border-radius: 3px; margin-right: 10px; min-width: 10px; transition: width 0.5s ease-out; }
+        .report-bar.low { background-color: var(--secondary-yellow); }
+        .report-text { font-size: 0.9em; color: #555; }
+        .report-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); font-size: 1.05em;}
+
+        small { color: #6c757d; display: block; margin-top: -10px; margin-bottom: 15px; }
+        .hidden { display: none; } /* Utility class */
+
+        /* --- Print View Styling --- */
+        @media print {
+            body {
+                padding: 0;
+                margin: 10mm; /* Add some margin for printing */
+                 font-size: 10pt; /* Smaller font for print */
+                 background-color: var(--white) !important; /* Force white background */
+                 color: #000 !important; /* Force black text */
+            }
+            #login-screen, #main-app .section:not(#reportSection), #main-app button, #main-app input, #main-app select, #main-app textarea, #main-app small, #main-app h3:not(#reportSection h3), #main-app label, .edit-controls, .no-print {
+                display: none !important; /* Hide non-report elements */
+            }
+             #main-app {
+                  box-shadow: none;
+                  border: none;
+                  padding: 0;
+                  margin: 0;
+             }
+            #reportSection, #reportDisplay, .report-item, #main-app h1, #main-app #reportSection h2 {
+                display: block !important; /* Ensure report sections are visible */
+                width: 100%;
+                box-shadow: none;
+                border: none;
+                page-break-inside: avoid; /* Try to keep report items together */
+            }
+             #main-app h1, #main-app #reportSection h2 {
+                 border-bottom: 1px solid #ccc;
+                 padding-bottom: 5px;
+                 margin-bottom: 15px;
+                 color: #000 !important;
+             }
+             .report-item {
+                 border: 1px solid #eee;
+                 padding: 8px;
+                 margin-bottom: 5px;
+                  background-color: var(--white) !important;
+             }
+             .report-bar-container { display: none; } /* Hide visual bars in print, text is enough */
+             .report-text { display: inline; margin-left: 5px; } /* Show percentage inline */
+             #attendanceStatus { border: 1px solid #ccc; }
+             #attendanceStatus .present, #attendanceStatus .absent { font-weight: normal;} /* Less emphasis */
+              #attendanceStatus .reason-text { font-style: italic;}
+              a[href]:after { content: none !important; } /* Avoid showing URLs */
+
         }
 
     </style>
@@ -268,19 +183,20 @@
 
     <!-- 1. Login Screen -->
     <div id="login-screen">
-        <h2>Login Admin Piket OSIS</h2>
-        <form onsubmit="event.preventDefault(); handleLogin();">
-             <div>
-                 <label for="username">Username:</label>
-                 <input type="text" id="username" required>
-             </div>
-             <div>
-                 <label for="password">Password:</label>
-                 <input type="password" id="password" required>
-             </div>
-             <button type="submit">Login</button>
-             <p id="login-error"></p>
-        </form>
+        <!-- ... (Login form remains the same) ... -->
+         <h2>Login Admin Piket OSIS</h2>
+         <form onsubmit="event.preventDefault(); handleLogin();">
+              <div>
+                  <label for="username">Username:</label>
+                  <input type="text" id="username" required value="Admin"> <!-- Pre-fill for convenience -->
+              </div>
+              <div>
+                  <label for="password">Password:</label>
+                  <input type="password" id="password" required value="Admin123"> <!-- Pre-fill for convenience -->
+              </div>
+              <button type="submit">Login</button>
+              <p id="login-error"></p>
+         </form>
     </div>
 
     <!-- 2. Main Application (Initially Hidden) -->
@@ -297,66 +213,94 @@
 
                 <h3>Daftar Anggota Saat Ini:</h3>
                 <ul id="memberListDisplay">
-                    <!-- Daftar anggota akan muncul di sini -->
+                    <!-- Daftar anggota (dengan tombol edit/hapus) akan muncul di sini -->
                 </ul>
             </div>
 
             <!-- 2. Input Jadwal Piket -->
             <div class="section">
-                <h2>Jadwal Piket Mingguan</h2>
-                <label for="scheduleDay">Pilih Hari:</label>
-                <select id="scheduleDay">
-                    <option value="Senin">Senin</option>
-                    <option value="Selasa">Selasa</option>
-                    <option value="Rabu">Rabu</option>
-                    <option value="Kamis">Kamis</option>
-                    <option value="Jumat">Jumat</option>
-                    <option value="Sabtu">Sabtu</option>
-                    <option value="Minggu">Minggu</option>
-                </select>
+                 <h2>Jadwal Piket Mingguan</h2>
+                 <!-- ... (Schedule form remains mostly the same) ... -->
+                 <label for="scheduleDay">Pilih Hari:</label>
+                 <select id="scheduleDay">
+                     <option value="Senin">Senin</option>
+                     <option value="Selasa">Selasa</option>
+                     <option value="Rabu">Rabu</option>
+                     <option value="Kamis">Kamis</option>
+                     <option value="Jumat">Jumat</option>
+                     <option value="Sabtu">Sabtu</option>
+                     <option value="Minggu">Minggu</option>
+                 </select>
 
-                <label>Pilih Anggota untuk Hari Ini:</label>
-                <div id="memberCheckboxList" class="member-checkbox-list">
-                    <!-- Checkbox anggota akan muncul di sini -->
-                </div>
-                <button onclick="saveScheduleForDay()">Simpan Jadwal Hari Ini</button>
-                <button class="secondary" onclick="clearScheduleForDay()">Kosongkan Jadwal Hari Ini</button>
+                 <label>Pilih Anggota untuk Hari Ini:</label>
+                 <div id="memberCheckboxList" class="member-checkbox-list">
+                     <!-- Checkbox anggota akan muncul di sini -->
+                 </div>
+                 <button onclick="saveScheduleForDay()">Simpan Jadwal Hari Ini</button>
+                 <button class="secondary" onclick="clearScheduleForDay()">Kosongkan Jadwal Hari Ini</button>
 
-                <h3>Jadwal Tersimpan:</h3>
-                <div id="scheduleDisplay">
-                    <!-- Jadwal mingguan akan muncul di sini -->
-                </div>
+                 <h3>Jadwal Tersimpan:</h3>
+                 <div id="scheduleDisplay">
+                     <!-- Jadwal mingguan akan muncul di sini -->
+                 </div>
             </div>
 
             <!-- 3. Input Kehadiran Piket -->
             <div class="section">
-                <h2>Catat Kehadiran Piket</h2>
-                <label for="attendanceDate">Pilih Tanggal Piket:</label>
-                <input type="date" id="attendanceDate">
-                <button onclick="showAttendanceForm()">Pilih Tanggal & Tampilkan Form</button>
+                 <h2>Catat Kehadiran Piket</h2>
+                <!-- ... (Attendance form remains mostly the same, but checkboxes section is modified) ... -->
+                 <label for="attendanceDate">Pilih Tanggal Piket:</label>
+                 <input type="date" id="attendanceDate">
+                 <button onclick="showAttendanceForm()">Pilih Tanggal & Tampilkan Form</button>
 
-                <div id="attendanceMarking" style="display: none;">
-                    <h3>Tandai Kehadiran untuk <span id="selectedDateDisplay"></span> (<span id="selectedDayDisplay"></span>):</h3>
-                    <p id="noScheduleMessage" style="display:none; color: orange;">Tidak ada jadwal piket untuk hari ini.</p>
-                    <div id="attendanceCheckboxes">
-                        <!-- Checkbox untuk menandai kehadiran akan muncul di sini -->
-                    </div>
-                    <button onclick="saveAttendance()" id="saveAttendanceButton" style="display:none;">Simpan Kehadiran</button>
-                    <div id="attendanceStatus">
-                        <!-- Status kehadiran (Piket/Tidak Piket) akan muncul di sini -->
-                    </div>
-                </div>
+                 <div id="attendanceMarking" style="display: none;">
+                     <h3>Tandai Kehadiran untuk <span id="selectedDateDisplay"></span> (<span id="selectedDayDisplay"></span>):</h3>
+                     <p id="noScheduleMessage" style="display:none; color: orange;">Tidak ada jadwal piket untuk hari ini.</p>
+                     <div id="attendanceCheckboxes">
+                         <!-- Checkbox & reason input akan muncul di sini -->
+                     </div>
+                     <button onclick="saveAttendance()" id="saveAttendanceButton" style="display:none;">Simpan Kehadiran</button>
+                     <div id="attendanceStatus">
+                         <!-- Status kehadiran (dengan alasan) akan muncul di sini -->
+                     </div>
+                 </div>
             </div>
 
             <!-- 4. Laporan Kerajinan -->
-            <div class="section">
+            <div class="section" id="reportSection"> <!-- Added ID for print styling -->
                 <h2>Laporan Kerajinan</h2>
                 <button onclick="generateReport()">Buat Laporan</button>
+                <button onclick="exportReportToCSV()" class="info small-btn no-print">Ekspor Laporan ke CSV</button>
                 <small>Laporan didasarkan pada data kehadiran yang sudah disimpan.</small>
                 <div id="reportDisplay">
-                    <!-- Laporan grafik sederhana akan muncul di sini -->
+                    <!-- Laporan (dengan summary) akan muncul di sini -->
                 </div>
             </div>
+
+             <!-- 5. Data Management Section (NEW) -->
+             <div class="section no-print">
+                  <h2>Manajemen Data</h2>
+
+                  <div>
+                       <h3>Backup Data Lokal</h3>
+                       <p>Salin teks di bawah ini dan simpan di tempat yang aman (misalnya file teks). Ini berisi semua data anggota, jadwal, dan kehadiran.</p>
+                       <textarea id="backupDataArea" rows="5" readonly placeholder="Klik 'Backup Data' untuk menampilkan data di sini..."></textarea>
+                       <button onclick="backupData()" class="info">Backup Data</button>
+                  </div>
+
+                   <div style="margin-top: 20px;">
+                       <h3>Restore Data Lokal</h3>
+                       <p><strong>PERHATIAN:</strong> Ini akan menimpa semua data saat ini dengan data dari backup. Pastikan teks yang Anda tempel di bawah ini valid.</p>
+                       <textarea id="restoreDataArea" rows="5" placeholder="Tempel data backup (format JSON) di sini..."></textarea>
+                       <button onclick="restoreData()" class="warning">Restore Data</button>
+                   </div>
+
+                   <div style="margin-top: 30px; border-top: 1px dashed var(--danger-red); padding-top: 20px;">
+                       <h3>Reset Aplikasi</h3>
+                       <p><strong>PERHATIAN BESAR:</strong> Ini akan menghapus SEMUA data anggota, jadwal, dan kehadiran dari penyimpanan browser ini secara permanen. Gunakan hanya jika Anda yakin ingin memulai dari awal.</p>
+                       <button onclick="resetAllData()" class="danger">Reset Semua Data Aplikasi</button>
+                   </div>
+             </div>
 
         </div> <!-- End of .container -->
     </div> <!-- End of #main-app -->
@@ -366,11 +310,16 @@
 
         // --- Global Variables & Constants ---
         const daysInIndonesian = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        const MEMBERS_KEY = 'osisMembers_v1'; // Added versioning in case structure changes later
+        const SCHEDULE_KEY = 'osisSchedule_v1';
+        const ATTENDANCE_KEY = 'osisAttendance_v2'; // V2 includes reason object
+
         let members = [];
         let schedule = {};
-        let attendance = {};
+        let attendance = {}; // Structure: { "YYYY-MM-DD": { "Member Name": { present: true/false, reason: "..." } } }
 
-        // --- DOM Element References (Cache them for performance) ---
+        // --- DOM Element References ---
+        // (Cached most elements used frequently)
         const loginScreen = document.getElementById('login-screen');
         const mainApp = document.getElementById('main-app');
         const usernameInput = document.getElementById('username');
@@ -391,141 +340,307 @@
         const reportDisplay = document.getElementById('reportDisplay');
         const selectedDateDisplay = document.getElementById('selectedDateDisplay');
         const selectedDayDisplay = document.getElementById('selectedDayDisplay');
+        const backupDataArea = document.getElementById('backupDataArea');
+        const restoreDataArea = document.getElementById('restoreDataArea');
 
 
         // --- Login Logic ---
         function handleLogin() {
+            // ... (Login logic remains the same) ...
             const username = usernameInput.value.trim();
-            const password = passwordInput.value; // No trim for password
-
-            // Simple hardcoded credentials
+            const password = passwordInput.value;
             if (username === "Admin" && password === "Admin123") {
-                loginError.textContent = ''; // Clear error
-                loginScreen.style.display = 'none'; // Hide login
-                mainApp.style.display = 'block';   // Show main app
-                 // Adjust body style after login if needed (e.g., remove centering)
-                 document.body.style.display = 'block'; // Back to default block display
+                loginError.textContent = '';
+                loginScreen.style.display = 'none';
+                mainApp.style.display = 'block';
+                document.body.style.display = 'block'; // Reset body display
                  document.body.style.justifyContent = '';
                  document.body.style.alignItems = '';
                  document.body.style.minHeight = '';
-                 document.body.style.padding = '20px'; // Restore padding
+                 document.body.style.padding = '20px'; // Restore body padding
 
-
-                initializeAppMainApp(); // Load data and setup the main application
+                initializeAppMainApp();
             } else {
                 loginError.textContent = 'Username atau Password salah.';
-                passwordInput.value = ''; // Clear password field on failure
+                passwordInput.value = '';
             }
         }
 
         // --- Main Application Initialization ---
         function initializeAppMainApp() {
             console.log("Initializing main application...");
-            // Load data from localStorage
-            members = loadData('osisMembers', []);
-            schedule = loadData('osisSchedule', {});
-            attendance = loadData('osisAttendance', {});
-
-            // Initial display setup
+            loadAllData(); // Load data first
             displayMembers();
-            updateMemberCheckboxesForScheduling(); // Populate scheduling checkboxes
-            loadScheduleForDay(scheduleDaySelect.value); // Load schedule for default day
+            updateMemberCheckboxesForScheduling();
+            loadScheduleForDay(scheduleDaySelect.value);
             displaySchedule();
+            setDefaultAttendanceDate();
+            addEventListeners();
+            console.log("Main application initialized.");
+        }
 
-            // Set default date to today for attendance
+        function loadAllData() {
+             members = loadData(MEMBERS_KEY, []);
+             schedule = loadData(SCHEDULE_KEY, {});
+             // Load attendance and handle potential old format (boolean)
+             const rawAttendance = loadData(ATTENDANCE_KEY, {});
+             attendance = migrateAttendanceData(rawAttendance); // Ensure data is in {present, reason} format
+        }
+
+         // Helper to ensure attendance data uses the new object format
+         function migrateAttendanceData(rawData) {
+             const migratedData = {};
+             for (const date in rawData) {
+                 if (Object.hasOwnProperty.call(rawData, date)) {
+                     migratedData[date] = {};
+                     const dailyRecord = rawData[date];
+                     for (const memberName in dailyRecord) {
+                         if (Object.hasOwnProperty.call(dailyRecord, memberName)) {
+                             const record = dailyRecord[memberName];
+                             if (typeof record === 'boolean') {
+                                 // Old format: Convert boolean to object
+                                 migratedData[date][memberName] = { present: record, reason: '' };
+                             } else if (typeof record === 'object' && record !== null && typeof record.present === 'boolean') {
+                                 // Already new format (or partially new)
+                                 migratedData[date][memberName] = {
+                                     present: record.present,
+                                     reason: typeof record.reason === 'string' ? record.reason : '' // Ensure reason is string
+                                 };
+                             } else {
+                                 console.warn(`Invalid attendance record found for ${memberName} on ${date}. Skipping.`);
+                                 // Optionally set a default or skip
+                                  // migratedData[date][memberName] = { present: false, reason: 'Data Error' };
+                             }
+                         }
+                     }
+                 }
+             }
+             // Optional: Save the migrated data back immediately if changes were made
+             // saveData(ATTENDANCE_KEY, migratedData); // Be cautious with auto-saving on load
+             return migratedData;
+         }
+
+
+        function setDefaultAttendanceDate() {
              try {
                  attendanceDateInput.valueAsDate = new Date();
              } catch (e) {
-                 // Fallback for browsers not supporting valueAsDate well or if Date is invalid
                  const today = new Date();
                  const yyyy = today.getFullYear();
-                 const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                 const mm = String(today.getMonth() + 1).padStart(2, '0');
                  const dd = String(today.getDate()).padStart(2, '0');
                  attendanceDateInput.value = `${yyyy}-${mm}-${dd}`;
-                  console.warn("Using fallback for setting date input value.");
+                 console.warn("Using fallback for setting date input value.");
              }
+        }
 
-
-            // Add event listener to scheduleDay select to load current schedule
-            scheduleDaySelect.addEventListener('change', (event) => {
-                loadScheduleForDay(event.target.value);
-            });
-             console.log("Main application initialized.");
+        function addEventListeners() {
+             scheduleDaySelect.addEventListener('change', (event) => {
+                 loadScheduleForDay(event.target.value);
+             });
+             // Listener for attendance checkboxes to show/hide reason input
+             attendanceCheckboxesDiv.addEventListener('change', (event) => {
+                  if (event.target.type === 'checkbox' && event.target.classList.contains('attendance-checkbox')) {
+                       const reasonInput = event.target.closest('.attendance-item').querySelector('.reason-input');
+                       if (reasonInput) {
+                            reasonInput.style.display = event.target.checked ? 'none' : 'inline-block';
+                            if (event.target.checked) {
+                                 reasonInput.value = ''; // Clear reason if checked present
+                            }
+                       }
+                  }
+             });
         }
 
 
-        // --- Data Management (using localStorage with error handling) ---
+        // --- Data Management (localStorage) ---
+        // ... (loadData and saveData remain the same, using provided keys) ...
         function loadData(key, defaultValue = []) {
             const data = localStorage.getItem(key);
-            if (data === null) return defaultValue; // No data saved yet
+            if (data === null) return defaultValue;
             try {
                 return JSON.parse(data);
             } catch (e) {
                 console.error(`Error parsing localStorage key "${key}":`, e);
                 alert(`Gagal memuat data untuk ${key}. Data mungkin rusak. Menggunakan nilai default.`);
-                return defaultValue; // Return default value if parsing fails
+                backupDataArea.value = `ERROR LOADING KEY ${key}:\n${localStorage.getItem(key)}`; // Show raw data on error
+                return defaultValue;
             }
         }
-
         function saveData(key, data) {
             try {
                 localStorage.setItem(key, JSON.stringify(data));
             } catch (e) {
                 console.error(`Error saving data to localStorage for key "${key}":`, e);
-                alert("Gagal menyimpan data. Penyimpanan lokal mungkin penuh atau tidak didukung.");
+                alert(`Gagal menyimpan data. Penyimpanan lokal mungkin penuh atau tidak didukung.\nError: ${e.message}`);
             }
         }
 
-        // --- 1. Member Management ---
+        // --- 1. Member Management (with Edit) ---
         function addMember() {
             const name = newMemberNameInput.value.trim();
             if (name && !members.includes(name)) {
                 members.push(name);
-                members.sort(); // Keep the list sorted alphabetically
-                saveData('osisMembers', members);
+                members.sort();
+                saveData(MEMBERS_KEY, members);
                 displayMembers();
-                updateMemberCheckboxesForScheduling(); // Update checkboxes in schedule section
-                newMemberNameInput.value = ''; // Clear input
-                 alert(`Anggota "${name}" berhasil ditambahkan.`);
+                updateMemberCheckboxesForScheduling();
+                newMemberNameInput.value = '';
+                showNotification(`Anggota "${name}" berhasil ditambahkan.`);
             } else if (members.includes(name)) {
-                alert('Nama anggota sudah ada.');
+                 showNotification('Nama anggota sudah ada.', 'error');
             } else {
-                alert('Nama anggota tidak boleh kosong.');
+                 showNotification('Nama anggota tidak boleh kosong.', 'error');
             }
         }
 
         function displayMembers() {
-            memberListDisplay.innerHTML = ''; // Clear list
+            memberListDisplay.innerHTML = '';
             if (members.length === 0) {
                 memberListDisplay.innerHTML = '<li>Belum ada anggota.</li>';
                 return;
             }
             members.forEach(member => {
-                const li = document.createElement('li');
-                li.textContent = member;
+                 const li = document.createElement('li');
+                 li.dataset.memberName = member; // Store name for reference
 
-                const removeBtn = document.createElement('button');
-                removeBtn.textContent = 'Hapus';
-                removeBtn.classList.add('danger'); // Use red color for delete
-                removeBtn.style.marginLeft = '10px';
-                removeBtn.style.padding = '5px 10px';
-                 removeBtn.style.fontSize = '0.9em'; // Smaller button
-                removeBtn.onclick = () => removeMember(member);
-                li.appendChild(removeBtn);
+                 // Normal display elements
+                 const nameSpan = document.createElement('span');
+                 nameSpan.textContent = member;
+                 nameSpan.classList.add('member-name');
 
-                memberListDisplay.appendChild(li);
+                 const viewControls = document.createElement('div'); // Container for view buttons
+                 viewControls.classList.add('view-controls');
+
+                 const editBtn = document.createElement('button');
+                 editBtn.textContent = 'Edit';
+                 editBtn.classList.add('info', 'small-btn');
+                 editBtn.onclick = () => startEditMember(member, li);
+
+                 const removeBtn = document.createElement('button');
+                 removeBtn.textContent = 'Hapus';
+                 removeBtn.classList.add('danger', 'small-btn');
+                 removeBtn.onclick = () => removeMember(member);
+
+                 viewControls.appendChild(editBtn);
+                 viewControls.appendChild(removeBtn);
+
+                 // Edit display elements (initially hidden)
+                 const editControls = document.createElement('div');
+                 editControls.classList.add('edit-controls'); // Initially hidden via CSS
+
+                 const editInput = document.createElement('input');
+                 editInput.type = 'text';
+                 editInput.value = member;
+                 editInput.classList.add('edit-member-input');
+
+                 const saveBtn = document.createElement('button');
+                 saveBtn.textContent = 'Simpan';
+                 saveBtn.classList.add('success', 'small-btn');
+                 saveBtn.onclick = () => saveEditMember(member, li);
+
+                 const cancelBtn = document.createElement('button');
+                 cancelBtn.textContent = 'Batal';
+                 cancelBtn.classList.add('secondary', 'small-btn');
+                 cancelBtn.onclick = () => cancelEditMember(li);
+
+                 editControls.appendChild(editInput);
+                 editControls.appendChild(saveBtn);
+                 editControls.appendChild(cancelBtn);
+
+                 li.appendChild(nameSpan);
+                 li.appendChild(viewControls);
+                 li.appendChild(editControls); // Add hidden edit controls
+                 memberListDisplay.appendChild(li);
             });
         }
 
+        function startEditMember(memberName, listItemElement) {
+             // Hide view controls, show edit controls
+             listItemElement.querySelector('.view-controls').style.display = 'none';
+             listItemElement.querySelector('.member-name').style.display = 'none';
+             listItemElement.querySelector('.edit-controls').style.display = 'flex';
+             listItemElement.querySelector('.edit-member-input').focus(); // Focus the input
+        }
+
+        function cancelEditMember(listItemElement) {
+             // Hide edit controls, show view controls
+             listItemElement.querySelector('.edit-controls').style.display = 'none';
+             listItemElement.querySelector('.view-controls').style.display = 'flex'; // Or block, depending on original style
+             listItemElement.querySelector('.member-name').style.display = 'inline'; // Or block
+             // Reset input value to original in case it was changed
+              const originalName = listItemElement.dataset.memberName;
+              listItemElement.querySelector('.edit-member-input').value = originalName;
+        }
+
+        function saveEditMember(originalName, listItemElement) {
+            const editInput = listItemElement.querySelector('.edit-member-input');
+            const newName = editInput.value.trim();
+
+            // Validation
+            if (!newName) {
+                 showNotification("Nama tidak boleh kosong.", 'error');
+                 return;
+            }
+            if (newName !== originalName && members.includes(newName)) {
+                 showNotification(`Nama "${newName}" sudah digunakan anggota lain.`, 'error');
+                 return;
+            }
+            if (newName === originalName) {
+                 cancelEditMember(listItemElement); // No change, just revert UI
+                 return;
+            }
+
+            // Update data structures
+            const memberIndex = members.indexOf(originalName);
+            if (memberIndex > -1) {
+                members[memberIndex] = newName; // Update members array
+                members.sort(); // Re-sort
+
+                // Update schedule
+                Object.keys(schedule).forEach(day => {
+                    if (schedule[day]) {
+                        schedule[day] = schedule[day].map(m => m === originalName ? newName : m);
+                    }
+                });
+
+                // Update attendance keys
+                Object.keys(attendance).forEach(date => {
+                    if (attendance[date] && attendance[date][originalName]) {
+                        attendance[date][newName] = attendance[date][originalName]; // Copy data to new key
+                        delete attendance[date][originalName];                     // Delete old key
+                    }
+                });
+
+                // Save all changes
+                saveData(MEMBERS_KEY, members);
+                saveData(SCHEDULE_KEY, schedule);
+                saveData(ATTENDANCE_KEY, attendance);
+
+                // Update UI
+                showNotification(`Nama anggota "${originalName}" berhasil diubah menjadi "${newName}".`);
+                displayMembers(); // Re-render the whole list to reflect sorting and changes
+                updateMemberCheckboxesForScheduling(); // Update schedule checkboxes
+                displaySchedule(); // Update schedule display
+                 // If attendance form is open for a date where the member was relevant, refresh it
+                 if(attendanceMarkingDiv.style.display === 'block'){
+                      showAttendanceForm(); // Re-run to potentially update names in form/status
+                 }
+            } else {
+                 showNotification(`Error: Anggota asli "${originalName}" tidak ditemukan.`, 'error');
+                 cancelEditMember(listItemElement); // Revert UI on error
+            }
+        }
+
+
         function removeMember(nameToRemove) {
-            // Confirmation Dialog
             if (confirm(`Yakin ingin menghapus anggota "${nameToRemove}"?\nIni juga akan menghapusnya dari semua jadwal piket dan catatan kehadiran yang ada.`)) {
                 // Remove from members list
                 members = members.filter(member => member !== nameToRemove);
 
                 // Remove from schedule object
                 Object.keys(schedule).forEach(day => {
-                    if (schedule[day]) { // Check if day exists
+                    if (schedule[day]) {
                         schedule[day] = schedule[day].filter(m => m !== nameToRemove);
                     }
                 });
@@ -534,7 +649,6 @@
                 Object.keys(attendance).forEach(date => {
                     if (attendance[date] && attendance[date][nameToRemove] !== undefined) {
                         delete attendance[date][nameToRemove];
-                        // Optional: If the attendance object for a date becomes empty, delete the date entry itself
                         if (Object.keys(attendance[date]).length === 0) {
                             delete attendance[date];
                         }
@@ -542,468 +656,541 @@
                 });
 
                 // Save all updated data
-                saveData('osisMembers', members);
-                saveData('osisSchedule', schedule);
-                saveData('osisAttendance', attendance);
+                saveData(MEMBERS_KEY, members);
+                saveData(SCHEDULE_KEY, schedule);
+                saveData(ATTENDANCE_KEY, attendance);
 
                 // Update UI
                 displayMembers();
                 updateMemberCheckboxesForScheduling();
                 displaySchedule();
-                // Clear attendance form if it was open and potentially showing the removed member
                 attendanceMarkingDiv.style.display = 'none';
                 attendanceStatusDiv.innerHTML = '';
-                // Optionally regenerate report if it was visible
-                if (reportDisplay.innerHTML !== '' && reportDisplay.innerHTML !== '<p>Belum ada anggota OSIS untuk dilaporkan.</p>') {
+                if (reportDisplay.innerHTML && reportDisplay.firstChild && reportDisplay.firstChild.textContent !== 'Belum ada anggota OSIS untuk dilaporkan.') {
                     generateReport();
                 }
-                 alert(`Anggota "${nameToRemove}" berhasil dihapus.`);
+                showNotification(`Anggota "${nameToRemove}" berhasil dihapus.`);
             }
         }
 
         // --- 2. Schedule Management ---
+        // ... (updateMemberCheckboxesForScheduling, saveScheduleForDay, clearScheduleForDay, displaySchedule, loadScheduleForDay remain largely the same) ...
         function updateMemberCheckboxesForScheduling() {
-            memberCheckboxContainer.innerHTML = ''; // Clear existing checkboxes
-            if (members.length === 0) {
-                memberCheckboxContainer.innerHTML = '<p>Tambahkan anggota terlebih dahulu.</p>';
-                return;
-            }
-            members.forEach(member => {
-                const label = document.createElement('label');
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = member;
-                // Use a consistent ID format, removing special chars that might break selectors
-                const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
-                checkbox.id = `schedule-cb-${safeMemberId}`; // Unique ID for scheduling checkbox
-
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(` ${member}`));
-                label.htmlFor = checkbox.id; // Associate label with checkbox
-
-                memberCheckboxContainer.appendChild(label);
-            });
-        }
-
-        function saveScheduleForDay() {
-            const day = scheduleDaySelect.value;
-            const checkboxes = memberCheckboxContainer.querySelectorAll('input[type="checkbox"]:checked');
-            const scheduledMembers = Array.from(checkboxes).map(cb => cb.value);
-
-            schedule[day] = scheduledMembers;
-            saveData('osisSchedule', schedule);
-            displaySchedule();
-            alert(`Jadwal untuk hari ${day} berhasil disimpan.`);
-        }
-
-        function clearScheduleForDay() {
-            const day = scheduleDaySelect.value;
-            if (confirm(`Yakin ingin mengosongkan jadwal piket untuk hari ${day}?`)) {
-                schedule[day] = []; // Set to empty array
-                saveData('osisSchedule', schedule);
-                displaySchedule();
-                alert(`Jadwal untuk hari ${day} telah dikosongkan.`);
-                // Clear checkboxes for the current view if it matches the cleared day
-                loadScheduleForDay(day);
-            }
-        }
-
-        function displaySchedule() {
-            scheduleDisplay.innerHTML = ''; // Clear display
-            const daysOrder = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
-
-            let hasSchedule = false;
-            daysOrder.forEach(day => {
-                // Check if the key exists and the array is not empty
-                if (schedule[day] && Array.isArray(schedule[day]) && schedule[day].length > 0) {
-                    hasSchedule = true;
-                    const div = document.createElement('div');
-                     const memberNames = schedule[day].join(', ') || '<i>(Kosong)</i>'; // Handle empty array just in case
-                    div.innerHTML = `<strong>${day}:</strong> ${memberNames}`;
-                    scheduleDisplay.appendChild(div);
-                }
-            });
-
-            if (!hasSchedule) {
-                scheduleDisplay.innerHTML = '<div>Belum ada jadwal yang diatur.</div>';
-            }
-        }
-
-        function loadScheduleForDay(day) {
-            const scheduledMembers = schedule[day] || [];
-            const checkboxes = memberCheckboxContainer.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                // Check if this member is in the schedule for the selected day
-                checkbox.checked = scheduledMembers.includes(checkbox.value);
-            });
-        }
-
-
-        // --- 3. Attendance Tracking ---
-        function showAttendanceForm() {
-            const selectedDate = attendanceDateInput.value; // Format: YYYY-MM-DD
-
-            if (!selectedDate) {
-                alert('Silakan pilih tanggal terlebih dahulu.');
-                return;
-            }
-
-            // Validate date format simple check
-            if (!/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
-                 alert("Format tanggal tidak valid. Gunakan format YYYY-MM-DD.");
+             memberCheckboxContainer.innerHTML = '';
+             if (members.length === 0) {
+                 memberCheckboxContainer.innerHTML = '<p>Tambahkan anggota terlebih dahulu.</p>';
                  return;
-            }
-
-            const dateObj = new Date(selectedDate + 'T00:00:00'); // Use T00:00:00 to avoid timezone issues affecting the day
-             if (isNaN(dateObj.getTime())) {
-                 alert("Tanggal tidak valid.");
-                 return; // Invalid date object
              }
+             members.forEach(member => {
+                 const label = document.createElement('label');
+                 const checkbox = document.createElement('input');
+                 checkbox.type = 'checkbox';
+                 checkbox.value = member;
+                 const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
+                 checkbox.id = `schedule-cb-${safeMemberId}`;
+                 label.appendChild(checkbox);
+                 label.appendChild(document.createTextNode(` ${member}`));
+                 label.htmlFor = checkbox.id;
+                 memberCheckboxContainer.appendChild(label);
+             });
+         }
+         function saveScheduleForDay() {
+             const day = scheduleDaySelect.value;
+             const checkboxes = memberCheckboxContainer.querySelectorAll('input[type="checkbox"]:checked');
+             const scheduledMembers = Array.from(checkboxes).map(cb => cb.value);
+             schedule[day] = scheduledMembers;
+             saveData(SCHEDULE_KEY, schedule);
+             displaySchedule();
+             showNotification(`Jadwal untuk hari ${day} berhasil disimpan.`);
+         }
+         function clearScheduleForDay() {
+             const day = scheduleDaySelect.value;
+             if (confirm(`Yakin ingin mengosongkan jadwal piket untuk hari ${day}?`)) {
+                 schedule[day] = [];
+                 saveData(SCHEDULE_KEY, schedule);
+                 displaySchedule();
+                 showNotification(`Jadwal untuk hari ${day} telah dikosongkan.`);
+                 loadScheduleForDay(day);
+             }
+         }
+         function displaySchedule() {
+             scheduleDisplay.innerHTML = '';
+             const daysOrder = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+             let hasSchedule = false;
+             daysOrder.forEach(day => {
+                 if (schedule[day] && Array.isArray(schedule[day]) && schedule[day].length > 0) {
+                     hasSchedule = true;
+                     const div = document.createElement('div');
+                     const memberNames = schedule[day].join(', ') || '<i>(Kosong)</i>';
+                     div.innerHTML = `<strong>${day}:</strong> ${memberNames}`;
+                     scheduleDisplay.appendChild(div);
+                 }
+             });
+             if (!hasSchedule) {
+                 scheduleDisplay.innerHTML = '<div>Belum ada jadwal yang diatur.</div>';
+             }
+         }
+         function loadScheduleForDay(day) {
+             const scheduledMembers = schedule[day] || [];
+             const checkboxes = memberCheckboxContainer.querySelectorAll('input[type="checkbox"]');
+             checkboxes.forEach(checkbox => {
+                 checkbox.checked = scheduledMembers.includes(checkbox.value);
+             });
+         }
 
-            const dayOfWeekIndex = dateObj.getDay();
-            const dayOfWeekName = daysInIndonesian[dayOfWeekIndex];
-
-            selectedDateDisplay.textContent = selectedDate;
-            selectedDayDisplay.textContent = dayOfWeekName;
-            attendanceMarkingDiv.style.display = 'block'; // Show the section
-            attendanceCheckboxesDiv.innerHTML = ''; // Clear previous checkboxes
-            attendanceStatusDiv.innerHTML = ''; // Clear previous status
-            saveAttendanceButton.style.display = 'none'; // Hide save button initially
-            noScheduleMessage.style.display = 'none'; // Hide no schedule message
-
-
-            const membersScheduledToday = schedule[dayOfWeekName] || [];
-
-            if (membersScheduledToday.length === 0) {
-                noScheduleMessage.style.display = 'block';
-                attendanceCheckboxesDiv.innerHTML = '<p>Tidak ada anggota yang dijadwalkan piket pada hari ini.</p>';
-                 attendanceStatusDiv.innerHTML = ''; // Also clear status display area
-
-            } else {
-                saveAttendanceButton.style.display = 'inline-block'; // Show save button
-                // Load existing attendance for this date, if any
-                const existingAttendance = attendance[selectedDate] || {};
-
-                membersScheduledToday.forEach(member => {
-                    // Double check if the member still exists in the main list
-                    if (!members.includes(member)) return; // Skip if member was deleted
-
-                    const isPresent = existingAttendance[member] === true;
-
-                    const div = document.createElement('div');
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.value = member;
-                     // Use a consistent ID format
-                     const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
-                     checkbox.id = `att-${selectedDate}-${safeMemberId}`;
-                    checkbox.checked = isPresent; // Set checkbox based on saved data
-
-                    const label = document.createElement('label');
-                    label.htmlFor = checkbox.id;
-                    label.appendChild(document.createTextNode(member));
-
-                    div.appendChild(checkbox);
-                    div.appendChild(label);
-                    attendanceCheckboxesDiv.appendChild(div);
-                });
-                // Display current status after loading form
-                displayAttendanceStatus(selectedDate, dayOfWeekName);
-            }
-        }
-
-        function saveAttendance() {
-            const selectedDate = attendanceDateInput.value;
-            const checkboxes = attendanceCheckboxesDiv.querySelectorAll('input[type="checkbox"]'); // Get checkboxes from the correct container
-
-            if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
-                alert("Tanggal tidak valid.");
-                return;
-            }
+        // --- 3. Attendance Tracking (with Reasons) ---
+        function showAttendanceForm() {
+             const selectedDate = attendanceDateInput.value;
+             if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
+                 showNotification('Silakan pilih tanggal yang valid (YYYY-MM-DD).', 'error');
+                 return;
+             }
              const dateObj = new Date(selectedDate + 'T00:00:00');
              if (isNaN(dateObj.getTime())) {
-                 alert("Tanggal tidak valid.");
-                 return;
+                 showNotification("Tanggal tidak valid.", 'error'); return;
+             }
+             const dayOfWeekIndex = dateObj.getDay();
+             const dayOfWeekName = daysInIndonesian[dayOfWeekIndex];
+
+             selectedDateDisplay.textContent = selectedDate;
+             selectedDayDisplay.textContent = dayOfWeekName;
+             attendanceMarkingDiv.style.display = 'block';
+             attendanceCheckboxesDiv.innerHTML = '';
+             attendanceStatusDiv.innerHTML = '';
+             saveAttendanceButton.style.display = 'none';
+             noScheduleMessage.style.display = 'none';
+
+             const membersScheduledToday = schedule[dayOfWeekName] || [];
+             const validScheduledMembers = membersScheduledToday.filter(m => members.includes(m)); // Ensure member exists
+
+             if (validScheduledMembers.length === 0) {
+                 noScheduleMessage.style.display = 'block';
+                 attendanceCheckboxesDiv.innerHTML = '<p>Tidak ada anggota yang dijadwalkan piket pada hari ini atau anggota telah dihapus.</p>';
+             } else {
+                 saveAttendanceButton.style.display = 'inline-block';
+                 const existingAttendance = attendance[selectedDate] || {};
+
+                 validScheduledMembers.forEach(member => {
+                      // Get current attendance status for this member (using the new format)
+                      const currentRecord = existingAttendance[member] || { present: false, reason: '' }; // Default to absent if no record
+                      const isPresent = currentRecord.present;
+                      const currentReason = currentRecord.reason || '';
+
+                      const itemDiv = document.createElement('div');
+                      itemDiv.classList.add('attendance-item');
+
+                      const label = document.createElement('label');
+                      const checkbox = document.createElement('input');
+                      checkbox.type = 'checkbox';
+                      checkbox.value = member;
+                      checkbox.checked = isPresent;
+                      checkbox.classList.add('attendance-checkbox'); // Add class for event listener
+                       const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
+                       const checkboxId = `att-${selectedDate}-${safeMemberId}`;
+                       checkbox.id = checkboxId;
+                       label.htmlFor = checkboxId; // Associate label
+
+                      label.appendChild(checkbox);
+                      label.appendChild(document.createTextNode(` ${member}`));
+
+                      // Reason Input (initially hidden if present)
+                      const reasonInput = document.createElement('input');
+                      reasonInput.type = 'text';
+                      reasonInput.value = currentReason;
+                      reasonInput.placeholder = 'Alasan (jika tidak hadir)...';
+                      reasonInput.classList.add('reason-input');
+                      reasonInput.style.display = isPresent ? 'none' : 'inline-block'; // Show if absent
+
+                      itemDiv.appendChild(label);
+                      itemDiv.appendChild(reasonInput);
+                      attendanceCheckboxesDiv.appendChild(itemDiv);
+                 });
+                 displayAttendanceStatus(selectedDate, dayOfWeekName); // Show initial status
+             }
+         }
+
+         function saveAttendance() {
+             const selectedDate = attendanceDateInput.value;
+             if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
+                 showNotification("Tanggal tidak valid.", 'error'); return;
+             }
+             const dateObj = new Date(selectedDate + 'T00:00:00');
+             if (isNaN(dateObj.getTime())) {
+                 showNotification("Tanggal tidak valid.", 'error'); return;
              }
              const dayOfWeekName = daysInIndonesian[dateObj.getDay()];
+             const membersScheduledToday = schedule[dayOfWeekName] || [];
 
-            // Initialize attendance object for the date if it doesn't exist
-            if (!attendance[selectedDate]) {
-                attendance[selectedDate] = {};
-            }
+             if (!attendance[selectedDate]) {
+                 attendance[selectedDate] = {};
+             }
 
-            // Get members scheduled for this specific day according to the current schedule
-            const membersScheduledToday = schedule[dayOfWeekName] || [];
+             // Iterate through the displayed checkboxes/inputs in the form
+             const attendanceItems = attendanceCheckboxesDiv.querySelectorAll('.attendance-item');
+             let changesMade = false;
 
-            // Update attendance only for members currently scheduled today
-            membersScheduledToday.forEach(member => {
-                 // Check if the member still exists globally
-                 if (!members.includes(member)) return;
+             attendanceItems.forEach(item => {
+                  const checkbox = item.querySelector('.attendance-checkbox');
+                  const reasonInput = item.querySelector('.reason-input');
+                  const memberName = checkbox.value;
 
-                  // Find the checkbox for this member
-                  const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, '');
-                  const checkbox = document.getElementById(`att-${selectedDate}-${safeMemberId}`);
+                  // Only save if this member is *currently* scheduled for today
+                  if (membersScheduledToday.includes(memberName)) {
+                       const isPresent = checkbox.checked;
+                       const reason = isPresent ? '' : reasonInput.value.trim(); // Only save reason if absent
 
-                  if (checkbox) { // If a checkbox exists for this scheduled member
-                      attendance[selectedDate][member] = checkbox.checked; // Store true (present) or false (absent)
-                  } else {
-                       // This case should ideally not happen if the form is generated correctly,
-                       // but as a safeguard, we might decide not to store anything or mark as absent.
-                       // Let's mark as absent (false) if they were scheduled but no checkbox was found (or interacted with)
-                       // However, it's safer to only update based on actual checkboxes present.
-                       console.warn(`Checkbox not found for scheduled member: ${member} on ${selectedDate}. Attendance not updated.`);
+                        // Check if data actually changed to avoid unnecessary saves
+                        const oldRecord = attendance[selectedDate][memberName];
+                        if (!oldRecord || oldRecord.present !== isPresent || oldRecord.reason !== reason) {
+                             attendance[selectedDate][memberName] = { present: isPresent, reason: reason };
+                             changesMade = true;
+                        }
                   }
-            });
+             });
 
-              // Optional: Clean up entries in attendance[selectedDate] for members who are *no longer* scheduled on this day
+              // Clean up: Remove entries for members no longer scheduled today (if schedule changed)
              Object.keys(attendance[selectedDate]).forEach(memberInRecord => {
                   if (!membersScheduledToday.includes(memberInRecord)) {
                        delete attendance[selectedDate][memberInRecord];
+                       changesMade = true; // Mark change if cleanup happened
                   }
              });
-             // If the date record becomes empty after cleanup, delete it
              if (Object.keys(attendance[selectedDate]).length === 0) {
                    delete attendance[selectedDate];
+                   changesMade = true; // Mark change if date record removed
              }
 
 
-            saveData('osisAttendance', attendance);
-            alert(`Kehadiran untuk tanggal ${selectedDate} berhasil disimpan.`);
-            displayAttendanceStatus(selectedDate, dayOfWeekName); // Update status display
-        }
+             if (changesMade) {
+                  saveData(ATTENDANCE_KEY, attendance);
+                  showNotification(`Kehadiran untuk tanggal ${selectedDate} berhasil disimpan.`);
+             } else {
+                   showNotification(`Tidak ada perubahan kehadiran untuk tanggal ${selectedDate}.`, 'info');
+             }
+             displayAttendanceStatus(selectedDate, dayOfWeekName);
+         }
 
-        function displayAttendanceStatus(selectedDate, dayOfWeekName) {
-            attendanceStatusDiv.innerHTML = ''; // Clear previous status
+         function displayAttendanceStatus(selectedDate, dayOfWeekName) {
+             attendanceStatusDiv.innerHTML = '';
+             const membersScheduledToday = schedule[dayOfWeekName] || [];
+             const validScheduledMembers = membersScheduledToday.filter(m => members.includes(m));
+             const attendanceData = attendance[selectedDate] || {};
 
-            const membersScheduledToday = schedule[dayOfWeekName] || [];
-            // Filter scheduled members to only include those still in the main members list
-            const validScheduledMembers = membersScheduledToday.filter(m => members.includes(m));
+             if (validScheduledMembers.length === 0) {
+                 attendanceStatusDiv.innerHTML = '<p>Tidak ada jadwal piket valid untuk ditampilkan.</p>'; return;
+             }
 
-            const attendanceData = attendance[selectedDate] || {};
+             attendanceStatusDiv.innerHTML = `<strong>Status Kehadiran ${selectedDate} (${dayOfWeekName}):</strong>`;
+             const presentList = document.createElement('ul');
+             const absentList = document.createElement('ul');
+             let presentCount = 0;
+             let absentCount = 0;
 
+             validScheduledMembers.forEach(member => {
+                 const li = document.createElement('li');
+                 const record = attendanceData[member] || { present: false, reason: '' }; // Default absent if no data yet
 
-            if (validScheduledMembers.length === 0) {
-                // Check if there *was* a schedule but members were deleted
-                if (membersScheduledToday.length > 0) {
-                     attendanceStatusDiv.innerHTML = '<p>Anggota yang dijadwalkan untuk hari ini mungkin telah dihapus.</p>';
-                } else {
-                     // No schedule was ever set or it's empty
-                     attendanceStatusDiv.innerHTML = '<p>Tidak ada jadwal piket untuk ditampilkan.</p>';
-                }
-                return;
-            }
+                 li.textContent = member;
+                 if (record.present === true) {
+                     li.classList.add('present');
+                     li.textContent += " (Piket)";
+                     presentList.appendChild(li);
+                     presentCount++;
+                 } else {
+                     li.classList.add('absent');
+                     li.textContent += " (Tidak Piket)";
+                     if (record.reason) {
+                         const reasonSpan = document.createElement('span');
+                         reasonSpan.classList.add('reason-text');
+                         reasonSpan.textContent = `- ${record.reason}`;
+                         li.appendChild(reasonSpan);
+                     }
+                     absentList.appendChild(li);
+                     absentCount++;
+                 }
+             });
 
-            attendanceStatusDiv.innerHTML = `<strong>Status Kehadiran ${selectedDate} (${dayOfWeekName}):</strong>`;
-            const presentList = document.createElement('ul');
-            const absentList = document.createElement('ul');
-            let presentCount = 0;
-            let absentCount = 0;
+             const summary = document.createElement('p');
+             summary.innerHTML = `Total Piket: <span class="present">${presentCount}</span>, Total Tidak Piket: <span class="absent">${absentCount}</span>`;
+             attendanceStatusDiv.appendChild(summary);
 
-            validScheduledMembers.forEach(member => {
-                const li = document.createElement('li');
-                li.textContent = member;
-
-                if (attendanceData[member] === true) {
-                    li.classList.add('present');
-                    li.textContent += " (Piket)";
-                    presentList.appendChild(li);
-                    presentCount++;
-                } else { // Includes false (explicitly absent) and undefined (not marked yet)
-                    li.classList.add('absent');
-                    li.textContent += " (Tidak Piket)";
-                    absentList.appendChild(li);
-                    absentCount++;
-                }
-            });
-
-            const summary = document.createElement('p');
-            summary.innerHTML = `Total Piket: <span class="present">${presentCount}</span>, Total Tidak Piket: <span class="absent">${absentCount}</span>`;
-            attendanceStatusDiv.appendChild(summary);
-
-            if (presentList.hasChildNodes()) {
-                const presentHeader = document.createElement('strong');
-                presentHeader.textContent = 'Daftar Hadir (Piket):';
-                presentHeader.style.color = 'var(--success-green)';
-                attendanceStatusDiv.appendChild(presentHeader);
-                attendanceStatusDiv.appendChild(presentList);
-            }
-            if (absentList.hasChildNodes()) {
-                const absentHeader = document.createElement('strong');
-                absentHeader.textContent = 'Daftar Tidak Hadir (Tidak Piket):';
-                 absentHeader.style.color = 'var(--danger-red)';
-                 absentHeader.style.display = 'block'; // Ensure it's on a new line
-                 absentHeader.style.marginTop = '10px'; // Add some space
-                attendanceStatusDiv.appendChild(absentHeader);
-                attendanceStatusDiv.appendChild(absentList);
-            }
-        }
+             if (presentList.hasChildNodes()) { /* ... add present list ... */
+                 const presentHeader = document.createElement('strong'); presentHeader.textContent = 'Daftar Hadir (Piket):'; presentHeader.style.color = 'var(--success-green)'; attendanceStatusDiv.appendChild(presentHeader); attendanceStatusDiv.appendChild(presentList);
+                 }
+             if (absentList.hasChildNodes()) { /* ... add absent list ... */
+                 const absentHeader = document.createElement('strong'); absentHeader.textContent = 'Daftar Tidak Hadir (Tidak Piket):'; absentHeader.style.color = 'var(--danger-red)'; absentHeader.style.display = 'block'; absentHeader.style.marginTop = '10px'; attendanceStatusDiv.appendChild(absentHeader); attendanceStatusDiv.appendChild(absentList);
+             }
+         }
 
 
         // --- 4. Reporting ---
         function generateReport() {
-            reportDisplay.innerHTML = ''; // Clear previous report
-
+            reportDisplay.innerHTML = '';
             if (members.length === 0) {
-                reportDisplay.innerHTML = '<p>Tidak ada anggota OSIS untuk dilaporkan.</p>';
-                return;
+                reportDisplay.innerHTML = '<p>Tidak ada anggota OSIS untuk dilaporkan.</p>'; return;
             }
-             if (Object.keys(attendance).length === 0 && Object.keys(schedule).every(day => schedule[day].length === 0)) {
-                  reportDisplay.innerHTML = '<p>Belum ada data jadwal atau kehadiran yang dicatat untuk membuat laporan.</p>';
-                  return;
+             if (Object.keys(attendance).length === 0 && Object.keys(schedule).every(day => !schedule[day] || schedule[day].length === 0)) {
+                  reportDisplay.innerHTML = '<p>Belum ada data jadwal atau kehadiran yang dicatat.</p>'; return;
              }
 
+             const memberStats = {};
+             members.forEach(member => { memberStats[member] = { scheduled: 0, attended: 0 }; });
+             let totalPiketOpportunitiesRecorded = 0;
 
-            const memberStats = {};
-            members.forEach(member => {
-                memberStats[member] = { scheduled: 0, attended: 0 };
-            });
+             Object.keys(attendance).forEach(date => {
+                 const dateObj = new Date(date + 'T00:00:00');
+                 if (isNaN(dateObj.getTime())) { console.warn(`Skipping invalid date in attendance: ${date}`); return; }
+                 const dayOfWeekName = daysInIndonesian[dateObj.getDay()];
+                 const scheduledMembersOnDate = schedule[dayOfWeekName] || [];
+                 const attendanceRecord = attendance[date];
 
-            let totalPiketOpportunities = 0;
-
-            // Iterate through all days with schedules first to count total scheduled instances
-             Object.keys(schedule).forEach(day => {
-                 const scheduledMembersOnDay = schedule[day] || [];
-                 scheduledMembersOnDay.forEach(member => {
-                      // Only count if the member still exists
-                     if (memberStats[member]) {
-                          // This counts potential schedules. We refine with actual attendance dates below.
-                          // We need a better way: Count based on *actual recorded attendance dates* where a schedule existed.
+                 scheduledMembersOnDate.forEach(member => {
+                     if (memberStats[member] && attendanceRecord && attendanceRecord[member] !== undefined) { // Check if attendance was recorded for this scheduled member
+                         memberStats[member].scheduled++;
+                         totalPiketOpportunitiesRecorded++;
+                         if (attendanceRecord[member].present === true) { // Check the 'present' property
+                             memberStats[member].attended++;
+                         }
                      }
                  });
              });
 
-             // Iterate through recorded attendance dates
-            Object.keys(attendance).forEach(date => {
-                const dateObj = new Date(date + 'T00:00:00');
-                if (isNaN(dateObj.getTime())) {
-                    console.warn(`Skipping invalid date format in attendance data: ${date}`);
-                    return; // Skip invalid date entries
-                }
-                const dayOfWeekName = daysInIndonesian[dateObj.getDay()];
-                const scheduledMembersOnDate = schedule[dayOfWeekName] || [];
-                const attendanceRecord = attendance[date]; // { member1: true, member2: false }
+             if (totalPiketOpportunitiesRecorded === 0) {
+                  reportDisplay.innerHTML = '<p>Belum ada data kehadiran yang relevan dengan jadwal untuk membuat laporan.</p>'; return;
+             }
 
-                scheduledMembersOnDate.forEach(member => {
-                    // Increment scheduled count *only if* the member exists and there's an attendance record for this date.
-                    if (memberStats[member] && attendanceRecord) {
-                        memberStats[member].scheduled++;
-                        totalPiketOpportunities++; // Increment total count based on actual checked days
-                        // Increment attended count if they were marked present (true)
-                        if (attendanceRecord[member] === true) {
-                            memberStats[member].attended++;
-                        }
-                    }
-                });
-            });
+             const sortedMembers = members.map(member => {
+                 const stats = memberStats[member];
+                 const percentage = stats.scheduled > 0 ? (stats.attended / stats.scheduled) * 100 : 0;
+                 return { name: member, attended: stats.attended, scheduled: stats.scheduled, percentage: percentage };
+             }).sort((a, b) => {
+                 if (b.percentage !== a.percentage) return b.percentage - a.percentage;
+                 if (b.attended !== a.attended) return b.attended - a.attended;
+                 return a.name.localeCompare(b.name);
+             });
 
+             // Display Summary First
+             displayReportSummary(sortedMembers);
 
-             if (totalPiketOpportunities === 0) {
-                   reportDisplay.innerHTML = '<p>Belum ada data kehadiran yang relevan dengan jadwal yang tersimpan untuk membuat laporan.</p>';
-                   return;
-              }
-
-
-            // Calculate percentage and sort members
-            const sortedMembers = members.map(member => {
-                const stats = memberStats[member];
-                const percentage = stats.scheduled > 0 ? (stats.attended / stats.scheduled) * 100 : 0;
-                return {
-                    name: member,
-                    attended: stats.attended,
-                    scheduled: stats.scheduled, // This now reflects days checked for attendance where they were scheduled
-                    percentage: percentage
-                };
-            }).sort((a, b) => {
-                // Sort logic: Percentage DESC, then Attended DESC, then Name ASC
-                if (b.percentage !== a.percentage) return b.percentage - a.percentage;
-                if (b.attended !== a.attended) return b.attended - a.attended;
-                return a.name.localeCompare(b.name);
-            });
-
-
-            // Display the report
-            sortedMembers.forEach(member => {
-                const div = document.createElement('div');
-                div.classList.add('report-item');
-
-                const nameSpan = document.createElement('span');
-                nameSpan.textContent = `${member.name}: `;
-                nameSpan.style.fontWeight = 'bold';
-
-                const statsSpan = document.createElement('span');
-                 // Clarify the meaning of 'scheduled' count
-                 statsSpan.innerHTML = `Hadir <strong>${member.attended}</strong> dari <strong>${member.scheduled}</strong> kali piket tercatat.`;
-
+             // Display Individual Reports
+             sortedMembers.forEach(member => {
+                 const div = document.createElement('div');
+                 div.classList.add('report-item');
+                 // ... (Create nameSpan, statsSpan as before) ...
+                 const nameSpan = document.createElement('span'); nameSpan.textContent = `${member.name}: `; nameSpan.style.fontWeight = 'bold';
+                 const statsSpan = document.createElement('span'); statsSpan.innerHTML = `Hadir <strong>${member.attended}</strong> dari <strong>${member.scheduled}</strong> kali piket tercatat.`;
                  div.appendChild(nameSpan);
-                 div.appendChild(statsSpan); // Place text first
+                 div.appendChild(statsSpan);
 
-                // Only show bar if they were scheduled at least once on a recorded day
-                if (member.scheduled > 0) {
-                    const barContainer = document.createElement('div');
-                    barContainer.classList.add('report-bar-container');
-
-                    const bar = document.createElement('div');
-                    bar.classList.add('report-bar');
-                    bar.style.width = `${member.percentage}%`;
-                    if (member.percentage < 50) {
-                        bar.classList.add('low'); // Yellow bar
-                    }
-
-                    const percentageText = document.createElement('span');
-                    percentageText.classList.add('report-text');
-                    percentageText.textContent = `(${member.percentage.toFixed(1)}%)`;
-
-                    barContainer.appendChild(bar);
-                    barContainer.appendChild(percentageText);
-                    div.appendChild(barContainer); // Add the bar below the text
-                 } else {
-                      const noDataText = document.createElement('span');
-                      noDataText.classList.add('report-text');
-                       noDataText.style.marginLeft = '10px';
-                      noDataText.textContent = "(Tidak ada data piket tercatat)";
-                      div.appendChild(noDataText);
+                 if (member.scheduled > 0) { // Add Bar
+                      // ... (Create barContainer, bar, percentageText as before) ...
+                       const barContainer = document.createElement('div'); barContainer.classList.add('report-bar-container');
+                       const bar = document.createElement('div'); bar.classList.add('report-bar'); bar.style.width = `${member.percentage}%`; if (member.percentage < 50) bar.classList.add('low');
+                       const percentageText = document.createElement('span'); percentageText.classList.add('report-text'); percentageText.textContent = `(${member.percentage.toFixed(1)}%)`;
+                       barContainer.appendChild(bar); barContainer.appendChild(percentageText);
+                      div.appendChild(barContainer);
+                 } else { // Add No Data Text
+                      const noDataText = document.createElement('span'); noDataText.classList.add('report-text'); noDataText.style.marginLeft = '10px'; noDataText.textContent = "(Tidak ada data piket tercatat)"; div.appendChild(noDataText);
                  }
+                 reportDisplay.appendChild(div);
+             });
+        }
 
-                reportDisplay.appendChild(div);
-            });
-
-             // Add summary for most/least diligent based on members with recorded schedules
+        function displayReportSummary(sortedMembers) {
              const membersWithData = sortedMembers.filter(m => m.scheduled > 0);
              if (membersWithData.length > 0) {
-                 const summaryDiv = document.createElement('div');
-                 summaryDiv.style.marginTop = '20px';
-                 summaryDiv.style.paddingTop = '15px';
-                 summaryDiv.style.borderTop = '1px solid var(--border-color)';
+                  const summaryDiv = document.createElement('div');
+                  summaryDiv.classList.add('report-summary'); // Add class for styling
 
-                 const mostDiligent = membersWithData[0];
-                 const leastDiligent = membersWithData[membersWithData.length - 1];
-
-                 let summaryText = `👏 <strong>Paling Rajin:</strong> ${mostDiligent.name} (${mostDiligent.percentage.toFixed(1)}%)<br>`;
-
-                 // Only show least diligent if there's more than one person with data and they are different people
-                 if (membersWithData.length > 1 && mostDiligent.name !== leastDiligent.name) {
-                     summaryText += `🤔 <strong>Kurang Rajin:</strong> ${leastDiligent.name} (${leastDiligent.percentage.toFixed(1)}%)`;
-                 } else if (membersWithData.length === 1) {
-                      summaryText += `🤔 <strong>Kurang Rajin:</strong> (Hanya satu anggota dengan data)`;
-                 } else { // All have same percentage (and > 0 scheduled)
-                      summaryText += `🤔 <strong>Kurang Rajin:</strong> (Beberapa anggota memiliki tingkat kerajinan yang sama)`;
-                 }
-
-                 summaryDiv.innerHTML = summaryText;
-                 reportDisplay.insertBefore(summaryDiv, reportDisplay.firstChild); // Add summary at the top
-             } else if(members.length > 0) {
-                 // Case where members exist but no relevant attendance/schedule data yet
-                 const noReportData = document.createElement('p');
-                 noReportData.textContent = "Belum ada cukup data kehadiran yang sesuai jadwal untuk menentukan peringkat kerajinan.";
-                 reportDisplay.insertBefore(noReportData, reportDisplay.firstChild);
+                  const mostDiligent = membersWithData[0];
+                  const leastDiligent = membersWithData[membersWithData.length - 1];
+                  let summaryText = `👏 <strong>Paling Rajin:</strong> ${mostDiligent.name} (${mostDiligent.percentage.toFixed(1)}%)<br>`;
+                  if (membersWithData.length > 1 && mostDiligent.name !== leastDiligent.name) {
+                      summaryText += `🤔 <strong>Kurang Rajin:</strong> ${leastDiligent.name} (${leastDiligent.percentage.toFixed(1)}%)`;
+                  } else if (membersWithData.length === 1) {
+                       summaryText += `🤔 <strong>Kurang Rajin:</strong> (Hanya satu anggota dengan data)`;
+                  } else {
+                       summaryText += `🤔 <strong>Kurang Rajin:</strong> (Beberapa anggota memiliki tingkat kerajinan yang sama)`;
+                  }
+                  summaryDiv.innerHTML = summaryText;
+                  reportDisplay.appendChild(summaryDiv); // Append summary
              }
         }
 
-        // --- Event Listeners (Login handled by form submit) ---
-         // Initial check: If the script runs, hide the main app by default (CSS does this, but JS ensures it)
-         mainApp.style.display = 'none';
-         loginScreen.style.display = 'block';
+         function exportReportToCSV() {
+             // 1. Get report data (re-generate if needed, or use stored if available)
+             const reportItems = reportDisplay.querySelectorAll('.report-item');
+             if (reportItems.length === 0) {
+                  showNotification("Buat laporan terlebih dahulu sebelum mengekspor.", "warning");
+                  return;
+             }
 
+             let csvContent = "data:text/csv;charset=utf-8,";
+             // Header Row
+             csvContent += "Nama Anggota,Jadwal Tercatat,Hadir,Persentase Kehadiran (%)\r\n";
+
+             // Data Rows (extract from the generated report structure or re-calculate)
+              const memberStats = {}; // Re-calculate stats for export consistency
+              members.forEach(member => { memberStats[member] = { scheduled: 0, attended: 0 }; });
+               Object.keys(attendance).forEach(date => {
+                   const dateObj = new Date(date + 'T00:00:00');
+                   if (isNaN(dateObj.getTime())) return;
+                   const dayOfWeekName = daysInIndonesian[dateObj.getDay()];
+                   const scheduledMembersOnDate = schedule[dayOfWeekName] || [];
+                   const attendanceRecord = attendance[date];
+                   scheduledMembersOnDate.forEach(member => {
+                       if (memberStats[member] && attendanceRecord && attendanceRecord[member] !== undefined) {
+                           memberStats[member].scheduled++;
+                           if (attendanceRecord[member].present === true) memberStats[member].attended++;
+                       }
+                   });
+               });
+               const sortedMembers = members.map(member => {
+                   const stats = memberStats[member];
+                   const percentage = stats.scheduled > 0 ? (stats.attended / stats.scheduled) * 100 : 0;
+                   return { name: member, attended: stats.attended, scheduled: stats.scheduled, percentage: percentage };
+               }).sort((a, b) => { /* Same sort logic */
+                   if (b.percentage !== a.percentage) return b.percentage - a.percentage;
+                   if (b.attended !== a.attended) return b.attended - a.attended;
+                   return a.name.localeCompare(b.name);
+               });
+
+               sortedMembers.forEach(member => {
+                    // Escape commas in names if necessary (though unlikely for names)
+                    const name = `"${member.name.replace(/"/g, '""')}"`; // Basic CSV escaping for quotes
+                    const row = [
+                         name,
+                         member.scheduled,
+                         member.attended,
+                         member.percentage.toFixed(1)
+                    ].join(",");
+                    csvContent += row + "\r\n";
+               });
+
+
+             // 3. Create download link
+             const encodedUri = encodeURI(csvContent);
+             const link = document.createElement("a");
+             link.setAttribute("href", encodedUri);
+             const timestamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+             link.setAttribute("download", `laporan_piket_osis_${timestamp}.csv`);
+             document.body.appendChild(link); // Required for Firefox
+
+             link.click(); // Trigger download
+             document.body.removeChild(link); // Clean up
+             showNotification("Laporan CSV sedang diunduh.", "success");
+         }
+
+        // --- 5. Data Management Functions (NEW) ---
+        function backupData() {
+             const dataToBackup = {
+                 members: members,
+                 schedule: schedule,
+                 attendance: attendance,
+                 backupDate: new Date().toISOString() // Add timestamp
+             };
+             try {
+                  const backupJSON = JSON.stringify(dataToBackup, null, 2); // Pretty print JSON
+                  backupDataArea.value = backupJSON;
+                  backupDataArea.select(); // Select text for easy copying
+                  showNotification("Data backup berhasil dibuat di area teks. Salin dan simpan!", "success");
+             } catch (e) {
+                  console.error("Error creating backup:", e);
+                  backupDataArea.value = "Gagal membuat backup: " + e.message;
+                  showNotification("Gagal membuat backup data.", "error");
+             }
+         }
+
+         function restoreData() {
+             const backupJSON = restoreDataArea.value.trim();
+             if (!backupJSON) {
+                  showNotification("Area teks restore kosong. Tempel data backup terlebih dahulu.", "warning");
+                  return;
+             }
+
+             if (!confirm("PERHATIAN!\nIni akan MENIMPA semua data anggota, jadwal, dan kehadiran saat ini dengan data dari backup.\n\nLanjutkan?")) {
+                  return;
+             }
+
+             try {
+                  const restoredData = JSON.parse(backupJSON);
+
+                  // Basic validation of restored data structure
+                  if (!Array.isArray(restoredData.members) || typeof restoredData.schedule !== 'object' || typeof restoredData.attendance !== 'object') {
+                       throw new Error("Format data backup tidak valid atau tidak lengkap.");
+                  }
+
+                   // Assign and save restored data
+                   members = restoredData.members;
+                   schedule = restoredData.schedule;
+                   // Ensure restored attendance data is also migrated/validated
+                   attendance = migrateAttendanceData(restoredData.attendance);
+
+                   saveData(MEMBERS_KEY, members);
+                   saveData(SCHEDULE_KEY, schedule);
+                   saveData(ATTENDANCE_KEY, attendance); // Save the validated/migrated data
+
+                   // Refresh the entire UI
+                   initializeAppMainApp(); // Re-init to load and display everything
+
+                   restoreDataArea.value = ''; // Clear restore area after success
+                   showNotification("Data berhasil direstore dari backup!", "success");
+
+             } catch (e) {
+                  console.error("Error restoring data:", e);
+                  showNotification(`Gagal merestore data: ${e.message}. Pastikan data JSON valid.`, "error");
+             }
+         }
+
+         function resetAllData() {
+              if (!confirm("PERINGATAN TERAKHIR!\nAnda yakin ingin menghapus SEMUA data Piket OSIS (anggota, jadwal, kehadiran) dari browser ini?\n\nAksi ini tidak dapat dibatalkan!")) {
+                   return;
+              }
+               // Double confirmation might be good here, e.g., type "RESET"
+               const confirmationText = prompt('Untuk konfirmasi, ketik "RESET" di bawah ini:');
+               if (confirmationText !== "RESET") {
+                    showNotification("Reset dibatalkan.", "info");
+                    return;
+               }
+
+             try {
+                  localStorage.removeItem(MEMBERS_KEY);
+                  localStorage.removeItem(SCHEDULE_KEY);
+                  localStorage.removeItem(ATTENDANCE_KEY);
+
+                  // Clear global variables
+                  members = [];
+                  schedule = {};
+                  attendance = {};
+
+                   // Clear UI elements
+                   backupDataArea.value = '';
+                   restoreDataArea.value = '';
+
+                   // Re-initialize the app state (will show empty sections)
+                   initializeAppMainApp();
+
+                   showNotification("Semua data aplikasi berhasil direset.", "success");
+
+             } catch (e) {
+                  console.error("Error resetting data:", e);
+                   showNotification("Gagal mereset data.", "error");
+             }
+         }
+
+          // --- Simple Notification Function ---
+          function showNotification(message, type = 'info') { // types: info, success, warning, error
+               // You can replace this with a more sophisticated notification system later
+               console.log(`[${type.toUpperCase()}] ${message}`); // Log to console for debugging
+               // Simple alert for now, replace if desired
+               const prefix = type === 'error' ? 'Error: ' : (type === 'warning' ? 'Warning: ' : '');
+               alert(prefix + message);
+               // TODO: Implement a non-blocking notification element
+          }
+
+        // --- Initial Check ---
+        mainApp.style.display = 'none';
+        loginScreen.style.display = 'block';
 
     </script>
 
