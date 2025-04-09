@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Piket OSIS (Penghargaan Bulanan)</title>
+    <title>Program Piket OSIS (Fitur Tukar Tugas)</title>
 
     <!-- Font Awesome CDN -->
     <link
@@ -22,26 +22,26 @@
     />
 
     <style>
-        /* =========== GAYA CSS (Penghargaan & Terminologi Baru) =========== */
+        /* =========== GAYA CSS (Ditambah Swap Button & Modal) =========== */
         :root {
-            --primary-blue: #007bff; --secondary-yellow: #ffc107; --light-bg: #f8f9fa; --white: #ffffff; --dark-text: #333; --blue-text: #0056b3; --border-color: #dee2e6; --danger-red: #dc3545; --warning-orange: #fd7e14; --success-green: #28a745; --info-cyan: #17a2b8; --disabled-bg: #e9ecef; --disabled-text: #6c757d; --modal-overlay: rgba(0, 0, 0, 0.6); --gold-color: #ffd700; /* Warna untuk penghargaan */
+            --primary-blue: #007bff; --secondary-yellow: #ffc107; --light-bg: #f8f9fa; --white: #ffffff; --dark-text: #333; --blue-text: #0056b3; --border-color: #dee2e6; --danger-red: #dc3545; --warning-orange: #fd7e14; --success-green: #28a745; --info-cyan: #17a2b8; --disabled-bg: #e9ecef; --disabled-text: #6c757d; --modal-overlay: rgba(0, 0, 0, 0.6); --gold-color: #ffd700; --swap-color: #6f42c1; /* Warna ungu untuk swap */
         }
         *, *::before, *::after { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: var(--light-bg); color: var(--dark-text); line-height: 1.6; }
-        #main-app { width: 100%; max-width: 900px; margin: 0 auto; background-color: var(--white); padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-top: 5px solid var(--primary-blue); display: block; opacity: 1; transform: none; }
+        #main-app { inline-size: 100%; max-inline-size: 900px; margin: 0 auto; background-color: var(--white); padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-block-start: 5px solid var(--primary-blue); display: block; opacity: 1; transform: none; }
         #main-app h1, #main-app h2, #main-app h3 { color: var(--primary-blue); }
-        #main-app h1 { border-bottom: 2px solid var(--secondary-yellow); padding-bottom: 10px; margin-bottom: 20px; }
-        #main-app h2 { border-bottom: 1px solid var(--secondary-yellow); padding-bottom: 8px; margin-bottom: 15px; margin-top: 30px; }
-        #main-app h3 { margin-top: 20px; margin-bottom: 10px; color: var(--blue-text); font-size: 1.1em; }
-        .section { margin-bottom: 30px; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px; background-color: #fdfdff; }
-        #main-app label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--blue-text); }
-        #main-app input[type="text"], #main-app input[type="date"], #main-app select, #main-app textarea, .modal-content input[type="text"], .modal-content input[type="search"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; transition: border-color 0.3s ease; }
-        #main-app input:focus, #main-app select:focus, #main-app textarea:focus, .modal-content input:focus { border-color: var(--primary-blue); outline: none; box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); }
-        #main-app textarea { min-height: 80px; }
+        #main-app h1 { border-block-end: 2px solid var(--secondary-yellow); padding-block-end: 10px; margin-block-end: 20px; }
+        #main-app h2 { border-block-end: 1px solid var(--secondary-yellow); padding-block-end: 8px; margin-block-end: 15px; margin-block-start: 30px; }
+        #main-app h3 { margin-block-start: 20px; margin-block-end: 10px; color: var(--blue-text); font-size: 1.1em; }
+        .section { margin-block-end: 30px; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px; background-color: #fdfdff; }
+        #main-app label { display: block; margin-block-end: 8px; font-weight: bold; color: var(--blue-text); }
+        #main-app input[type="text"], #main-app input[type="date"], #main-app select, #main-app textarea, .modal-content input[type="text"], .modal-content input[type="search"], .modal-content select { inline-size: 100%; padding: 10px; margin-block-end: 15px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; transition: border-color 0.3s ease; background-color: var(--white); /* Ensure select background is white */ }
+        #main-app input:focus, #main-app select:focus, #main-app textarea:focus, .modal-content input:focus, .modal-content select:focus { border-color: var(--primary-blue); outline: none; box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); }
+        #main-app textarea { min-block-size: 80px; }
 
-        /* Buttons (Unchanged) */
-        #main-app button, .modal-actions button, .modal-header-actions button { background-color: var(--primary-blue); color: var(--white); border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s ease, opacity 0.3s ease; margin-right: 10px; margin-bottom: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; overflow: hidden; }
-        #main-app button i, .modal-actions button i, .modal-header-actions button i { min-width: 1em; text-align: center; }
+        /* Buttons (Added Swap Color) */
+        #main-app button, .modal-actions button, .modal-header-actions button { background-color: var(--primary-blue); color: var(--white); border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s ease, opacity 0.3s ease; margin-inline-end: 10px; margin-block-end: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; overflow: hidden; }
+        #main-app button i, .modal-actions button i, .modal-header-actions button i { min-inline-size: 1em; text-align: center; }
         #main-app button:hover, .modal-actions button:hover, .modal-header-actions button:hover { background-color: var(--blue-text); }
         #main-app button.secondary, .modal-actions button.secondary, .modal-header-actions button.secondary { background-color: var(--secondary-yellow); color: var(--dark-text); }
         #main-app button.secondary:hover, .modal-actions button.secondary:hover, .modal-header-actions button.secondary:hover { background-color: #e0a800; }
@@ -53,101 +53,107 @@
         #main-app button.info:hover, .modal-actions button.info:hover, .modal-header-actions button.info:hover { background-color: #138496; }
         #main-app button.success, .modal-actions button.success, .modal-header-actions button.success { background-color: var(--success-green); }
         #main-app button.success:hover, .modal-actions button.success:hover, .modal-header-actions button.success:hover { background-color: #218838; }
-        #main-app button.small-btn, .modal-actions button.small-btn, .modal-header-actions button.small-btn { padding: 5px 10px; font-size: 0.9em; gap: 5px; margin-right: 5px; margin-bottom: 0; }
+        #main-app button.swap, .modal-actions button.swap { background-color: var(--swap-color); } /* Swap button color */
+        #main-app button.swap:hover, .modal-actions button.swap:hover { background-color: #5a32a3; } /* Darker purple */
+        #main-app button.small-btn, .modal-actions button.small-btn, .modal-header-actions button.small-btn { padding: 5px 10px; font-size: 0.9em; gap: 5px; margin-inline-end: 5px; margin-block-end: 0; }
         #main-app button.loading, .modal-actions button.loading, .modal-header-actions button.loading { opacity: 0.7; cursor: not-allowed; }
         #main-app button .button-text, .modal-actions button .button-text, .modal-header-actions button .button-text { transition: opacity 0.2s ease; }
         #main-app button.loading .button-text, .modal-actions button.loading .button-text, .modal-header-actions button.loading .button-text { opacity: 0; }
-        #main-app button .spinner, .modal-actions button .spinner, .modal-header-actions button .spinner { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: var(--white); width: 18px; height: 18px; animation: spin 1s linear infinite; }
+        #main-app button .spinner, .modal-actions button .spinner, .modal-header-actions button .spinner { display: none; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-block-start-color: var(--white); inline-size: 18px; block-size: 18px; animation: spin 1s linear infinite; }
         #main-app button.loading .spinner, .modal-actions button.loading .spinner, .modal-header-actions button.loading .spinner { display: block; }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
         #main-app button:disabled, .modal-actions button:disabled, .modal-header-actions button:disabled { background-color: var(--disabled-bg); color: var(--disabled-text); cursor: not-allowed; opacity: 0.6; }
         #main-app button:disabled:hover, .modal-actions button:disabled:hover, .modal-header-actions button:disabled:hover { background-color: var(--disabled-bg); }
 
         /* Search Container (Unchanged) */
-        .search-container { margin-bottom: 15px; position: relative; }
-        .search-container input[type="search"] { width: 100%; padding: 8px 12px 8px 35px; font-size: 0.95rem; border-radius: 20px; border: 1px solid var(--border-color); }
-        .search-container .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--disabled-text); z-index: 1; }
+        .search-container { margin-block-end: 15px; position: relative; }
+        .search-container input[type="search"] { inline-size: 100%; padding: 8px 12px 8px 35px; font-size: 0.95rem; border-radius: 20px; border: 1px solid var(--border-color); }
+        .search-container .search-icon { position: absolute; inset-inline-start: 12px; inset-block-start: 50%; transform: translateY(-50%); color: var(--disabled-text); z-index: 1; }
 
         /* Schedule Display (Unchanged) */
-        #scheduleDisplay strong { color: var(--primary-blue); min-width: 80px; display: inline-block; }
-        #scheduleDisplay div { background-color: var(--light-bg); padding: 10px 15px; margin-bottom: 8px; border: 1px solid var(--border-color); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s ease; }
+        #scheduleDisplay strong { color: var(--primary-blue); min-inline-size: 80px; display: inline-block; }
+        #scheduleDisplay div { background-color: var(--light-bg); padding: 10px 15px; margin-block-end: 8px; border: 1px solid var(--border-color); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s ease; }
         #scheduleDisplay div:hover { background-color: #e9ecef; }
 
-        /* Attendance Specifics (Unchanged) */
-        #attendanceMarking { transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease; overflow: hidden; opacity: 0; max-height: 0; margin-top: 0 !important; }
-        #attendanceMarking.visible { opacity: 1; max-height: 1000px; margin-top: 20px !important; }
-        .date-navigation { display: flex; align-items: center; gap: 5px; margin-bottom: 15px; }
-        .date-navigation input[type="date"] { flex-grow: 1; margin-bottom: 0; }
-        .date-navigation button { padding: 8px 10px; font-size: 1rem; margin-bottom: 0; line-height: 1; }
-        #attendanceCheckboxes .attendance-item { display: flex; align-items: center; margin-bottom: 8px; padding: 8px; border-radius: 4px; transition: background-color 0.2s; }
+        /* Attendance Specifics (Added Swap Button Style) */
+        #attendanceMarking { transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease; overflow: hidden; opacity: 0; max-block-size: 0; margin-block-start: 0 !important; }
+        #attendanceMarking.visible { opacity: 1; max-block-size: 1000px; margin-block-start: 20px !important; }
+        .date-navigation { display: flex; align-items: center; gap: 5px; margin-block-end: 15px; }
+        .date-navigation input[type="date"] { flex-grow: 1; margin-block-end: 0; }
+        .date-navigation button { padding: 8px 10px; font-size: 1rem; margin-block-end: 0; line-height: 1; }
+        #attendanceCheckboxes .attendance-item { display: flex; align-items: center; margin-block-end: 8px; padding: 8px; border-radius: 4px; transition: background-color 0.2s; }
         #attendanceCheckboxes .attendance-item:hover { background-color: #e9ecef; }
-        #attendanceCheckboxes label { display: inline-flex; align-items: center; margin-left: 0; margin-right: 15px; font-weight: normal; color: var(--dark-text); cursor: pointer; flex-grow: 1; }
-        #attendanceCheckboxes input[type="checkbox"] { margin-right: 8px; transform: scale(1.2); cursor: pointer; }
-        #attendanceCheckboxes input[type="text"].reason-input { margin-left: 10px; padding: 4px 8px; font-size: 0.9em; border: 1px solid var(--border-color); border-radius: 3px; width: auto; flex-basis: 200px; transition: opacity 0.3s ease, max-width 0.3s ease; opacity: 0; max-width: 0; overflow: hidden; }
-        #attendanceCheckboxes .attendance-item.show-reason .reason-input { opacity: 1; max-width: 200px; }
-        #attendanceStatus { margin-top: 20px; padding: 15px; border: 1px dashed var(--primary-blue); border-radius: 5px; }
-        #attendanceStatus ul { margin-top: 10px; list-style: none; padding: 0; }
-        #attendanceStatus li { margin-bottom: 5px; padding-left: 15px; }
+        #attendanceCheckboxes label { display: inline-flex; align-items: center; margin-inline-start: 0; margin-inline-end: 15px; font-weight: normal; color: var(--dark-text); cursor: pointer; flex-grow: 1; }
+        #attendanceCheckboxes input[type="checkbox"] { margin-inline-end: 8px; transform: scale(1.2); cursor: pointer; }
+        #attendanceCheckboxes input[type="text"].reason-input { margin-inline-start: 10px; padding: 4px 8px; font-size: 0.9em; border: 1px solid var(--border-color); border-radius: 3px; inline-size: auto; flex-basis: 180px; transition: opacity 0.3s ease, max-width 0.3s ease; opacity: 0; max-inline-size: 0; overflow: hidden; }
+        #attendanceCheckboxes .attendance-item.show-reason .reason-input { opacity: 1; max-inline-size: 180px; }
+        #attendanceCheckboxes .swap-button { margin-inline-start: auto; /* Push swap button to the right */ }
+        #attendanceStatus { margin-block-start: 20px; padding: 15px; border: 1px dashed var(--primary-blue); border-radius: 5px; }
+        #attendanceStatus ul { margin-block-start: 10px; list-style: none; padding: 0; }
+        #attendanceStatus li { margin-block-end: 5px; padding-inline-start: 15px; }
         #attendanceStatus .present { color: var(--success-green); font-weight: bold; }
         #attendanceStatus .absent { color: var(--danger-red); font-weight: bold; }
-        #attendanceStatus .reason-text { font-size: 0.9em; color: #555; margin-left: 5px; font-style: italic; }
+        #attendanceStatus .swapped-out { color: var(--warning-orange); font-style: italic; } /* Style for swapped out */
+        #attendanceStatus .substitute { color: var(--swap-color); font-weight: bold; } /* Style for substitute */
+        #attendanceStatus .reason-text { font-size: 0.9em; color: #555; margin-inline-start: 5px; font-style: italic; }
+        #attendanceStatus .swap-info { font-size: 0.9em; color: #555; margin-inline-start: 5px; font-style: italic; }
 
-        /* Reporting (Summary text changed in JS) */
-        .report-item { background-color: var(--light-bg); padding: 10px 15px; margin-bottom: 8px; border: 1px solid var(--border-color); border-radius: 4px; display: block; transition: background-color 0.2s ease; }
+        /* Reporting (Unchanged) */
+        .report-item { background-color: var(--light-bg); padding: 10px 15px; margin-block-end: 8px; border: 1px solid var(--border-color); border-radius: 4px; display: block; transition: background-color 0.2s ease; }
         .report-item:hover { background-color: #e9ecef; }
-        .report-bar-container { display: flex; align-items: center; margin-top: 5px; }
-        .report-bar { height: 20px; background-color: var(--primary-blue); border-radius: 3px; margin-right: 10px; min-width: 10px; transition: width 0.5s ease-out; }
-        .report-bar.low { background-color: var(--secondary-yellow); } /* Still useful for visual indication */
+        .report-bar-container { display: flex; align-items: center; margin-block-start: 5px; }
+        .report-bar { block-size: 20px; background-color: var(--primary-blue); border-radius: 3px; margin-inline-end: 10px; min-inline-size: 10px; transition: width 0.5s ease-out; }
+        .report-bar.low { background-color: var(--secondary-yellow); }
         .report-text { font-size: 0.9em; color: #555; }
-        .report-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); font-size: 1.05em; }
+        .report-summary { margin-block-start: 20px; padding-block-start: 15px; border-block-start: 1px solid var(--border-color); font-size: 1.05em; }
         .report-summary .positive { color: var(--success-green); }
         .report-summary .needs-improvement { color: var(--warning-orange); }
-        small { color: #6c757d; display: block; margin-top: -10px; margin-bottom: 15px; }
+        small { color: #6c757d; display: block; margin-block-start: -10px; margin-block-end: 15px; }
 
-        /* Monthly Award Section */
-        #awardResultDisplay { margin-top: 15px; padding: 15px; border: 1px solid var(--secondary-yellow); border-radius: 5px; background-color: #fffcf1; min-height: 50px; }
+        /* Monthly Award Section (Unchanged) */
+        #awardResultDisplay { margin-block-start: 15px; padding: 15px; border: 1px solid var(--secondary-yellow); border-radius: 5px; background-color: #fffcf1; min-block-size: 50px; }
         #awardResultDisplay p { margin: 0; font-size: 1.1em; }
         #awardResultDisplay strong { color: var(--blue-text); }
         #awardResultDisplay .winner { color: var(--primary-blue); font-weight: bold; font-size: 1.2em; }
-        #awardResultDisplay .winner i { color: var(--gold-color); margin-right: 5px; }
+        #awardResultDisplay .winner i { color: var(--gold-color); margin-inline-end: 5px; }
 
         /* --- MODAL DIALOG Styling (Unchanged) --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--modal-overlay); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.3s; }
+        .modal-overlay { position: fixed; inset-block-start: 0; inset-inline-start: 0; inline-size: 100%; block-size: 100%; background-color: var(--modal-overlay); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.3s; }
         .modal-overlay.visible { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
-        .modal-content { background-color: var(--white); padding: 0; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); max-width: 600px; width: 90%; transform: scale(0.9); transition: transform 0.3s ease; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+        .modal-content { background-color: var(--white); padding: 0; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); max-inline-size: 600px; inline-size: 90%; transform: scale(0.9); transition: transform 0.3s ease; max-block-size: 90vh; display: flex; flex-direction: column; overflow: hidden; }
         .modal-overlay.visible .modal-content { transform: scale(1); }
-        .modal-header { padding: 15px 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .modal-header { padding: 15px 25px; border-block-end: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .modal-header h3 { margin: 0; color: var(--primary-blue); font-size: 1.3em; }
-        .modal-header-actions { margin-left: auto; }
+        .modal-header-actions { margin-inline-start: auto; }
         .modal-body { padding: 20px 25px; overflow-y: auto; flex-grow: 1; }
-        .modal-content p { margin-bottom: 15px; line-height: 1.7; }
-        .modal-actions { padding: 15px 25px; text-align: right; flex-shrink: 0; border-top: 1px solid var(--border-color); background-color: #f8f9fa; }
-        .modal-actions button { margin-left: 10px; margin-bottom: 0; }
-        .modal-content label { margin-bottom: 5px; font-size: 0.95em; }
-        .modal-content input[type="text"], .modal-content input[type="search"] { margin-bottom: 10px; }
+        .modal-content p { margin-block-end: 15px; line-height: 1.7; }
+        .modal-actions { padding: 15px 25px; text-align: end; flex-shrink: 0; border-block-start: 1px solid var(--border-color); background-color: #f8f9fa; }
+        .modal-actions button { margin-inline-start: 10px; margin-block-end: 0; }
+        .modal-content label { margin-block-end: 5px; font-size: 0.95em; }
+        .modal-content input[type="text"], .modal-content input[type="search"], .modal-content select { margin-block-end: 10px; }
 
         /* View Members Modal Specifics (Unchanged) */
-        #modal-member-list-display { padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
-        #modal-member-list-display li { background-color: var(--white); padding: 8px 12px; margin-bottom: 5px; border: 1px solid var(--border-color); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s ease; }
+        #modal-member-list-display { padding: 0; margin: 0; max-block-size: 400px; overflow-y: auto; }
+        #modal-member-list-display li { background-color: var(--white); padding: 8px 12px; margin-block-end: 5px; border: 1px solid var(--border-color); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s ease; }
         #modal-member-list-display li:hover { background-color: #f1f1f1; }
-        #modal-member-list-display li span.member-name { flex-grow: 1; margin-right: 10px; }
-        #modal-member-list-display li .edit-controls input[type="text"] { width: auto; flex-grow: 1; margin-right: 5px; padding: 6px 8px; font-size: 0.95rem; margin-bottom: 0; }
+        #modal-member-list-display li span.member-name { flex-grow: 1; margin-inline-end: 10px; }
+        #modal-member-list-display li .edit-controls input[type="text"] { inline-size: auto; flex-grow: 1; margin-inline-end: 5px; padding: 6px 8px; font-size: 0.95rem; margin-block-end: 0; }
         #modal-member-list-display .view-controls, #modal-member-list-display .edit-controls { gap: 3px; }
-        #modal-member-list-display li.editing .view-controls { opacity: 0; max-height: 0; display: none; }
-        #modal-member-list-display li.editing .edit-controls { display: flex; opacity: 1; max-height: 50px; width: 100%; }
+        #modal-member-list-display li.editing .view-controls { opacity: 0; max-block-size: 0; display: none; }
+        #modal-member-list-display li.editing .edit-controls { display: flex; opacity: 1; max-block-size: 50px; inline-size: 100%; }
         #modal-member-list-display li.editing .member-name { display: none; }
         #modal-member-list-display .edit-controls { background-color: transparent; padding: 0; margin: 0; border: none; }
 
         /* Schedule Modal Specifics (Unchanged) */
-        #modal-schedule-member-list { max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; margin-top: 10px; }
-        #modal-schedule-member-list label { display: block; margin-bottom: 5px; font-weight: normal; cursor: pointer; padding: 5px; border-radius: 3px; transition: background-color 0.2s; }
+        #modal-schedule-member-list { max-block-size: 300px; overflow-y: auto; border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; margin-block-start: 10px; }
+        #modal-schedule-member-list label { display: block; margin-block-end: 5px; font-weight: normal; cursor: pointer; padding: 5px; border-radius: 3px; transition: background-color 0.2s; }
         #modal-schedule-member-list label:hover { background-color: #e9ecef; }
-        #modal-schedule-member-list input[type="checkbox"] { margin-right: 8px; }
+        #modal-schedule-member-list input[type="checkbox"] { margin-inline-end: 8px; }
         #modal-schedule-member-list label.hidden { display: none; }
 
         /* Utility Classes (Unchanged) */
         .hidden { display: none !important; }
-        .visually-hidden { /* ... unchanged ... */ }
+        .visually-hidden { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
         /* Print Styles (Unchanged) */
         @media print { /* ... unchanged ... */ }
@@ -155,7 +161,7 @@
 </head>
 <body>
 
-    <!-- MAIN APP -->
+    <!-- MAIN APP (Unchanged Structure) -->
     <div id="main-app">
         <div class="container">
             <h1><i class="fa-solid fa-clipboard-list"></i> Program Piket OSIS</h1>
@@ -185,7 +191,7 @@
                 <div id="scheduleDisplay"></div>
             </div>
 
-            <!-- 3. Input Kehadiran Piket (Unchanged) -->
+            <!-- 3. Input Kehadiran Piket (Unchanged Structure, JS modified) -->
             <div class="section">
                  <h2><i class="fa-solid fa-user-check"></i> Catat Kehadiran Piket</h2>
                  <div class="date-navigation no-print">
@@ -199,58 +205,54 @@
                  <div id="attendanceMarking">
                      <h3>Tandai Kehadiran untuk <span id="selectedDateDisplay"></span> (<span id="selectedDayDisplay"></span>):</h3>
                      <p id="noScheduleMessage" style="display:none; color: orange;">Tidak ada jadwal piket untuk hari ini.</p>
-                     <div id="attendanceCheckboxes"></div>
+                     <div id="attendanceCheckboxes">
+                         <!-- Checkboxes, reason inputs, AND swap buttons will be generated here -->
+                     </div>
                      <button id="saveAttendanceButton" style="display:none;"><i class="fa-solid fa-save"></i> <span class="button-text">Simpan Kehadiran</span> <span class="spinner"></span></button>
                      <div id="attendanceStatus"></div>
                  </div>
             </div>
 
-             <!-- 4. Penghargaan Bulanan (NEW SECTION) -->
+             <!-- 4. Penghargaan Bulanan (Unchanged) -->
              <div class="section" id="monthlyAwardSection">
                  <h2><i class="fa-solid fa-award"></i> Penghargaan Bulanan</h2>
                  <label for="awardMonthSelect">Pilih Bulan untuk Penghargaan:</label>
                  <select id="awardMonthSelect">
                      <option value="">-- Pilih Bulan --</option>
-                     <!-- Opsi bulan akan di-generate oleh JS -->
                  </select>
                  <button id="calculateAwardButton" class="success">
-                     <i class="fa-solid fa-calculator"></i>
-                     <span class="button-text">Tentukan Penerima Penghargaan</span>
-                     <span class="spinner"></span>
+                     <i class="fa-solid fa-calculator"></i> <span class="button-text">Tentukan Penerima Penghargaan</span> <span class="spinner"></span>
                  </button>
                  <div id="awardResultDisplay">
-                     <p><i>Pilih bulan dan klik tombol untuk melihat penerima penghargaan.</i></p>
+                     <p><i>Pilih bulan dan klik tombol.</i></p>
                  </div>
              </div>
 
-
-            <!-- 5. Laporan Kerajinan (Adjusted Section Number) -->
+            <!-- 5. Laporan Partisipasi (Unchanged) -->
             <div class="section" id="reportSection">
-                <h2><i class="fa-solid fa-chart-line"></i> Laporan Partisipasi</h2> <!-- Title changed -->
+                <h2><i class="fa-solid fa-chart-line"></i> Laporan Partisipasi</h2>
                 <button id="generate-report-button"><i class="fa-solid fa-file-alt"></i> <span class="button-text">Buat Laporan</span> <span class="spinner"></span></button>
                 <button id="export-csv-button" class="info small-btn no-print"><i class="fa-solid fa-file-csv"></i> <span class="button-text">Ekspor CSV</span> <span class="spinner"></span></button>
-                <small>Laporan didasarkan pada data kehadiran yang sudah disimpan di Firestore.</small>
-                <div id="reportDisplay">
-                    <!-- Summary text changed in JS -->
-                </div>
+                <small>Laporan didasarkan pada data kehadiran di Firestore.</small>
+                <div id="reportDisplay"></div>
             </div>
 
-            <!-- 6. Data Management Section (Adjusted Section Number) -->
+            <!-- 6. Data Management Section (Unchanged) -->
             <div class="section no-print">
                 <h2><i class="fa-solid fa-database"></i> Manajemen Data</h2>
                 <div>
                     <h3><i class="fa-solid fa-copy"></i> Backup Data (dari Memori)</h3>
-                    <p>Data sudah disimpan ke Firestore, backup ini hanya menyalin data terakhir dimuat.</p>
+                    <p>Backup ini hanya menyalin data terakhir dimuat.</p>
                     <textarea id="backupDataArea" rows="5" readonly placeholder="Klik 'Backup Data'..."></textarea>
                     <button id="backup-button" class="info"><i class="fa-solid fa-clone"></i> <span class="button-text">Backup Data</span> <span class="spinner"></span></button>
                 </div>
-                <div style="margin-top: 20px;">
+                <div style="margin-block-start: 20px;">
                     <h3><i class="fa-solid fa-upload"></i> Restore Data Lokal ke Firestore</h3>
                     <p><strong>PERHATIAN:</strong> Ini akan menimpa data di Firestore.</p>
                     <textarea id="restoreDataArea" rows="5" placeholder="Tempel data backup (JSON)..."></textarea>
                     <button id="restore-button" class="warning"><i class="fa-solid fa-cloud-upload-alt"></i> <span class="button-text">Restore Data</span> <span class="spinner"></span></button>
                 </div>
-                <div style="margin-top: 30px; border-top: 1px dashed var(--danger-red); padding-top: 20px;">
+                <div style="margin-block-start: 30px; border-block-start: 1px dashed var(--danger-red); padding-block-start: 20px;">
                     <h3><i class="fa-solid fa-triangle-exclamation"></i> Reset Aplikasi</h3>
                     <p><strong>PERHATIAN BESAR:</strong> Ini akan menghapus SEMUA data di Firestore.</p>
                     <button id="reset-button" class="danger"><i class="fa-solid fa-bomb"></i> <span class="button-text">Reset Semua Data Aplikasi</span> <span class="spinner"></span></button>
@@ -260,11 +262,44 @@
         </div> <!-- End .container -->
     </div> <!-- End #main-app -->
 
-    <!-- MODAL DIALOGS (Unchanged Structures) -->
-    <div id="view-members-modal" class="modal-overlay no-print"> /* ... (kode modal sama) ... */ <div class="modal-content"><div class="modal-header"><h3><i class="fa-solid fa-address-book"></i> Daftar Anggota OSIS</h3><div class="modal-header-actions"><button id="modal-open-add-member-button" class="success small-btn"><i class="fa-solid fa-user-plus"></i> Tambah Baru</button></div></div><div class="modal-body"><div class="search-container"><i class="fa-solid fa-magnifying-glass search-icon"></i><input type="search" id="modal-member-search" placeholder="Cari anggota..." aria-label="Cari Anggota dalam Modal"></div><ul id="modal-member-list-display"></ul></div><div class="modal-actions"><button id="modal-close-view-members" class="secondary"><i class="fa-solid fa-times"></i> Tutup</button></div></div></div>
-    <div id="add-member-modal" class="modal-overlay no-print"> /* ... (kode modal sama) ... */ <div class="modal-content"><div class="modal-header"><h3><i class="fa-solid fa-user-plus"></i> Tambah Anggota Baru</h3></div><div class="modal-body"><label for="modal-new-member-name">Nama Lengkap Anggota:</label><input type="text" id="modal-new-member-name" placeholder="Masukkan nama lengkap..." /></div><div class="modal-actions"><button id="modal-cancel-add-member" class="secondary"><i class="fa-solid fa-times"></i> Batal</button><button id="modal-save-member-button"><i class="fa-solid fa-save"></i> <span class="button-text">Simpan Anggota</span> <span class="spinner"></span></button></div></div></div>
-    <div id="edit-schedule-modal" class="modal-overlay no-print"> /* ... (kode modal sama) ... */ <div class="modal-content"><div class="modal-header"><h3 id="modal-schedule-title"><i class="fa-solid fa-users-gear"></i> Pilih Anggota Piket</h3></div><div class="modal-body"><div class="search-container"><i class="fa-solid fa-magnifying-glass search-icon"></i><input type="search" id="modal-schedule-search" placeholder="Cari anggota..." aria-label="Cari Anggota dalam Modal Jadwal"></div><div id="modal-schedule-member-list"></div></div><div class="modal-actions"><button id="modal-cancel-edit-schedule" class="secondary"><i class="fa-solid fa-times"></i> Batal</button><button id="modal-confirm-schedule-button" class="success"><i class="fa-solid fa-check"></i> <span class="button-text">Simpan Jadwal Hari Ini</span> <span class="spinner"></span></button></div></div></div>
-    <div id="confirmation-modal" class="modal-overlay no-print"> /* ... (kode modal sama) ... */ <div class="modal-content"><div class="modal-header"><h3 id="modal-title">Konfirmasi</h3></div><div class="modal-body"><p id="modal-message">Apakah Anda yakin?</p></div><div class="modal-actions"><button id="modal-cancel-button" class="secondary"><i class="fa-solid fa-times"></i> Batal</button><button id="modal-confirm-button" class="danger"><i class="fa-solid fa-check"></i> <span class="button-text">Ya, Lanjutkan</span> <span class="spinner"></span></button></div></div></div>
+    <!-- MODAL DIALOGS -->
+    <div id="view-members-modal" class="modal-overlay no-print"> /* ... (unchanged) ... */ <div class="modal-content"><div class="modal-header"><h3><i class="fa-solid fa-address-book"></i> Daftar Anggota OSIS</h3><div class="modal-header-actions"><button id="modal-open-add-member-button" class="success small-btn"><i class="fa-solid fa-user-plus"></i> Tambah Baru</button></div></div><div class="modal-body"><div class="search-container"><i class="fa-solid fa-magnifying-glass search-icon"></i><input type="search" id="modal-member-search" placeholder="Cari anggota..." aria-label="Cari Anggota dalam Modal"></div><ul id="modal-member-list-display"></ul></div><div class="modal-actions"><button id="modal-close-view-members" class="secondary"><i class="fa-solid fa-times"></i> Tutup</button></div></div></div>
+    <div id="add-member-modal" class="modal-overlay no-print"> /* ... (unchanged) ... */ <div class="modal-content"><div class="modal-header"><h3><i class="fa-solid fa-user-plus"></i> Tambah Anggota Baru</h3></div><div class="modal-body"><label for="modal-new-member-name">Nama Lengkap Anggota:</label><input type="text" id="modal-new-member-name" placeholder="Masukkan nama lengkap..." /></div><div class="modal-actions"><button id="modal-cancel-add-member" class="secondary"><i class="fa-solid fa-times"></i> Batal</button><button id="modal-save-member-button"><i class="fa-solid fa-save"></i> <span class="button-text">Simpan Anggota</span> <span class="spinner"></span></button></div></div></div>
+    <div id="edit-schedule-modal" class="modal-overlay no-print"> /* ... (unchanged) ... */ <div class="modal-content"><div class="modal-header"><h3 id="modal-schedule-title"><i class="fa-solid fa-users-gear"></i> Pilih Anggota Piket</h3></div><div class="modal-body"><div class="search-container"><i class="fa-solid fa-magnifying-glass search-icon"></i><input type="search" id="modal-schedule-search" placeholder="Cari anggota..." aria-label="Cari Anggota dalam Modal Jadwal"></div><div id="modal-schedule-member-list"></div></div><div class="modal-actions"><button id="modal-cancel-edit-schedule" class="secondary"><i class="fa-solid fa-times"></i> Batal</button><button id="modal-confirm-schedule-button" class="success"><i class="fa-solid fa-check"></i> <span class="button-text">Simpan Jadwal Hari Ini</span> <span class="spinner"></span></button></div></div></div>
+    <div id="confirmation-modal" class="modal-overlay no-print"> /* ... (unchanged) ... */ <div class="modal-content"><div class="modal-header"><h3 id="modal-title">Konfirmasi</h3></div><div class="modal-body"><p id="modal-message">Apakah Anda yakin?</p></div><div class="modal-actions"><button id="modal-cancel-button" class="secondary"><i class="fa-solid fa-times"></i> Batal</button><button id="modal-confirm-button" class="danger"><i class="fa-solid fa-check"></i> <span class="button-text">Ya, Lanjutkan</span> <span class="spinner"></span></button></div></div></div>
+
+    <!-- NEW: Modal Tukar Tugas -->
+    <div id="swap-duty-modal" class="modal-overlay no-print">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="swap-modal-title"><i class="fa-solid fa-right-left"></i> Tukar Tugas Piket</h3>
+            </div>
+            <div class="modal-body">
+                <p>Anda akan mencatat pertukaran tugas untuk:</p>
+                <p>Tanggal: <strong id="swap-modal-date"></strong></p>
+                <p>Anggota Asli: <strong id="swap-modal-original-member"></strong></p>
+                <hr style="margin: 15px 0; border: none; border-block-start: 1px solid var(--border-color);">
+                <label for="swap-modal-substitute-select">Pilih Anggota Pengganti:</label>
+                <select id="swap-modal-substitute-select">
+                    <option value="">-- Pilih Pengganti --</option>
+                    <!-- Opsi anggota pengganti akan di-generate JS -->
+                </select>
+                <label for="swap-modal-reason">Alasan Pertukaran (Opsional):</label>
+                <input type="text" id="swap-modal-reason" placeholder="Misal: Sakit, Izin acara keluarga">
+            </div>
+            <div class="modal-actions">
+                <button id="modal-cancel-swap-duty" class="secondary">
+                    <i class="fa-solid fa-times"></i> Batal
+                </button>
+                <button id="modal-confirm-swap-duty" class="swap"> <!-- Use swap color -->
+                    <i class="fa-solid fa-check"></i>
+                    <span class="button-text">Simpan Pertukaran</span>
+                    <span class="spinner"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Toastify JS CDN -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -292,7 +327,7 @@
         const db = getFirestore(app);
 
         /***********************************************************************
-         *     3) VARIABEL GLOBAL DAN DOM REFERENCES (Added Award Refs)        *
+         *     3) VARIABEL GLOBAL DAN DOM REFERENCES (Added Swap Modal Refs)   *
          ***********************************************************************/
         const daysInIndonesian = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
         const monthNamesIndonesian = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -327,8 +362,6 @@
         const backupButton = document.getElementById('backup-button');
         const restoreButton = document.getElementById('restore-button');
         const resetButton = document.getElementById('reset-button');
-
-        // Award Refs
         const awardMonthSelect = document.getElementById('awardMonthSelect');
         const calculateAwardButton = document.getElementById('calculateAwardButton');
         const awardResultDisplay = document.getElementById('awardResultDisplay');
@@ -355,6 +388,15 @@
         const modalConfirmButton = document.getElementById('modal-confirm-button');
         const modalCancelButton = document.getElementById('modal-cancel-button');
 
+        // NEW: Swap Duty Modal References
+        const swapDutyModal = document.getElementById('swap-duty-modal');
+        const swapModalDate = document.getElementById('swap-modal-date');
+        const swapModalOriginalMember = document.getElementById('swap-modal-original-member');
+        const swapModalSubstituteSelect = document.getElementById('swap-modal-substitute-select');
+        const swapModalReason = document.getElementById('swap-modal-reason');
+        const modalConfirmSwapDutyButton = document.getElementById('modal-confirm-swap-duty');
+        const modalCancelSwapDutyButton = document.getElementById('modal-cancel-swap-duty');
+
         /***********************************************************************
          *     4) UTILITY FUNCTIONS (Unchanged)                               *
          ***********************************************************************/
@@ -363,39 +405,21 @@
         function hideConfirmationModal() { /* ... (unchanged) ... */ confirmationModal.classList.remove('visible'); currentConfirmationCallback = null; }
         function setLoading(buttonElement, isLoading) { /* ... (unchanged) ... */ if (!buttonElement) return; const textElement = buttonElement.querySelector('.button-text'); if (isLoading) { buttonElement.classList.add('loading'); buttonElement.disabled = true; if (textElement) textElement.style.opacity = '0'; } else { buttonElement.classList.remove('loading'); buttonElement.disabled = false; if (textElement) textElement.style.opacity = '1'; } }
         function changeDate(days) { /* ... (unchanged) ... */ try { const currentDate = new Date(attendanceDateInput.value + "T00:00:00"); if (isNaN(currentDate.getTime())) { showNotification("Tanggal saat ini tidak valid.", "warning"); return; } currentDate.setDate(currentDate.getDate() + days); attendanceDateInput.value = currentDate.toISOString().split('T')[0]; showAttendanceForm(); } catch (e) { showNotification("Gagal mengubah tanggal.", "error"); } }
-        function openModal(modalElement) { /* ... (unchanged focus logic) ... */ modalElement.classList.add('visible'); let focusTarget = null; if (modalElement.id === 'add-member-modal') { focusTarget = modalNewMemberNameInput; } else if (modalElement.id === 'view-members-modal') { focusTarget = modalMemberSearchInput; } else if (modalElement.id === 'edit-schedule-modal') { focusTarget = modalScheduleSearchInput; } else if (modalElement.id === 'confirmation-modal') { focusTarget = modalConfirmButton; } if (focusTarget) { setTimeout(() => focusTarget.focus(), 150); } }
+        function openModal(modalElement) { /* ... (unchanged focus logic) ... */ modalElement.classList.add('visible'); let focusTarget = null; if (modalElement.id === 'add-member-modal') { focusTarget = modalNewMemberNameInput; } else if (modalElement.id === 'view-members-modal') { focusTarget = modalMemberSearchInput; } else if (modalElement.id === 'edit-schedule-modal') { focusTarget = modalScheduleSearchInput; } else if (modalElement.id === 'confirmation-modal') { focusTarget = modalConfirmButton; } else if (modalElement.id === 'swap-duty-modal') { focusTarget = swapModalSubstituteSelect; } if (focusTarget) { setTimeout(() => focusTarget.focus(), 150); } }
         function closeModal(modalElement) { /* ... (unchanged) ... */ modalElement.classList.remove('visible'); }
         function openAddMemberModal() { /* ... (unchanged) ... */ modalNewMemberNameInput.value = ''; setLoading(modalSaveMemberButton, false); openModal(addMemberModal); }
         function openScheduleModal() { /* ... (unchanged) ... */ const selectedDay = scheduleDaySelect.value; modalScheduleTitle.innerHTML = `<i class="fa-solid fa-users-gear"></i> Pilih Anggota Piket - <strong>${selectedDay}</strong>`; modalScheduleSearchInput.value = ''; populateScheduleModal(selectedDay, ''); setLoading(modalConfirmScheduleButton, false); openModal(editScheduleModal); }
         function openViewMembersModal() { /* ... (unchanged) ... */ modalMemberSearchInput.value = ''; displayMembers(''); openModal(viewMembersModal); }
 
-
         /***********************************************************************
-         *     5) INITIALIZE MAIN APP (Added populateAwardMonthSelect)         *
+         *     5) INITIALIZE MAIN APP (Unchanged)                             *
          ***********************************************************************/
-        async function initializeAppMainApp() {
-            console.log("Loading data from Firestore...");
-            showNotification("Memuat data awal...", "info");
-            try {
-                await loadAllData();
-                displayMembers(); // Populates hidden modal list initially
-                displaySchedule();
-                setDefaultAttendanceDate();
-                populateAwardMonthSelect(); // Populate month dropdown
-                addGlobalEventListeners();
-                console.log("Main app ready.");
-                showNotification("Aplikasi siap digunakan.", "success");
-            } catch (err) {
-                console.error("Error loading initial data:", err);
-                showNotification("Gagal memuat data awal dari Firestore.", "error");
-                mainApp.innerHTML = `<div class="section" style="border-color: var(--danger-red);"><h2 style="color: var(--danger-red);"><i class="fa-solid fa-triangle-exclamation"></i> Gagal Memuat Data</h2><p>Tidak dapat terhubung atau memuat data dari database. Silakan coba muat ulang halaman atau periksa konfigurasi Firebase.</p><p><small>${err.message}</small></p></div>`;
-            }
-        }
+        async function initializeAppMainApp() { /* ... (unchanged) ... */ console.log("Loading data from Firestore..."); showNotification("Memuat data awal...", "info"); try { await loadAllData(); displayMembers(); displaySchedule(); setDefaultAttendanceDate(); populateAwardMonthSelect(); addGlobalEventListeners(); console.log("Main app ready."); showNotification("Aplikasi siap digunakan.", "success"); } catch (err) { console.error("Error loading initial data:", err); showNotification("Gagal memuat data awal.", "error"); mainApp.innerHTML = `<div class="section" style="border-color: var(--danger-red);"><h2 style="color: var(--danger-red);"><i class="fa-solid fa-triangle-exclamation"></i> Gagal Memuat Data</h2><p>Tidak dapat terhubung atau memuat data. Coba muat ulang halaman.</p><p><small>${err.message}</small></p></div>`; } }
         function loadAllData() { /* ... (unchanged) ... */ return Promise.all([ loadMembersFromFirestore(), loadScheduleFromFirestore(), loadAttendanceFromFirestore() ]); }
         async function loadMembersFromFirestore() { /* ... (unchanged) ... */ members = []; const snap = await getDocs(collection(db, "members")); snap.forEach(docSnap => { const data = docSnap.data(); if (data.name) members.push(data.name); }); members.sort((a, b) => a.localeCompare(b)); }
         async function loadScheduleFromFirestore() { /* ... (unchanged) ... */ schedule = {}; const snap = await getDocs(collection(db, "schedules")); snap.forEach(docSnap => { const data = docSnap.data(); if (data.day && Array.isArray(data.members)) { schedule[data.day] = data.members; } }); }
         async function loadAttendanceFromFirestore() { /* ... (unchanged) ... */ attendance = {}; const snap = await getDocs(collection(db, "attendance")); snap.forEach(docSnap => { const data = docSnap.data(); if (data.date && data.records) { attendance[data.date] = migrateAttendanceObject(data.records); } }); }
-        function migrateAttendanceObject(records) { /* ... (unchanged) ... */ const result = {}; for (const memberName in records) { const val = records[memberName]; if (typeof val === "boolean") { result[memberName] = { present: val, reason: "" }; } else if (val && typeof val.present === "boolean") { result[memberName] = { present: val.present, reason: val.reason || "" }; } else { console.warn(`Invalid attendance format for ${memberName}:`, val); result[memberName] = { present: false, reason: "" }; } } return result; }
+        function migrateAttendanceObject(records) { /* ... (unchanged, but now handles swap fields gracefully) ... */ const result = {}; for (const memberName in records) { const val = records[memberName]; if (typeof val === "boolean") { result[memberName] = { present: val, reason: "", swappedOut: false, substitute: null, isSubstitute: false, replaced: null }; } else if (val && typeof val.present === "boolean") { result[memberName] = { present: val.present, reason: val.reason || "", swappedOut: val.swappedOut || false, substitute: val.substitute || null, isSubstitute: val.isSubstitute || false, replaced: val.replaced || null }; } else { console.warn(`Invalid attendance format for ${memberName}:`, val); result[memberName] = { present: false, reason: "", swappedOut: false, substitute: null, isSubstitute: false, replaced: null }; } } return result; }
         function setDefaultAttendanceDate() { /* ... (unchanged) ... */ try { attendanceDateInput.valueAsDate = new Date(); } catch (e) { const today = new Date(); const yyyy = today.getFullYear(); const mm = String(today.getMonth() + 1).padStart(2, "0"); const dd = String(today.getDate()).padStart(2, "0"); attendanceDateInput.value = `${yyyy}-${mm}-${dd}`; } }
 
         function addGlobalEventListeners() {
@@ -416,26 +440,42 @@
             modalConfirmScheduleButton.addEventListener('click', saveScheduleForDay);
             modalCancelEditScheduleButton.addEventListener('click', () => closeModal(editScheduleModal));
             editScheduleModal.addEventListener('click', (e) => { if (e.target === editScheduleModal) closeModal(editScheduleModal); });
-            clearScheduleButton.addEventListener('click', () => { const day = scheduleDaySelect.value; showConfirmationModal('Konfirmasi Kosongkan Jadwal', `Anda yakin ingin mengosongkan jadwal piket untuk hari <strong>${day}</strong>?`, () => clearScheduleForDayAction(day), 'warning'); });
+            clearScheduleButton.addEventListener('click', () => { const day = scheduleDaySelect.value; showConfirmationModal('Konfirmasi Kosongkan Jadwal', `Yakin kosongkan jadwal <strong>${day}</strong>?`, () => clearScheduleForDayAction(day), 'warning'); });
 
-            // Attendance Management (Unchanged)
+            // Attendance Management (Added Swap Button Listener)
             showAttendanceFormButton.addEventListener('click', showAttendanceForm);
             prevDayButton.addEventListener('click', () => changeDate(-1));
             nextDayButton.addEventListener('click', () => changeDate(1));
             attendanceCheckboxesDiv.addEventListener('change', handleAttendanceCheckboxChange);
+            // Use event delegation for swap buttons inside attendanceCheckboxesDiv
+            attendanceCheckboxesDiv.addEventListener('click', (event) => {
+                if (event.target.closest('.swap-button')) {
+                    const button = event.target.closest('.swap-button');
+                    const memberName = button.dataset.member;
+                    const date = button.dataset.date;
+                    if (memberName && date) {
+                        openSwapDutyModal(date, memberName);
+                    }
+                }
+            });
             if (saveAttendanceButton) saveAttendanceButton.addEventListener('click', saveAttendance);
 
-            // Award Calculation
+            // Swap Duty Modal Buttons
+            modalConfirmSwapDutyButton.addEventListener('click', saveSwapDuty);
+            modalCancelSwapDutyButton.addEventListener('click', () => closeModal(swapDutyModal));
+            swapDutyModal.addEventListener('click', (e) => { if (e.target === swapDutyModal) closeModal(swapDutyModal); });
+
+            // Award Calculation (Unchanged)
             calculateAwardButton.addEventListener('click', calculateMonthlyAward);
 
-            // Reporting (Unchanged listeners)
+            // Reporting (Unchanged)
             generateReportButton.addEventListener('click', generateReport);
             exportCsvButton.addEventListener('click', exportReportToCSV);
 
             // Data Management (Unchanged)
             backupButton.addEventListener('click', backupData);
-            restoreButton.addEventListener('click', () => { showConfirmationModal('Konfirmasi Restore Data', `<strong>PERHATIAN!</strong> Ini akan <strong>MENIMPA</strong> semua data di Firestore.<br>Pastikan data backup valid. Lanjutkan?`, restoreData, 'warning'); });
-            resetButton.addEventListener('click', () => { showConfirmationModal('Konfirmasi Reset Aplikasi', `<strong>PERINGATAN KERAS!</strong> Anda akan <strong>MENGHAPUS SEMUA</strong> data di Firestore.<br>Tindakan ini tidak dapat dibatalkan. Yakin?`, () => resetAllData(false), 'danger'); });
+            restoreButton.addEventListener('click', () => { showConfirmationModal('Konfirmasi Restore Data', `<strong>PERHATIAN!</strong> Ini akan <strong>MENIMPA</strong> semua data di Firestore.<br>Pastikan data valid. Lanjutkan?`, restoreData, 'warning'); });
+            resetButton.addEventListener('click', () => { showConfirmationModal('Konfirmasi Reset Aplikasi', `<strong>PERINGATAN KERAS!</strong> Anda akan <strong>MENGHAPUS SEMUA</strong> data di Firestore.<br>Tidak dapat dibatalkan. Yakin?`, () => resetAllData(false), 'danger'); });
 
             // Generic Confirmation Modal (Unchanged)
             modalCancelButton.addEventListener('click', hideConfirmationModal);
@@ -446,94 +486,410 @@
         /***********************************************************************
          *     6) MANAGEMENT ANGGOTA (Unchanged)                              *
          ***********************************************************************/
-        async function addMember() { /* ... (unchanged) ... */ const name = modalNewMemberNameInput.value.trim(); if (!name) { showNotification("Nama anggota tidak boleh kosong", "warning"); return; } if (members.some(m => m.toLowerCase() === name.toLowerCase())) { showNotification(`Nama "${name}" sudah ada`, "warning"); return; } setLoading(modalSaveMemberButton, true); try { await addDoc(collection(db, "members"), { name }); showNotification(`Anggota "${name}" berhasil ditambahkan.`, "success"); closeModal(addMemberModal); await loadMembersFromFirestore(); displayMembers(modalMemberSearchInput.value); } catch (err) { console.error("Error adding member:", err); showNotification("Gagal menambahkan anggota ke Firestore", "error"); } finally { setLoading(modalSaveMemberButton, false); } }
-        function displayMembers(filter = '') { /* ... (unchanged - targets modal list) ... */ modalMemberListDisplay.innerHTML = ""; const lowerCaseFilter = filter.toLowerCase(); const filteredMembers = members.filter(member => member.toLowerCase().includes(lowerCaseFilter)); if (filteredMembers.length === 0) { modalMemberListDisplay.innerHTML = filter ? `<li style="font-style: italic; background: transparent; border: none;">Tidak ada anggota cocok dengan "${filter}".</li>` : "<li style='font-style: italic; background: transparent; border: none;'>Belum ada anggota.</li>"; return; } filteredMembers.forEach(member => { const li = document.createElement("li"); li.dataset.memberName = member; const mainContent = document.createElement('div'); mainContent.style.display = 'flex'; mainContent.style.alignItems = 'center'; mainContent.style.flexGrow = '1'; const nameSpan = document.createElement("span"); nameSpan.textContent = member; nameSpan.classList.add("member-name"); nameSpan.style.marginRight = 'auto'; const viewControls = document.createElement("div"); viewControls.classList.add("view-controls"); const editBtn = document.createElement("button"); editBtn.innerHTML = `<i class="fa-solid fa-pencil"></i><span class="visually-hidden">Edit</span>`; editBtn.classList.add("info", "small-btn"); editBtn.setAttribute('aria-label', `Edit ${member}`); editBtn.onclick = (e) => { e.stopPropagation(); startEditMember(member, li); }; const removeBtn = document.createElement("button"); removeBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i><span class="visually-hidden">Hapus</span>`; removeBtn.classList.add("danger", "small-btn"); removeBtn.setAttribute('aria-label', `Hapus ${member}`); removeBtn.onclick = (e) => { e.stopPropagation(); removeMember(member); }; viewControls.appendChild(editBtn); viewControls.appendChild(removeBtn); mainContent.appendChild(nameSpan); mainContent.appendChild(viewControls); const editControls = document.createElement("div"); editControls.classList.add("edit-controls"); const editInput = document.createElement("input"); editInput.type = "text"; editInput.value = member; editInput.classList.add("edit-member-input"); editInput.onclick = (e) => e.stopPropagation(); const saveBtn = document.createElement("button"); saveBtn.innerHTML = `<i class="fa-solid fa-save"></i> <span class="button-text">Simpan</span> <span class="spinner"></span>`; saveBtn.classList.add("success", "small-btn"); saveBtn.onclick = (e) => { e.stopPropagation(); saveEditMember(member, li); }; const cancelBtn = document.createElement("button"); cancelBtn.innerHTML = `<i class="fa-solid fa-times"></i> <span class="button-text">Batal</span>`; cancelBtn.classList.add("secondary", "small-btn"); cancelBtn.onclick = (e) => { e.stopPropagation(); cancelEditMember(li); }; editControls.appendChild(editInput); editControls.appendChild(saveBtn); editControls.appendChild(cancelBtn); li.appendChild(mainContent); li.appendChild(editControls); modalMemberListDisplay.appendChild(li); }); }
+        async function addMember() { /* ... (unchanged) ... */ const name = modalNewMemberNameInput.value.trim(); if (!name) { showNotification("Nama kosong", "warning"); return; } if (members.some(m => m.toLowerCase() === name.toLowerCase())) { showNotification(`"${name}" sudah ada`, "warning"); return; } setLoading(modalSaveMemberButton, true); try { await addDoc(collection(db, "members"), { name }); showNotification(`"${name}" ditambahkan.`, "success"); closeModal(addMemberModal); await loadMembersFromFirestore(); displayMembers(modalMemberSearchInput.value); } catch (err) { console.error("Error adding member:", err); showNotification("Gagal tambah anggota", "error"); } finally { setLoading(modalSaveMemberButton, false); } }
+        function displayMembers(filter = '') { /* ... (unchanged) ... */ modalMemberListDisplay.innerHTML = ""; const lowerCaseFilter = filter.toLowerCase(); const filteredMembers = members.filter(member => member.toLowerCase().includes(lowerCaseFilter)); if (filteredMembers.length === 0) { modalMemberListDisplay.innerHTML = filter ? `<li style="font-style: italic; background: transparent; border: none;">Tidak ada cocok "${filter}".</li>` : "<li style='font-style: italic; background: transparent; border: none;'>Belum ada anggota.</li>"; return; } filteredMembers.forEach(member => { const li = document.createElement("li"); li.dataset.memberName = member; const mainContent = document.createElement('div'); mainContent.style.display = 'flex'; mainContent.style.alignItems = 'center'; mainContent.style.flexGrow = '1'; const nameSpan = document.createElement("span"); nameSpan.textContent = member; nameSpan.classList.add("member-name"); nameSpan.style.marginRight = 'auto'; const viewControls = document.createElement("div"); viewControls.classList.add("view-controls"); const editBtn = document.createElement("button"); editBtn.innerHTML = `<i class="fa-solid fa-pencil"></i><span class="visually-hidden">Edit</span>`; editBtn.classList.add("info", "small-btn"); editBtn.setAttribute('aria-label', `Edit ${member}`); editBtn.onclick = (e) => { e.stopPropagation(); startEditMember(member, li); }; const removeBtn = document.createElement("button"); removeBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i><span class="visually-hidden">Hapus</span>`; removeBtn.classList.add("danger", "small-btn"); removeBtn.setAttribute('aria-label', `Hapus ${member}`); removeBtn.onclick = (e) => { e.stopPropagation(); removeMember(member); }; viewControls.appendChild(editBtn); viewControls.appendChild(removeBtn); mainContent.appendChild(nameSpan); mainContent.appendChild(viewControls); const editControls = document.createElement("div"); editControls.classList.add("edit-controls"); const editInput = document.createElement("input"); editInput.type = "text"; editInput.value = member; editInput.classList.add("edit-member-input"); editInput.onclick = (e) => e.stopPropagation(); const saveBtn = document.createElement("button"); saveBtn.innerHTML = `<i class="fa-solid fa-save"></i> <span class="button-text">Simpan</span> <span class="spinner"></span>`; saveBtn.classList.add("success", "small-btn"); saveBtn.onclick = (e) => { e.stopPropagation(); saveEditMember(member, li); }; const cancelBtn = document.createElement("button"); cancelBtn.innerHTML = `<i class="fa-solid fa-times"></i> <span class="button-text">Batal</span>`; cancelBtn.classList.add("secondary", "small-btn"); cancelBtn.onclick = (e) => { e.stopPropagation(); cancelEditMember(li); }; editControls.appendChild(editInput); editControls.appendChild(saveBtn); editControls.appendChild(cancelBtn); li.appendChild(mainContent); li.appendChild(editControls); modalMemberListDisplay.appendChild(li); }); }
         function startEditMember(memberName, listItemElement) { /* ... (unchanged) ... */ document.querySelectorAll('#modal-member-list-display li.editing').forEach(otherLi => { if (otherLi !== listItemElement) cancelEditMember(otherLi); }); listItemElement.classList.add('editing'); const input = listItemElement.querySelector(".edit-member-input"); input.focus(); input.select(); }
         function cancelEditMember(listItemElement) { /* ... (unchanged) ... */ listItemElement.classList.remove('editing'); const originalName = listItemElement.dataset.memberName; listItemElement.querySelector(".edit-member-input").value = originalName; }
-        async function saveEditMember(originalName, listItemElement) { /* ... (unchanged) ... */ const editInput = listItemElement.querySelector(".edit-member-input"); const newName = editInput.value.trim(); const saveButton = listItemElement.querySelector(".edit-controls .success"); if (!newName) { showNotification("Nama tidak boleh kosong", "warning"); return; } if (newName.toLowerCase() !== originalName.toLowerCase() && members.some(m => m.toLowerCase() === newName.toLowerCase())) { showNotification(`Nama "${newName}" sudah digunakan.`, "warning"); return; } if (newName === originalName) { cancelEditMember(listItemElement); return; } setLoading(saveButton, true); try { const memSnap = await getDocs(collection(db, "members")); let docIdToUpdate = null; memSnap.forEach(docSnap => { if (docSnap.data().name === originalName) { docIdToUpdate = docSnap.id; } }); if (!docIdToUpdate) throw new Error(`Anggota "${originalName}" tidak ditemukan.`); const memDocRef = doc(db, "members", docIdToUpdate); await updateDoc(memDocRef, { name: newName }); await renameMemberInRelatedCollections(originalName, newName); showNotification(`Nama "${originalName}" berhasil diubah menjadi "${newName}"`, "success"); await loadAllData(); displayMembers(modalMemberSearchInput.value); displaySchedule(); if (attendanceMarkingDiv.classList.contains('visible')) { showAttendanceForm(); } } catch (err) { console.error("Error saving member edit:", err); showNotification(`Gagal menyimpan perubahan: ${err.message}`, "error"); cancelEditMember(listItemElement); } finally { setLoading(saveButton, false); } }
-        async function renameMemberInRelatedCollections(oldName, newName) { /* ... (unchanged) ... */ const batcher = writeBatch(db); let hasChanges = false; const schedSnap = await getDocs(collection(db, "schedules")); schedSnap.forEach(docSnap => { const data = docSnap.data(); if (data.day && Array.isArray(data.members)) { let changed = false; const newArr = data.members.map(m => { if (m === oldName) { changed = true; return newName; } return m; }); if (changed) { batcher.update(doc(db, "schedules", docSnap.id), { members: newArr }); hasChanges = true; } } }); const attSnap = await getDocs(collection(db, "attendance")); attSnap.forEach(docSnap => { const data = docSnap.data(); if (data.records && typeof data.records === 'object' && data.records[oldName]) { const updatedRecords = { ...data.records }; updatedRecords[newName] = updatedRecords[oldName]; delete updatedRecords[oldName]; batcher.update(doc(db, "attendance", docSnap.id), { records: updatedRecords }); hasChanges = true; } }); if (hasChanges) { await batcher.commit(); console.log(`References to "${oldName}" updated to "${newName}".`); } }
-        function removeMember(nameToRemove) { /* ... (unchanged) ... */ showConfirmationModal('Konfirmasi Hapus Anggota', `Anda yakin ingin menghapus anggota "<strong>${nameToRemove}</strong>"?<br>Ini juga akan menghapusnya dari semua jadwal dan catatan kehadiran.`, () => removeMemberAction(nameToRemove)); }
-        async function removeMemberAction(nameToRemove) { /* ... (unchanged) ... */ showNotification(`Menghapus ${nameToRemove}...`, "info"); try { const memSnap = await getDocs(collection(db, "members")); let docIdToDelete = null; memSnap.forEach(docSnap => { if (docSnap.data().name === nameToRemove) { docIdToDelete = docSnap.id; } }); const batcher = writeBatch(db); if (docIdToDelete) { batcher.delete(doc(db, "members", docIdToDelete)); } const schedSnap = await getDocs(collection(db, "schedules")); schedSnap.forEach(docSnap => { const data = docSnap.data(); if (data.day && Array.isArray(data.members)) { const filtered = data.members.filter(m => m !== nameToRemove); if (filtered.length !== data.members.length) { batcher.update(doc(db, "schedules", docSnap.id), { members: filtered }); } } }); const attSnap = await getDocs(collection(db, "attendance")); attSnap.forEach(docSnap => { const data = docSnap.data(); if (data.records && typeof data.records === 'object' && data.records[nameToRemove]) { const updatedRecords = { ...data.records }; delete updatedRecords[nameToRemove]; batcher.update(doc(db, "attendance", docSnap.id), { records: updatedRecords }); } }); await batcher.commit(); showNotification(`Anggota "${nameToRemove}" berhasil dihapus.`, "success"); await loadAllData(); displayMembers(modalMemberSearchInput.value); displaySchedule(); attendanceMarkingDiv.classList.remove('visible'); attendanceStatusDiv.innerHTML = ""; reportDisplay.innerHTML = ""; } catch (err) { console.error("Error removing member:", err); showNotification("Gagal menghapus anggota di Firestore", "error"); } }
+        async function saveEditMember(originalName, listItemElement) { /* ... (unchanged) ... */ const editInput = listItemElement.querySelector(".edit-member-input"); const newName = editInput.value.trim(); const saveButton = listItemElement.querySelector(".edit-controls .success"); if (!newName) { showNotification("Nama kosong", "warning"); return; } if (newName.toLowerCase() !== originalName.toLowerCase() && members.some(m => m.toLowerCase() === newName.toLowerCase())) { showNotification(`"${newName}" sudah ada.`, "warning"); return; } if (newName === originalName) { cancelEditMember(listItemElement); return; } setLoading(saveButton, true); try { const memSnap = await getDocs(collection(db, "members")); let docIdToUpdate = null; memSnap.forEach(docSnap => { if (docSnap.data().name === originalName) { docIdToUpdate = docSnap.id; } }); if (!docIdToUpdate) throw new Error(`"${originalName}" tidak ditemukan.`); const memDocRef = doc(db, "members", docIdToUpdate); await updateDoc(memDocRef, { name: newName }); await renameMemberInRelatedCollections(originalName, newName); showNotification(`"${originalName}" diubah jadi "${newName}"`, "success"); await loadAllData(); displayMembers(modalMemberSearchInput.value); displaySchedule(); if (attendanceMarkingDiv.classList.contains('visible')) { showAttendanceForm(); } } catch (err) { console.error("Error saving member edit:", err); showNotification(`Gagal simpan: ${err.message}`, "error"); cancelEditMember(listItemElement); } finally { setLoading(saveButton, false); } }
+        async function renameMemberInRelatedCollections(oldName, newName) { /* ... (unchanged) ... */ const batcher = writeBatch(db); let hasChanges = false; const schedSnap = await getDocs(collection(db, "schedules")); schedSnap.forEach(docSnap => { const data = docSnap.data(); if (data.day && Array.isArray(data.members)) { let changed = false; const newArr = data.members.map(m => { if (m === oldName) { changed = true; return newName; } return m; }); if (changed) { batcher.update(doc(db, "schedules", docSnap.id), { members: newArr }); hasChanges = true; } } }); const attSnap = await getDocs(collection(db, "attendance")); attSnap.forEach(docSnap => { const data = docSnap.data(); if (data.records && typeof data.records === 'object' && data.records[oldName]) { const updatedRecords = { ...data.records }; updatedRecords[newName] = updatedRecords[oldName]; delete updatedRecords[oldName]; batcher.update(doc(db, "attendance", docSnap.id), { records: updatedRecords }); hasChanges = true; } }); if (hasChanges) { await batcher.commit(); console.log(`Ref "${oldName}" -> "${newName}".`); } }
+        function removeMember(nameToRemove) { /* ... (unchanged) ... */ showConfirmationModal('Konfirmasi Hapus Anggota', `Yakin hapus "<strong>${nameToRemove}</strong>"?<br>Jadwal & kehadiran terkait juga dihapus.`, () => removeMemberAction(nameToRemove)); }
+        async function removeMemberAction(nameToRemove) { /* ... (unchanged) ... */ showNotification(`Menghapus ${nameToRemove}...`, "info"); try { const memSnap = await getDocs(collection(db, "members")); let docIdToDelete = null; memSnap.forEach(docSnap => { if (docSnap.data().name === nameToRemove) { docIdToDelete = docSnap.id; } }); const batcher = writeBatch(db); if (docIdToDelete) { batcher.delete(doc(db, "members", docIdToDelete)); } const schedSnap = await getDocs(collection(db, "schedules")); schedSnap.forEach(docSnap => { const data = docSnap.data(); if (data.day && Array.isArray(data.members)) { const filtered = data.members.filter(m => m !== nameToRemove); if (filtered.length !== data.members.length) { batcher.update(doc(db, "schedules", docSnap.id), { members: filtered }); } } }); const attSnap = await getDocs(collection(db, "attendance")); attSnap.forEach(docSnap => { const data = docSnap.data(); if (data.records && typeof data.records === 'object' && data.records[nameToRemove]) { const updatedRecords = { ...data.records }; delete updatedRecords[nameToRemove]; batcher.update(doc(db, "attendance", docSnap.id), { records: updatedRecords }); } }); await batcher.commit(); showNotification(`"${nameToRemove}" dihapus.`, "success"); await loadAllData(); displayMembers(modalMemberSearchInput.value); displaySchedule(); populateAwardMonthSelect(); attendanceMarkingDiv.classList.remove('visible'); attendanceStatusDiv.innerHTML = ""; reportDisplay.innerHTML = ""; } catch (err) { console.error("Error removing member:", err); showNotification("Gagal hapus anggota", "error"); } }
 
         /***********************************************************************
          *     7) MANAGEMENT JADWAL (Unchanged)                              *
          ***********************************************************************/
-        function populateScheduleModal(selectedDay, filter = '') { /* ... (unchanged) ... */ modalScheduleMemberList.innerHTML = ""; const lowerCaseFilter = filter.toLowerCase(); const membersScheduledThisDay = schedule[selectedDay] || []; if (members.length === 0) { modalScheduleMemberList.innerHTML = "<p>Tambahkan anggota.</p>"; return; } let visibleCount = 0; members.forEach(member => { const isVisible = filter === '' || member.toLowerCase().includes(lowerCaseFilter); if (!isVisible) return; visibleCount++; const labelEl = document.createElement("label"); const cb = document.createElement("input"); cb.type = "checkbox"; cb.value = member; const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, ""); cb.id = `modal-schedule-cb-${safeMemberId}-${selectedDay}`; cb.checked = membersScheduledThisDay.includes(member); labelEl.appendChild(cb); labelEl.appendChild(document.createTextNode(" " + member)); labelEl.htmlFor = cb.id; modalScheduleMemberList.appendChild(labelEl); }); if (visibleCount === 0 && members.length > 0) { modalScheduleMemberList.innerHTML = `<p>Tidak ada anggota cocok dengan "${filter}".</p>`; } }
-        async function saveScheduleForDay() { /* ... (unchanged) ... */ const day = scheduleDaySelect.value; const checkboxes = modalScheduleMemberList.querySelectorAll("input[type='checkbox']:checked"); const selectedMembers = Array.from(checkboxes).map(cb => cb.value); setLoading(modalConfirmScheduleButton, true); try { await setDoc(doc(db, "schedules", day), { day, members: selectedMembers }); schedule[day] = selectedMembers; displaySchedule(); closeModal(editScheduleModal); showNotification(`Jadwal untuk hari ${day} berhasil disimpan.`, "success"); } catch (err) { console.error("Error saving schedule:", err); showNotification("Gagal menyimpan jadwal", "error"); } finally { setLoading(modalConfirmScheduleButton, false); } }
-        async function clearScheduleForDayAction(day) { /* ... (unchanged) ... */ setLoading(clearScheduleButton, true); try { await setDoc(doc(db, "schedules", day), { day, members: [] }); schedule[day] = []; displaySchedule(); showNotification(`Jadwal untuk hari ${day} dikosongkan.`, "success"); } catch (err) { console.error("Error clearing schedule:", err); showNotification("Gagal mengosongkan jadwal", "error"); } finally { setLoading(clearScheduleButton, false); } }
-        function displaySchedule() { /* ... (unchanged) ... */ scheduleDisplay.innerHTML = ""; const daysOrder = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]; let hasSchedule = false; daysOrder.forEach(day => { if (schedule[day] && schedule[day].length > 0) { hasSchedule = true; const div = document.createElement("div"); const names = schedule[day].join(", ") || "<i>(Kosong)</i>"; div.innerHTML = `<strong>${day}:</strong> ${names}`; scheduleDisplay.appendChild(div); } }); if (!hasSchedule) { scheduleDisplay.innerHTML = "<div>Belum ada jadwal yang diatur.</div>"; } }
+        function populateScheduleModal(selectedDay, filter = '') { /* ... (unchanged) ... */ modalScheduleMemberList.innerHTML = ""; const lowerCaseFilter = filter.toLowerCase(); const membersScheduledThisDay = schedule[selectedDay] || []; if (members.length === 0) { modalScheduleMemberList.innerHTML = "<p>Tambah anggota.</p>"; return; } let visibleCount = 0; members.forEach(member => { const isVisible = filter === '' || member.toLowerCase().includes(lowerCaseFilter); if (!isVisible) return; visibleCount++; const labelEl = document.createElement("label"); const cb = document.createElement("input"); cb.type = "checkbox"; cb.value = member; const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, ""); cb.id = `modal-schedule-cb-${safeMemberId}-${selectedDay}`; cb.checked = membersScheduledThisDay.includes(member); labelEl.appendChild(cb); labelEl.appendChild(document.createTextNode(" " + member)); labelEl.htmlFor = cb.id; modalScheduleMemberList.appendChild(labelEl); }); if (visibleCount === 0 && members.length > 0) { modalScheduleMemberList.innerHTML = `<p>Tidak cocok "${filter}".</p>`; } }
+        async function saveScheduleForDay() { /* ... (unchanged) ... */ const day = scheduleDaySelect.value; const checkboxes = modalScheduleMemberList.querySelectorAll("input[type='checkbox']:checked"); const selectedMembers = Array.from(checkboxes).map(cb => cb.value); setLoading(modalConfirmScheduleButton, true); try { await setDoc(doc(db, "schedules", day), { day, members: selectedMembers }); schedule[day] = selectedMembers; displaySchedule(); closeModal(editScheduleModal); showNotification(`Jadwal ${day} disimpan.`, "success"); } catch (err) { console.error("Error saving schedule:", err); showNotification("Gagal simpan jadwal", "error"); } finally { setLoading(modalConfirmScheduleButton, false); } }
+        async function clearScheduleForDayAction(day) { /* ... (unchanged) ... */ setLoading(clearScheduleButton, true); try { await setDoc(doc(db, "schedules", day), { day, members: [] }); schedule[day] = []; displaySchedule(); showNotification(`Jadwal ${day} dikosongkan.`, "success"); } catch (err) { console.error("Error clearing schedule:", err); showNotification("Gagal kosongkan jadwal", "error"); } finally { setLoading(clearScheduleButton, false); } }
+        function displaySchedule() { /* ... (unchanged) ... */ scheduleDisplay.innerHTML = ""; const daysOrder = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]; let hasSchedule = false; daysOrder.forEach(day => { if (schedule[day] && schedule[day].length > 0) { hasSchedule = true; const div = document.createElement("div"); const names = schedule[day].join(", ") || "<i>(Kosong)</i>"; div.innerHTML = `<strong>${day}:</strong> ${names}`; scheduleDisplay.appendChild(div); } }); if (!hasSchedule) { scheduleDisplay.innerHTML = "<div>Belum ada jadwal.</div>"; } }
 
         /***********************************************************************
-         *     8) ABSENSI / KEHADIRAN (Unchanged)                             *
+         *     8) ABSENSI / KEHADIRAN (Modified for Swap Button & Display)    *
          ***********************************************************************/
-        function showAttendanceForm() { /* ... (unchanged) ... */ const selectedDate = attendanceDateInput.value; if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) { showNotification("Pilih tanggal valid.", "warning"); attendanceMarkingDiv.classList.remove('visible'); return; } const dateObj = new Date(selectedDate + "T00:00:00"); if (isNaN(dateObj.getTime())) { showNotification("Tanggal tidak valid.", "error"); attendanceMarkingDiv.classList.remove('visible'); return; } const dayIndex = dateObj.getDay(); const dayName = daysInIndonesian[dayIndex]; selectedDateDisplay.textContent = selectedDate; selectedDayDisplay.textContent = dayName; attendanceCheckboxesDiv.innerHTML = ""; attendanceStatusDiv.innerHTML = ""; saveAttendanceButton.style.display = "none"; noScheduleMessage.style.display = "none"; const scheduled = schedule[dayName] || []; const validScheduledMembers = scheduled.filter(m => members.includes(m)); if (validScheduledMembers.length === 0) { noScheduleMessage.style.display = "block"; attendanceCheckboxesDiv.innerHTML = "<p>Tidak ada jadwal piket.</p>"; } else { saveAttendanceButton.style.display = "inline-flex"; const existingAttendance = attendance[selectedDate] || {}; validScheduledMembers.forEach(member => { const record = existingAttendance[member] || { present: false, reason: "" }; const isPresent = record.present; const currentReason = record.reason || ""; const itemDiv = document.createElement("div"); itemDiv.classList.add("attendance-item"); itemDiv.classList.toggle('show-reason', !isPresent); const labelEl = document.createElement("label"); const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.value = member; checkbox.checked = isPresent; checkbox.classList.add("attendance-checkbox"); const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, ""); checkbox.id = `att-${selectedDate}-${safeMemberId}`; labelEl.htmlFor = checkbox.id; labelEl.appendChild(checkbox); labelEl.appendChild(document.createTextNode(" " + member)); const reasonInput = document.createElement("input"); reasonInput.type = "text"; reasonInput.value = currentReason; reasonInput.placeholder = "Alasan..."; reasonInput.classList.add("reason-input"); itemDiv.appendChild(labelEl); itemDiv.appendChild(reasonInput); attendanceCheckboxesDiv.appendChild(itemDiv); }); displayAttendanceStatus(selectedDate, dayName); } attendanceMarkingDiv.classList.add('visible'); }
-        function handleAttendanceCheckboxChange(event) { /* ... (unchanged) ... */ if (event.target.type === "checkbox" && event.target.classList.contains("attendance-checkbox")) { const itemDiv = event.target.closest(".attendance-item"); if (itemDiv) { itemDiv.classList.toggle('show-reason', !event.target.checked); if (event.target.checked) { const reasonInput = itemDiv.querySelector(".reason-input"); if(reasonInput) reasonInput.value = ""; } } } }
-        async function saveAttendance() { /* ... (unchanged) ... */ const selectedDate = attendanceDateInput.value; if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) { showNotification("Tanggal tidak valid.", "error"); return; } const dateObj = new Date(selectedDate + "T00:00:00"); if (isNaN(dateObj.getTime())) { showNotification("Tanggal tidak valid.", "error"); return; } const dayName = daysInIndonesian[dateObj.getDay()]; const scheduled = schedule[dayName] || []; const newRecords = {}; const items = attendanceCheckboxesDiv.querySelectorAll(".attendance-item"); items.forEach(item => { const checkbox = item.querySelector(".attendance-checkbox"); const reasonInput = item.querySelector(".reason-input"); const memberName = checkbox.value; if (scheduled.includes(memberName)) { const isPresent = checkbox.checked; const reason = isPresent ? "" : reasonInput.value.trim(); newRecords[memberName] = { present: isPresent, reason: reason }; } }); setLoading(saveAttendanceButton, true); try { const docRef = doc(db, "attendance", selectedDate); if (Object.keys(newRecords).length === 0) { try { await deleteDoc(docRef); delete attendance[selectedDate]; showNotification(`Absensi ${selectedDate} dihapus (kosong).`, "info"); } catch (delErr) { if (delErr.code !== 'not-found') throw delErr; else console.log("Attendance doc to delete not found."); delete attendance[selectedDate]; } } else { await setDoc(docRef, { date: selectedDate, records: newRecords }); attendance[selectedDate] = newRecords; showNotification(`Kehadiran ${selectedDate} disimpan.`, "success"); } displayAttendanceStatus(selectedDate, dayName); populateAwardMonthSelect(); /* Refresh months after saving */ } catch (err) { console.error("Error saving attendance:", err); showNotification("Gagal menyimpan kehadiran", "error"); } finally { setLoading(saveAttendanceButton, false); } }
-        function displayAttendanceStatus(selectedDate, dayName) { /* ... (unchanged) ... */ attendanceStatusDiv.innerHTML = ""; const scheduled = schedule[dayName] || []; const validScheduled = scheduled.filter(m => members.includes(m)); const attData = attendance[selectedDate] || {}; if (validScheduled.length === 0) { attendanceStatusDiv.innerHTML = "<p>Tidak ada jadwal valid.</p>"; return; } attendanceStatusDiv.innerHTML = `<strong>Status ${selectedDate} (${dayName}):</strong>`; const presentUl = document.createElement("ul"); const absentUl = document.createElement("ul"); let presentCount = 0; let absentCount = 0; validScheduled.forEach(member => { const li = document.createElement("li"); const record = attData[member] || { present: false, reason: "" }; li.textContent = member; if (record.present) { li.classList.add("present"); li.textContent += " (Piket)"; presentUl.appendChild(li); presentCount++; } else { li.classList.add("absent"); li.textContent += " (Tidak Piket)"; if (record.reason) { const reasonSpan = document.createElement("span"); reasonSpan.classList.add("reason-text"); reasonSpan.textContent = `- ${record.reason}`; li.appendChild(reasonSpan); } absentUl.appendChild(li); absentCount++; } }); const summary = document.createElement("p"); summary.innerHTML = `Total Piket: <span class="present">${presentCount}</span>, Tidak Piket: <span class="absent">${absentCount}</span>`; attendanceStatusDiv.appendChild(summary); if (presentUl.hasChildNodes()) { const presentHeader = document.createElement("strong"); presentHeader.textContent = "Hadir (Piket):"; presentHeader.style.color = "var(--success-green)"; attendanceStatusDiv.appendChild(presentHeader); attendanceStatusDiv.appendChild(presentUl); } if (absentUl.hasChildNodes()) { const absentHeader = document.createElement("strong"); absentHeader.textContent = "Tidak Hadir (Tidak Piket):"; absentHeader.style.color = "var(--danger-red)"; absentHeader.style.display = "block"; absentHeader.style.marginTop = "10px"; attendanceStatusDiv.appendChild(absentHeader); attendanceStatusDiv.appendChild(absentUl); } }
+        function showAttendanceForm() {
+            const selectedDate = attendanceDateInput.value;
+            if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) { showNotification("Pilih tanggal valid.", "warning"); attendanceMarkingDiv.classList.remove('visible'); return; }
+            const dateObj = new Date(selectedDate + "T00:00:00"); if (isNaN(dateObj.getTime())) { showNotification("Tanggal tidak valid.", "error"); attendanceMarkingDiv.classList.remove('visible'); return; }
+            const dayIndex = dateObj.getDay(); const dayName = daysInIndonesian[dayIndex];
+            selectedDateDisplay.textContent = selectedDate; selectedDayDisplay.textContent = dayName;
+            attendanceCheckboxesDiv.innerHTML = ""; attendanceStatusDiv.innerHTML = ""; saveAttendanceButton.style.display = "none"; noScheduleMessage.style.display = "none";
 
+            const scheduled = schedule[dayName] || [];
+            const validScheduledMembers = scheduled.filter(m => members.includes(m));
+            const existingAttendance = attendance[selectedDate] || {};
 
-        /***********************************************************************
-         *     9) PENGHARGAAN BULANAN (NEW FUNCTIONS)                        *
-         ***********************************************************************/
-         function populateAwardMonthSelect() {
-             const months = new Set();
-             Object.keys(attendance).forEach(date => {
-                 if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                     months.add(date.substring(0, 7)); // Extract YYYY-MM
+            if (validScheduledMembers.length === 0) {
+                noScheduleMessage.style.display = "block";
+                attendanceCheckboxesDiv.innerHTML = "<p>Tidak ada anggota dijadwalkan piket hari ini.</p>";
+            } else {
+                saveAttendanceButton.style.display = "inline-flex"; // Show save button
+
+                validScheduledMembers.forEach(member => {
+                    const record = existingAttendance[member] || { present: false, reason: "", swappedOut: false, substitute: null, isSubstitute: false, replaced: null };
+                    const isPresent = record.present;
+                    const isSwappedOut = record.swappedOut;
+                    const currentReason = record.reason || "";
+                    const safeMemberId = member.replace(/[^a-zA-Z0-9-_]/g, "");
+
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("attendance-item");
+                    // Show reason input if absent AND not swapped out
+                    itemDiv.classList.toggle('show-reason', !isPresent && !isSwappedOut);
+
+                    const labelEl = document.createElement("label");
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.value = member;
+                    checkbox.checked = isPresent;
+                    checkbox.classList.add("attendance-checkbox");
+                    checkbox.id = `att-${selectedDate}-${safeMemberId}`;
+                    // Disable checkbox if this member was swapped out or is a substitute (handled by swap logic)
+                    checkbox.disabled = isSwappedOut || record.isSubstitute;
+
+                    labelEl.htmlFor = checkbox.id;
+                    labelEl.appendChild(checkbox);
+                    labelEl.appendChild(document.createTextNode(" " + member));
+
+                    // Add visual cues for swapped status
+                    if (isSwappedOut) {
+                        const swapOutInfo = document.createElement('span');
+                        swapOutInfo.classList.add('swap-info');
+                        swapOutInfo.textContent = ` (Digantikan oleh ${record.substitute || '???'})`;
+                        labelEl.appendChild(swapOutInfo);
+                        labelEl.style.textDecoration = 'line-through'; // Cross out name
+                        labelEl.style.color = 'var(--disabled-text)';
+                    } else if (record.isSubstitute) {
+                         const swapInInfo = document.createElement('span');
+                         swapInInfo.classList.add('swap-info');
+                         swapInInfo.textContent = ` (Menggantikan ${record.replaced || '???'})`;
+                         labelEl.appendChild(swapInInfo);
+                         labelEl.style.color = 'var(--swap-color)';
+                    }
+
+                    const reasonInput = document.createElement("input");
+                    reasonInput.type = "text";
+                    reasonInput.value = currentReason;
+                    reasonInput.placeholder = "Alasan...";
+                    reasonInput.classList.add("reason-input");
+                    reasonInput.disabled = isPresent || isSwappedOut; // Disable if present or swapped out
+
+                    // Swap Button
+                    const swapButton = document.createElement("button");
+                    swapButton.innerHTML = `<i class="fa-solid fa-right-left"></i><span class="visually-hidden">Tukar</span>`;
+                    swapButton.classList.add("swap", "small-btn", "swap-button");
+                    swapButton.dataset.member = member; // Store member name
+                    swapButton.dataset.date = selectedDate; // Store date
+                    swapButton.setAttribute('aria-label', `Tukar tugas ${member}`);
+                    // Disable swap button if the member IS a substitute
+                    swapButton.disabled = record.isSubstitute;
+
+                    itemDiv.appendChild(labelEl);
+                    itemDiv.appendChild(reasonInput);
+                    itemDiv.appendChild(swapButton); // Add swap button
+                    attendanceCheckboxesDiv.appendChild(itemDiv);
+                });
+                displayAttendanceStatus(selectedDate, dayName); // Display initial status
+            }
+            attendanceMarkingDiv.classList.add('visible');
+        }
+
+        function handleAttendanceCheckboxChange(event) {
+            if (event.target.type === "checkbox" && event.target.classList.contains("attendance-checkbox")) {
+                const itemDiv = event.target.closest(".attendance-item");
+                if (itemDiv) {
+                    const isChecked = event.target.checked;
+                    const reasonInput = itemDiv.querySelector(".reason-input");
+                    // Show reason input only if unchecked AND not swapped out
+                    const isSwappedOut = itemDiv.querySelector('.swap-info')?.textContent.includes('Digantikan');
+                    itemDiv.classList.toggle('show-reason', !isChecked && !isSwappedOut);
+                    if (reasonInput) {
+                         reasonInput.disabled = isChecked || isSwappedOut;
+                         if (isChecked) reasonInput.value = ""; // Clear reason if checked present
+                    }
+                }
+            }
+        }
+
+        // Modified saveAttendance to handle swap data potentially being present
+        async function saveAttendance() {
+            const selectedDate = attendanceDateInput.value;
+            if (!selectedDate || !/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) { showNotification("Tanggal tidak valid.", "error"); return; }
+            const dateObj = new Date(selectedDate + "T00:00:00"); if (isNaN(dateObj.getTime())) { showNotification("Tanggal tidak valid.", "error"); return; }
+            const dayName = daysInIndonesian[dateObj.getDay()];
+            const scheduled = schedule[dayName] || [];
+
+            // Get existing records for the day, or initialize if none
+            const existingRecords = attendance[selectedDate] ? JSON.parse(JSON.stringify(attendance[selectedDate])) : {};
+            const newRecords = {};
+
+            const items = attendanceCheckboxesDiv.querySelectorAll(".attendance-item");
+
+            items.forEach(item => {
+                const checkbox = item.querySelector(".attendance-checkbox");
+                const reasonInput = item.querySelector(".reason-input");
+                const memberName = checkbox.value;
+
+                // Only process members who were originally scheduled for this day
+                if (scheduled.includes(memberName)) {
+                    const isPresent = checkbox.checked;
+                    const reason = isPresent ? "" : reasonInput.value.trim();
+
+                    // Preserve swap data if it exists, otherwise use checkbox state
+                    const existingMemberRecord = existingRecords[memberName] || {};
+                    if (existingMemberRecord.swappedOut) {
+                        // If swapped out, keep that status regardless of checkbox
+                        newRecords[memberName] = {
+                            present: false,
+                            reason: existingMemberRecord.reason || reason, // Keep existing reason or use new one if empty
+                            swappedOut: true,
+                            substitute: existingMemberRecord.substitute,
+                            isSubstitute: false,
+                            replaced: null
+                        };
+                    } else if (existingMemberRecord.isSubstitute) {
+                         // This case shouldn't happen via checkbox change, but as safety
+                         newRecords[memberName] = { ...existingMemberRecord };
+                    }
+                    else {
+                        // Normal attendance marking
+                        newRecords[memberName] = {
+                            present: isPresent,
+                            reason: reason,
+                            swappedOut: false,
+                            substitute: null,
+                            isSubstitute: false,
+                            replaced: null
+                        };
+                    }
+                }
+            });
+
+             // Also include any substitute records that might exist for this date
+             Object.keys(existingRecords).forEach(memberName => {
+                 if (existingRecords[memberName].isSubstitute && !newRecords[memberName]) {
+                     newRecords[memberName] = { ...existingRecords[memberName] };
                  }
              });
 
-             const sortedMonths = Array.from(months).sort().reverse(); // Sort newest first
 
-             // Clear previous options except the placeholder
-             awardMonthSelect.innerHTML = '<option value="">-- Pilih Bulan --</option>';
+            setLoading(saveAttendanceButton, true);
+            try {
+                const docRef = doc(db, "attendance", selectedDate);
+                if (Object.keys(newRecords).length === 0) {
+                    try { await deleteDoc(docRef); delete attendance[selectedDate]; showNotification(`Absensi ${selectedDate} dihapus (kosong).`, "info"); } catch (delErr) { if (delErr.code !== 'not-found') throw delErr; else console.log("Attendance doc to delete not found."); delete attendance[selectedDate]; }
+                } else {
+                    await setDoc(docRef, { date: selectedDate, records: newRecords });
+                    attendance[selectedDate] = newRecords; // Update local cache
+                    showNotification(`Kehadiran ${selectedDate} disimpan.`, "success");
+                }
+                // Refresh display to show saved state including swap info
+                displayAttendanceStatus(selectedDate, dayName);
+                populateAwardMonthSelect(); // Refresh months
+            } catch (err) {
+                console.error("Error saving attendance:", err);
+                showNotification("Gagal menyimpan kehadiran", "error");
+            } finally {
+                setLoading(saveAttendanceButton, false);
+            }
+        }
 
-             sortedMonths.forEach(monthYYYYMM => {
-                 const [year, month] = monthYYYYMM.split('-');
-                 const monthName = monthNamesIndonesian[parseInt(month, 10) - 1];
-                 const option = document.createElement('option');
-                 option.value = monthYYYYMM; // Store YYYY-MM
-                 option.textContent = `${monthName} ${year}`;
-                 awardMonthSelect.appendChild(option);
-             });
+        // Modified displayAttendanceStatus to show swap info
+        function displayAttendanceStatus(selectedDate, dayName) {
+            attendanceStatusDiv.innerHTML = "";
+            const scheduled = schedule[dayName] || [];
+            const attData = attendance[selectedDate] || {};
+            const membersToShow = new Set([...scheduled, ...Object.keys(attData)]); // Show scheduled + anyone in attendance record (substitutes)
 
-             if (sortedMonths.length === 0) {
-                  awardMonthSelect.disabled = true;
-                  calculateAwardButton.disabled = true;
-                  awardResultDisplay.innerHTML = '<p><i>Belum ada data kehadiran untuk menentukan penghargaan bulanan.</i></p>';
-             } else {
-                  awardMonthSelect.disabled = false;
-                  calculateAwardButton.disabled = false; // Enable button if months exist
-                  awardResultDisplay.innerHTML = '<p><i>Pilih bulan dan klik tombol untuk melihat penerima penghargaan.</i></p>'; // Reset display text
-             }
-         }
+            const validMembersToShow = Array.from(membersToShow).filter(m => members.includes(m)); // Filter only active members
+
+            if (validMembersToShow.length === 0) {
+                attendanceStatusDiv.innerHTML = "<p>Tidak ada data kehadiran/jadwal valid.</p>";
+                return;
+            }
+
+            attendanceStatusDiv.innerHTML = `<strong>Status ${selectedDate} (${dayName}):</strong>`;
+            const presentUl = document.createElement("ul");
+            const absentUl = document.createElement("ul");
+            let presentCount = 0;
+            let absentCount = 0;
+
+            validMembersToShow.forEach(member => {
+                const li = document.createElement("li");
+                const record = attData[member] || { present: false, reason: "", swappedOut: false, isSubstitute: false }; // Default if not in record
+                li.textContent = member;
+
+                if (record.present) {
+                    li.classList.add("present");
+                    if (record.isSubstitute) {
+                        li.classList.add("substitute"); // Add substitute class
+                        li.textContent += ` (Piket - Menggantikan ${record.replaced || '???'})`;
+                    } else {
+                        li.textContent += " (Piket)";
+                    }
+                    presentUl.appendChild(li);
+                    presentCount++;
+                } else {
+                    li.classList.add("absent");
+                    if (record.swappedOut) {
+                        li.classList.add("swapped-out"); // Add swapped-out class
+                        li.textContent += ` (Digantikan oleh ${record.substitute || '???'})`;
+                    } else {
+                        li.textContent += " (Tidak Piket)";
+                    }
+                    // Show reason only if truly absent (not swapped out)
+                    if (record.reason && !record.swappedOut) {
+                        const reasonSpan = document.createElement("span");
+                        reasonSpan.classList.add("reason-text");
+                        reasonSpan.textContent = `- ${record.reason}`;
+                        li.appendChild(reasonSpan);
+                    }
+                    absentUl.appendChild(li);
+                    absentCount++;
+                }
+            });
+
+            const summary = document.createElement("p");
+            summary.innerHTML = `Total Hadir Piket: <span class="present">${presentCount}</span>, Tidak Hadir/Digantikan: <span class="absent">${absentCount}</span>`;
+            attendanceStatusDiv.appendChild(summary);
+
+            if (presentUl.hasChildNodes()) {
+                const presentHeader = document.createElement("strong");
+                presentHeader.textContent = "Daftar Hadir (Piket):";
+                presentHeader.style.color = "var(--success-green)";
+                attendanceStatusDiv.appendChild(presentHeader);
+                attendanceStatusDiv.appendChild(presentUl);
+            }
+            if (absentUl.hasChildNodes()) {
+                const absentHeader = document.createElement("strong");
+                absentHeader.textContent = "Daftar Tidak Hadir/Digantikan:";
+                absentHeader.style.color = "var(--danger-red)";
+                absentHeader.style.display = "block";
+                absentHeader.style.marginTop = "10px";
+                attendanceStatusDiv.appendChild(absentHeader);
+                attendanceStatusDiv.appendChild(absentUl);
+            }
+        }
+
+        /***********************************************************************
+         *     9) TUKAR TUGAS (NEW FUNCTIONS)                                 *
+         ***********************************************************************/
+        function openSwapDutyModal(date, originalMemberName) {
+            // Populate modal fields
+            swapModalDate.textContent = date;
+            swapModalOriginalMember.textContent = originalMemberName;
+
+            // Populate substitute dropdown
+            swapModalSubstituteSelect.innerHTML = '<option value="">-- Pilih Pengganti --</option>'; // Reset
+            members.forEach(member => {
+                if (member !== originalMemberName) { // Exclude the original member
+                    const option = document.createElement('option');
+                    option.value = member;
+                    option.textContent = member;
+                    swapModalSubstituteSelect.appendChild(option);
+                }
+            });
+
+            swapModalReason.value = ''; // Clear reason input
+            setLoading(modalConfirmSwapDutyButton, false); // Reset button state
+
+            // Store data needed for saving
+            swapDutyModal.dataset.originalMember = originalMemberName;
+            swapDutyModal.dataset.date = date;
+
+            openModal(swapDutyModal);
+        }
+
+        async function saveSwapDuty() {
+            const originalMember = swapDutyModal.dataset.originalMember;
+            const date = swapDutyModal.dataset.date;
+            const substituteMember = swapModalSubstituteSelect.value;
+            const reason = swapModalReason.value.trim();
+
+            if (!substituteMember) {
+                showNotification("Silakan pilih anggota pengganti.", "warning");
+                return;
+            }
+            if (!originalMember || !date) {
+                 showNotification("Data anggota asli atau tanggal tidak ditemukan.", "error");
+                 return;
+            }
+
+            setLoading(modalConfirmSwapDutyButton, true);
+
+            try {
+                // Get current attendance data for the date, or initialize
+                const currentDayAttendance = attendance[date] ? JSON.parse(JSON.stringify(attendance[date])) : {};
+
+                // --- Update records ---
+                // 1. Mark original member as swapped out
+                currentDayAttendance[originalMember] = {
+                    present: false,
+                    reason: reason, // Use the reason entered in the swap modal
+                    swappedOut: true,
+                    substitute: substituteMember,
+                    isSubstitute: false, // Original is never a substitute
+                    replaced: null
+                };
+
+                // 2. Mark substitute member as present (substitute)
+                // Check if substitute already has a record (e.g., was marked absent before swap)
+                const existingSubstituteRecord = currentDayAttendance[substituteMember] || {};
+                currentDayAttendance[substituteMember] = {
+                    ...existingSubstituteRecord, // Keep potential existing reason if they were absent? Or clear it? Let's clear it.
+                    present: true,
+                    reason: "", // Clear reason for substitute
+                    swappedOut: false, // Substitute is not swapped out
+                    substitute: null,
+                    isSubstitute: true, // Mark as substitute
+                    replaced: originalMember // Record who they replaced
+                };
+
+                // --- Save to Firestore ---
+                const docRef = doc(db, "attendance", date);
+                await setDoc(docRef, { date: date, records: currentDayAttendance });
+
+                // Update local cache
+                attendance[date] = currentDayAttendance;
+
+                showNotification(`Pertukaran tugas ${originalMember} -> ${substituteMember} pada ${date} berhasil disimpan.`, "success");
+                closeModal(swapDutyModal);
+
+                // Refresh the attendance form display for the current date
+                showAttendanceForm(); // This will re-render checkboxes and status
+
+            } catch (err) {
+                console.error("Error saving swap duty:", err);
+                showNotification("Gagal menyimpan pertukaran tugas.", "error");
+            } finally {
+                setLoading(modalConfirmSwapDutyButton, false);
+            }
+        }
+
+
+        /***********************************************************************
+         *     10) PENGHARGAAN BULANAN (Modified Calculation)                 *
+         ***********************************************************************/
+         function populateAwardMonthSelect() { /* ... (unchanged) ... */ const months = new Set(); Object.keys(attendance).forEach(date => { if (/^\d{4}-\d{2}-\d{2}$/.test(date)) { months.add(date.substring(0, 7)); } }); const sortedMonths = Array.from(months).sort().reverse(); awardMonthSelect.innerHTML = '<option value="">-- Pilih Bulan --</option>'; sortedMonths.forEach(monthYYYYMM => { const [year, month] = monthYYYYMM.split('-'); const monthName = monthNamesIndonesian[parseInt(month, 10) - 1]; const option = document.createElement('option'); option.value = monthYYYYMM; option.textContent = `${monthName} ${year}`; awardMonthSelect.appendChild(option); }); if (sortedMonths.length === 0) { awardMonthSelect.disabled = true; calculateAwardButton.disabled = true; awardResultDisplay.innerHTML = '<p><i>Belum ada data kehadiran.</i></p>'; } else { awardMonthSelect.disabled = false; calculateAwardButton.disabled = false; awardResultDisplay.innerHTML = '<p><i>Pilih bulan dan klik tombol.</i></p>'; } }
 
          function calculateMonthlyAward() {
-             const selectedMonth = awardMonthSelect.value; // YYYY-MM
-             if (!selectedMonth) {
-                 showNotification("Silakan pilih bulan terlebih dahulu.", "warning");
-                 awardResultDisplay.innerHTML = '<p style="color: orange;">Pilih bulan dari daftar di atas.</p>';
-                 return;
-             }
+             const selectedMonth = awardMonthSelect.value;
+             if (!selectedMonth) { showNotification("Pilih bulan.", "warning"); awardResultDisplay.innerHTML = '<p style="color: orange;">Pilih bulan.</p>'; return; }
 
              setLoading(calculateAwardButton, true);
-             awardResultDisplay.innerHTML = '<p><i>Menghitung data...</i></p>';
+             awardResultDisplay.innerHTML = '<p><i>Menghitung...</i></p>';
 
-             const monthlyCounts = {};
+             const monthlyCounts = {}; // Count actual presence
              let totalAttendanceInMonth = 0;
 
-             // Iterate through attendance data
              Object.keys(attendance).forEach(date => {
                  if (date.startsWith(selectedMonth)) {
                      const dailyRecords = attendance[date];
                      if (dailyRecords) {
                          Object.keys(dailyRecords).forEach(memberName => {
-                             // IMPORTANT: Only count active members
-                             if (members.includes(memberName)) {
-                                 if (dailyRecords[memberName].present === true) {
-                                     monthlyCounts[memberName] = (monthlyCounts[memberName] || 0) + 1;
-                                     totalAttendanceInMonth++;
-                                 }
+                             // Only count active members who were PRESENT (including substitutes)
+                             if (members.includes(memberName) && dailyRecords[memberName].present === true) {
+                                 monthlyCounts[memberName] = (monthlyCounts[memberName] || 0) + 1;
+                                 totalAttendanceInMonth++;
                              }
                          });
                      }
@@ -544,117 +900,121 @@
              let winners = [];
 
              if (totalAttendanceInMonth === 0) {
-                  awardResultDisplay.innerHTML = `<p>Tidak ada data kehadiran yang tercatat untuk bulan ${awardMonthSelect.options[awardMonthSelect.selectedIndex].text}.</p>`;
+                  awardResultDisplay.innerHTML = `<p>Tidak ada kehadiran tercatat untuk ${awardMonthSelect.options[awardMonthSelect.selectedIndex].text}.</p>`;
                   setLoading(calculateAwardButton, false);
                   return;
              }
 
-             // Find the max attendance count
-             Object.values(monthlyCounts).forEach(count => {
-                 if (count > maxAttendance) {
-                     maxAttendance = count;
-                 }
-             });
+             Object.values(monthlyCounts).forEach(count => { if (count > maxAttendance) maxAttendance = count; });
+             Object.keys(monthlyCounts).forEach(memberName => { if (monthlyCounts[memberName] === maxAttendance) winners.push(memberName); });
 
-             // Find all members with the max count
-             Object.keys(monthlyCounts).forEach(memberName => {
-                 if (monthlyCounts[memberName] === maxAttendance) {
-                     winners.push(memberName);
-                 }
-             });
-
-             // Display result
              const [year, month] = selectedMonth.split('-');
              const monthName = monthNamesIndonesian[parseInt(month, 10) - 1];
              if (winners.length > 0) {
                  const winnerText = winners.join(', ');
-                 awardResultDisplay.innerHTML = `
-                     <p>Penghargaan Bulan <strong>${monthName} ${year}</strong>:</p>
-                     <p class="winner"><i class="fa-solid fa-star"></i> ${winnerText}</p>
-                     <p>Dengan total kehadiran: <strong>${maxAttendance} kali</strong>.</p>
-                 `;
-                 showNotification(`Penghargaan ${monthName} ${year} diberikan kepada ${winnerText}.`, "success");
+                 awardResultDisplay.innerHTML = `<p>Penghargaan Bulan <strong>${monthName} ${year}</strong>:</p><p class="winner"><i class="fa-solid fa-star"></i> ${winnerText}</p><p>Total kehadiran: <strong>${maxAttendance} kali</strong>.</p>`;
+                 showNotification(`Penghargaan ${monthName} ${year}: ${winnerText}.`, "success");
              } else {
-                 // This case should be covered by totalAttendanceInMonth check, but as a fallback:
-                 awardResultDisplay.innerHTML = `<p>Tidak ditemukan data kehadiran untuk anggota aktif di bulan ${monthName} ${year}.</p>`;
+                 awardResultDisplay.innerHTML = `<p>Tidak ditemukan data kehadiran untuk ${monthName} ${year}.</p>`;
              }
-
              setLoading(calculateAwardButton, false);
          }
 
 
         /***********************************************************************
-         *     10) LAPORAN PARTISIPASI (Terminology Changed)                  *
+         *     11) LAPORAN PARTISIPASI (Modified Calculation)                 *
          ***********************************************************************/
         async function generateReport() {
             setLoading(generateReportButton, true);
             reportDisplay.innerHTML = "<p>Memproses laporan...</p>";
-            await new Promise(resolve => setTimeout(resolve, 50)); // Allow UI update
+            await new Promise(resolve => setTimeout(resolve, 50));
 
             try {
-                if (members.length === 0) { reportDisplay.innerHTML = "<p>Tidak ada anggota OSIS untuk dilaporkan.</p>"; return; }
-                const hasSchedule = Object.keys(schedule).some(day => schedule[day]?.length > 0);
+                if (members.length === 0) { reportDisplay.innerHTML = "<p>Tidak ada anggota.</p>"; return; }
                 const hasAttendance = Object.keys(attendance).length > 0;
-                if (!hasSchedule && !hasAttendance) { reportDisplay.innerHTML = "<p>Belum ada data jadwal atau kehadiran yang cukup.</p>"; return; }
+                if (!hasAttendance) { reportDisplay.innerHTML = "<p>Belum ada data kehadiran.</p>"; return; }
 
                 const memberStats = {};
-                // Initialize stats only for *current* members
-                members.forEach(m => (memberStats[m] = { scheduled: 0, attended: 0 }));
+                members.forEach(m => (memberStats[m] = { scheduled: 0, attended: 0, substituted: 0 })); // Add substituted count
                 let totalPiketOpportunitiesRecorded = 0;
 
-                // Iterate through attendance records
                 for (const date in attendance) {
                     const dateObj = new Date(date + "T00:00:00");
-                    if (isNaN(dateObj.getTime())) continue; // Skip invalid dates
+                    if (isNaN(dateObj.getTime())) continue;
                     const dayName = daysInIndonesian[dateObj.getDay()];
                     const scheduledMembersOnDate = schedule[dayName] || [];
                     const dailyRecord = attendance[date];
 
-                    // Process only members who were scheduled AND are still active
+                    // First pass: Count scheduled opportunities for active members
                     scheduledMembersOnDate.forEach(member => {
-                        if (memberStats[member] && dailyRecord && dailyRecord[member] !== undefined) {
-                            memberStats[member].scheduled++;
-                            totalPiketOpportunitiesRecorded++;
-                            if (dailyRecord[member].present === true) {
-                                memberStats[member].attended++;
-                            }
-                        }
+                         // Only count if member is active AND there's an attendance record for this date (meaning it was checked)
+                         if (memberStats[member] && dailyRecord) {
+                              memberStats[member].scheduled++;
+                              totalPiketOpportunitiesRecorded++;
+                         }
+                    });
+
+                    // Second pass: Count attendance based on who actually performed
+                    Object.keys(dailyRecord).forEach(memberName => {
+                         if (memberStats[memberName]) { // Only process active members found in the record
+                              const record = dailyRecord[memberName];
+                              if (record.present === true) {
+                                   memberStats[memberName].attended++; // Count if present (includes substitutes)
+                                   if (record.isSubstitute) {
+                                        memberStats[memberName].substituted++; // Specifically count substitute appearances
+                                   }
+                              }
+                         }
                     });
                 }
 
-                if (totalPiketOpportunitiesRecorded === 0) { reportDisplay.innerHTML = "<p>Belum ada data kehadiran relevan dengan jadwal tersimpan.</p>"; return; }
 
-                // Map to report array, calculate percentage
+                if (totalPiketOpportunitiesRecorded === 0) { reportDisplay.innerHTML = "<p>Belum ada data kehadiran relevan.</p>"; return; }
+
                 const reportDataArray = members.map(member => {
                     const stats = memberStats[member];
-                    const percentage = stats.scheduled > 0 ? (stats.attended / stats.scheduled) * 100 : 0;
-                    return { name: member, attended: stats.attended, scheduled: stats.scheduled, percentage: percentage };
+                    // Base percentage on scheduled duties they were assigned
+                    const percentage = stats.scheduled > 0 ? (stats.attended - stats.substituted) / stats.scheduled * 100 : 0;
+                    // Ensure percentage isn't negative if they only substituted
+                    const displayPercentage = Math.max(0, percentage);
+                    return {
+                        name: member,
+                        attended: stats.attended, // Total times present (incl. substituting)
+                        scheduled: stats.scheduled, // Times they were scheduled and attendance was recorded
+                        substituted: stats.substituted, // Times they substituted for others
+                        percentage: displayPercentage // Percentage of *their own scheduled* duties they attended
+                    };
                 });
 
-                // Sort: Percentage DESC, Attended DESC, Name ASC
                 reportDataArray.sort((a, b) => {
-                    if (b.percentage !== a.percentage) return b.percentage - a.percentage;
-                    if (b.attended !== a.attended) return b.attended - a.attended;
-                    return a.name.localeCompare(b.name);
+                    if (b.percentage !== a.percentage) return b.percentage - a.percentage; // Primary sort: % of own schedule attended
+                    if (b.attended !== a.attended) return b.attended - a.attended; // Secondary sort: Total presence
+                    return a.name.localeCompare(b.name); // Tertiary sort: Name
                 });
 
-                // Display report
-                reportDisplay.innerHTML = ""; // Clear previous
-                displayReportSummary(reportDataArray); // Display NEW summary
+                reportDisplay.innerHTML = "";
+                displayReportSummary(reportDataArray); // Use the same summary function
 
                 reportDataArray.forEach(item => {
                     const div = document.createElement("div"); div.classList.add("report-item");
                     const nameSpan = document.createElement("span"); nameSpan.textContent = item.name + ": "; nameSpan.style.fontWeight = "bold";
-                    const statsSpan = document.createElement("span"); statsSpan.innerHTML = `Hadir <strong>${item.attended}</strong> dari <strong>${item.scheduled}</strong> kali piket tercatat.`;
+                    const statsSpan = document.createElement("span");
+                    // Updated stats text
+                    statsSpan.innerHTML = `Hadir <strong>${item.attended}</strong> kali (<strong>${item.substituted}</strong> kali menggantikan). Dijadwalkan <strong>${item.scheduled}</strong> kali.`;
                     div.appendChild(nameSpan); div.appendChild(statsSpan);
-                    if (item.scheduled > 0) {
+
+                    if (item.scheduled > 0) { // Show percentage bar based on their own schedule completion
                         const barContainer = document.createElement("div"); barContainer.classList.add("report-bar-container");
                         const bar = document.createElement("div"); bar.classList.add("report-bar");
                         requestAnimationFrame(() => { bar.style.width = item.percentage + "%"; });
-                        if (item.percentage < 50) bar.classList.add("low"); // Keep visual cue
-                        const pctSpan = document.createElement("span"); pctSpan.classList.add("report-text"); pctSpan.textContent = `(${item.percentage.toFixed(1)}%)`;
+                        if (item.percentage < 50) bar.classList.add("low");
+                        const pctSpan = document.createElement("span"); pctSpan.classList.add("report-text"); pctSpan.textContent = `(${item.percentage.toFixed(1)}% dari jadwal pribadi)`;
                         barContainer.appendChild(bar); barContainer.appendChild(pctSpan); div.appendChild(barContainer);
-                    } else {
+                    } else if (item.attended > 0) { // Attended only as substitute
+                         const subOnlyText = document.createElement("span"); subOnlyText.classList.add("report-text"); subOnlyText.style.marginLeft = "10px"; subOnlyText.style.color = 'var(--swap-color)'; subOnlyText.textContent = "(Hadir hanya sebagai pengganti)";
+                         div.appendChild(subOnlyText);
+                    }
+                     else { // No schedule recorded, no attendance
                         const noData = document.createElement("span"); noData.classList.add("report-text"); noData.style.marginLeft = "10px"; noData.textContent = "(Tidak ada data piket tercatat)";
                         div.appendChild(noData);
                     }
@@ -663,56 +1023,62 @@
 
             } catch (error) {
                 console.error("Error generating report:", error);
-                reportDisplay.innerHTML = "<p style='color:red;'>Terjadi kesalahan saat membuat laporan.</p>";
+                reportDisplay.innerHTML = "<p style='color:red;'>Gagal membuat laporan.</p>";
                 showNotification("Gagal membuat laporan.", "error");
             } finally {
                 setLoading(generateReportButton, false);
             }
         }
 
-        // ** Updated Summary Display with New Terminology **
-        function displayReportSummary(dataArr) {
-            const filtered = dataArr.filter(m => m.scheduled > 0); // Only consider members with recorded schedules
-            if (!filtered.length) return; // No relevant data
+        // displayReportSummary remains the same, using the 'percentage' field which now reflects own schedule completion
+        function displayReportSummary(dataArr) { /* ... (unchanged) ... */ const filtered = dataArr.filter(m => m.scheduled > 0); if (!filtered.length) { /* Maybe add message if only substitutes exist */ return; } const summaryDiv = document.createElement("div"); summaryDiv.classList.add("report-summary"); const highest = filtered[0]; const lowest = filtered[filtered.length - 1]; let html = `<span class="positive">✅ <strong>Partisipasi Terbaik (Jadwal Pribadi):</strong> ${highest.name} (${highest.percentage.toFixed(1)}%)</span><br>`; if (filtered.length > 1 && highest.name !== lowest.name) { html += `<span class="needs-improvement">📈 <strong>Perlu Peningkatan (Jadwal Pribadi):</strong> ${lowest.name} (${lowest.percentage.toFixed(1)}%)</span>`; } else if (filtered.length === 1) { html += `<span class="info">ℹ️ (Hanya satu anggota dengan data jadwal pribadi)</span>`; } else { html += `<span class="info">ℹ️ (Data sama atau tidak cukup pembanding)</span>`; } summaryDiv.innerHTML = html; if (reportDisplay.firstChild) { reportDisplay.insertBefore(summaryDiv, reportDisplay.firstChild); } else { reportDisplay.appendChild(summaryDiv); } }
+        // exportReportToCSV needs update to include substitute count
+        function exportReportToCSV() {
+             const reportData = [];
+             const memberStats = {};
+             members.forEach(m => (memberStats[m] = { scheduled: 0, attended: 0, substituted: 0 }));
+             let hasRelevantData = false;
 
-            const summaryDiv = document.createElement("div");
-            summaryDiv.classList.add("report-summary");
+             for (const date in attendance) {
+                 const dateObj = new Date(date + "T00:00:00"); if (isNaN(dateObj.getTime())) continue;
+                 const dayName = daysInIndonesian[dateObj.getDay()]; const scheduledMembersOnDate = schedule[dayName] || []; const dailyRecord = attendance[date];
+                 scheduledMembersOnDate.forEach(member => { if (memberStats[member] && dailyRecord) { memberStats[member].scheduled++; hasRelevantData = true; } });
+                 Object.keys(dailyRecord).forEach(memberName => { if (memberStats[memberName]) { const record = dailyRecord[memberName]; if (record.present === true) { memberStats[memberName].attended++; if (record.isSubstitute) memberStats[memberName].substituted++; hasRelevantData = true; } } });
+             }
 
-            const highest = filtered[0];
-            const lowest = filtered[filtered.length - 1];
+             if (!hasRelevantData) { showNotification("Tidak ada data laporan relevan.", "warning"); return; }
 
-            let html = `<span class="positive">✅ <strong>Partisipasi Terbaik:</strong> ${highest.name} (${highest.percentage.toFixed(1)}%)</span><br>`;
+             const reportDataArray = members.map(member => {
+                 const stats = memberStats[member];
+                 const percentage = stats.scheduled > 0 ? Math.max(0, (stats.attended - stats.substituted) / stats.scheduled * 100) : 0;
+                 return { name: member, attended: stats.attended, scheduled: stats.scheduled, substituted: stats.substituted, percentage: percentage };
+             }).sort((a, b) => { if (b.percentage !== a.percentage) return b.percentage - a.percentage; if (b.attended !== a.attended) return b.attended - a.attended; return a.name.localeCompare(b.name); });
 
-            // Show improvement needed only if there's more than one person with data and they are different
-            if (filtered.length > 1 && highest.name !== lowest.name) {
-                 html += `<span class="needs-improvement">📈 <strong>Perlu Peningkatan:</strong> ${lowest.name} (${lowest.percentage.toFixed(1)}%)</span>`;
-            } else if (filtered.length === 1) {
-                 html += `<span class="info">ℹ️ (Hanya satu anggota dengan data partisipasi)</span>`;
-            } else { // Multiple people, but all have same stats or only one person exists
-                 html += `<span class="info">ℹ️ (Beberapa anggota memiliki tingkat partisipasi yang sama atau data belum cukup)</span>`;
-            }
+             let csvContent = "data:text/csv;charset=utf-8,";
+             // Add new column header
+             csvContent += "Nama Anggota,Jadwal Tercatat,Total Hadir,Kali Menggantikan,Persentase Kehadiran Jadwal Pribadi (%)\r\n";
+             reportDataArray.forEach(row => {
+                 const safeName = `"${row.name.replace(/"/g, '""')}"`;
+                 // Add substituted data to row
+                 const rowData = [ safeName, row.scheduled, row.attended, row.substituted, row.percentage.toFixed(1) ];
+                 csvContent += rowData.join(",") + "\r\n";
+             });
 
-            summaryDiv.innerHTML = html;
-            if (reportDisplay.firstChild) {
-                reportDisplay.insertBefore(summaryDiv, reportDisplay.firstChild);
-            } else {
-                reportDisplay.appendChild(summaryDiv);
-            }
-        }
-        function exportReportToCSV() { /* ... (unchanged) ... */ const memberStats = {}; members.forEach(m => (memberStats[m] = { scheduled: 0, attended: 0 })); let hasRelevantData = false; for (const date in attendance) { const dateObj = new Date(date + "T00:00:00"); if (isNaN(dateObj.getTime())) continue; const dayName = daysInIndonesian[dateObj.getDay()]; const scheduledMembersOnDate = schedule[dayName] || []; const dailyRecord = attendance[date]; scheduledMembersOnDate.forEach(member => { if (memberStats[member] && dailyRecord[member] !== undefined) { memberStats[member].scheduled++; hasRelevantData = true; if (dailyRecord[member].present === true) { memberStats[member].attended++; } } }); } if (!hasRelevantData) { showNotification("Tidak ada data laporan relevan.", "warning"); return; } const reportDataArray = members.map(member => { const stats = memberStats[member]; const percentage = stats.scheduled > 0 ? (stats.attended / stats.scheduled) * 100 : 0; return { name: member, attended: stats.attended, scheduled: stats.scheduled, percentage: percentage }; }).sort((a, b) => { if (b.percentage !== a.percentage) return b.percentage - a.percentage; if (b.attended !== a.attended) return b.attended - a.attended; return a.name.localeCompare(b.name); }); let csvContent = "data:text/csv;charset=utf-8,"; csvContent += "Nama Anggota,Jadwal Tercatat,Hadir,Persentase Kehadiran (%)\r\n"; reportDataArray.forEach(row => { const safeName = `"${row.name.replace(/"/g, '""')}"`; const rowData = [ safeName, row.scheduled, row.attended, row.percentage.toFixed(1) ]; csvContent += rowData.join(",") + "\r\n"; }); const encodedUri = encodeURI(csvContent); const link = document.createElement("a"); link.setAttribute("href", encodedUri); const today = new Date().toISOString().slice(0, 10); link.setAttribute("download", `laporan_partisipasi_osis_${today}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link); showNotification("Laporan CSV diunduh.", "success"); }
+             const encodedUri = encodeURI(csvContent); const link = document.createElement("a"); link.setAttribute("href", encodedUri); const today = new Date().toISOString().slice(0, 10); link.setAttribute("download", `laporan_partisipasi_osis_${today}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link); showNotification("Laporan CSV diunduh.", "success");
+         }
 
 
         /***********************************************************************
-         *     11) BACKUP & RESTORE (Unchanged)                              *
+         *     12) BACKUP & RESTORE (Unchanged)                              *
          ***********************************************************************/
-        function backupData() { /* ... (unchanged) ... */ setLoading(backupButton, true); try { const dataToBackup = { members: [...members], schedule: JSON.parse(JSON.stringify(schedule)), attendance: JSON.parse(JSON.stringify(attendance)), backupDate: new Date().toISOString() }; const jsonString = JSON.stringify(dataToBackup, null, 2); backupDataArea.value = jsonString; backupDataArea.select(); showNotification("Backup data (memori) dibuat.", "success"); } catch (err) { console.error("Error creating backup:", err); showNotification("Gagal membuat backup.", "error"); } finally { setLoading(backupButton, false); } }
-        async function restoreData() { /* ... (unchanged) ... */ const backupJSON = restoreDataArea.value.trim(); if (!backupJSON) { showNotification("Area restore kosong.", "warning"); return; } setLoading(restoreButton, true); showNotification("Memulai restore...", "info"); try { const restoredData = JSON.parse(backupJSON); if (!Array.isArray(restoredData.members) || typeof restoredData.schedule !== 'object' || typeof restoredData.attendance !== 'object') { throw new Error("Format backup tidak valid."); } await resetAllDataAction(); const batcher = writeBatch(db); let writeCount = 0; restoredData.members.forEach(memberName => { if (typeof memberName === 'string' && memberName.trim()) { const newMemberRef = doc(collection(db, "members")); batcher.set(newMemberRef, { name: memberName.trim() }); writeCount++; } }); for (const day in restoredData.schedule) { if (daysInIndonesian.includes(day) && Array.isArray(restoredData.schedule[day])) { const scheduleRef = doc(db, "schedules", day); batcher.set(scheduleRef, { day: day, members: restoredData.schedule[day] }); writeCount++; } } for (const date in restoredData.attendance) { if (/^\d{4}-\d{2}-\d{2}$/.test(date) && typeof restoredData.attendance[date] === 'object') { const attendanceRef = doc(db, "attendance", date); const validRecords = migrateAttendanceObject(restoredData.attendance[date]); if (Object.keys(validRecords).length > 0) { batcher.set(attendanceRef, { date: date, records: validRecords }); writeCount++; } } } if (writeCount > 490) { console.warn("Operasi restore mendekati limit."); } await batcher.commit(); await loadAllData(); displayMembers(modalMemberSearchInput.value); displaySchedule(); populateAwardMonthSelect(); /* Refresh months */ attendanceMarkingDiv.classList.remove('visible'); attendanceStatusDiv.innerHTML = ""; reportDisplay.innerHTML = ""; restoreDataArea.value = ""; showNotification("Restore data berhasil!", "success"); } catch (err) { console.error("Error during restore:", err); showNotification(`Gagal restore: ${err.message}.`, "error"); } finally { setLoading(restoreButton, false); } }
-        async function resetAllData(askConfirm = true) { /* ... (unchanged) ... */ if (askConfirm) { showConfirmationModal('Konfirmasi Reset Aplikasi', `<strong>PERINGATAN KERAS!</strong> Anda akan <strong>MENGHAPUS SEMUA</strong> data di Firestore.<br>Tindakan ini tidak dapat dibatalkan. Yakin?`, () => resetAllDataAction(), 'danger'); } else { await resetAllDataAction(); } }
-        async function resetAllDataAction() { /* ... (unchanged) ... */ setLoading(resetButton, true); showNotification("Memulai reset Firestore...", "info"); try { const collectionsToDelete = ["members", "schedules", "attendance"]; const batcher = writeBatch(db); let deleteCount = 0; for (const collName of collectionsToDelete) { const snapshot = await getDocs(collection(db, collName)); snapshot.forEach(docSnap => { batcher.delete(docSnap.ref); deleteCount++; }); } if (deleteCount > 0) { await batcher.commit(); } members = []; schedule = {}; attendance = {}; displayMembers(); displaySchedule(); populateAwardMonthSelect(); attendanceMarkingDiv.classList.remove('visible'); attendanceStatusDiv.innerHTML = ""; reportDisplay.innerHTML = ""; backupDataArea.value = ""; restoreDataArea.value = ""; showNotification("Reset Firestore berhasil.", "success"); } catch (err) { console.error("Error resetting data:", err); showNotification("Gagal mereset Firestore", "error"); } finally { setLoading(resetButton, false); } }
+        function backupData() { /* ... (unchanged) ... */ setLoading(backupButton, true); try { const dataToBackup = { members: [...members], schedule: JSON.parse(JSON.stringify(schedule)), attendance: JSON.parse(JSON.stringify(attendance)), backupDate: new Date().toISOString() }; const jsonString = JSON.stringify(dataToBackup, null, 2); backupDataArea.value = jsonString; backupDataArea.select(); showNotification("Backup data (memori) dibuat.", "success"); } catch (err) { console.error("Error creating backup:", err); showNotification("Gagal backup.", "error"); } finally { setLoading(backupButton, false); } }
+        async function restoreData() { /* ... (unchanged) ... */ const backupJSON = restoreDataArea.value.trim(); if (!backupJSON) { showNotification("Area restore kosong.", "warning"); return; } setLoading(restoreButton, true); showNotification("Memulai restore...", "info"); try { const restoredData = JSON.parse(backupJSON); if (!Array.isArray(restoredData.members) || typeof restoredData.schedule !== 'object' || typeof restoredData.attendance !== 'object') { throw new Error("Format backup tidak valid."); } await resetAllDataAction(); const batcher = writeBatch(db); let writeCount = 0; restoredData.members.forEach(memberName => { if (typeof memberName === 'string' && memberName.trim()) { const newMemberRef = doc(collection(db, "members")); batcher.set(newMemberRef, { name: memberName.trim() }); writeCount++; } }); for (const day in restoredData.schedule) { if (daysInIndonesian.includes(day) && Array.isArray(restoredData.schedule[day])) { const scheduleRef = doc(db, "schedules", day); batcher.set(scheduleRef, { day: day, members: restoredData.schedule[day] }); writeCount++; } } for (const date in restoredData.attendance) { if (/^\d{4}-\d{2}-\d{2}$/.test(date) && typeof restoredData.attendance[date] === 'object') { const attendanceRef = doc(db, "attendance", date); const validRecords = migrateAttendanceObject(restoredData.attendance[date]); if (Object.keys(validRecords).length > 0) { batcher.set(attendanceRef, { date: date, records: validRecords }); writeCount++; } } } if (writeCount > 490) { console.warn("Operasi restore mendekati limit."); } await batcher.commit(); await loadAllData(); displayMembers(modalMemberSearchInput.value); displaySchedule(); populateAwardMonthSelect(); attendanceMarkingDiv.classList.remove('visible'); attendanceStatusDiv.innerHTML = ""; reportDisplay.innerHTML = ""; restoreDataArea.value = ""; showNotification("Restore data berhasil!", "success"); } catch (err) { console.error("Error during restore:", err); showNotification(`Gagal restore: ${err.message}.`, "error"); } finally { setLoading(restoreButton, false); } }
+        async function resetAllData(askConfirm = true) { /* ... (unchanged) ... */ if (askConfirm) { showConfirmationModal('Konfirmasi Reset Aplikasi', `<strong>PERINGATAN KERAS!</strong> Hapus SEMUA data di Firestore?<br>Tidak dapat dibatalkan. Yakin?`, () => resetAllDataAction(), 'danger'); } else { await resetAllDataAction(); } }
+        async function resetAllDataAction() { /* ... (unchanged) ... */ setLoading(resetButton, true); showNotification("Memulai reset Firestore...", "info"); try { const collectionsToDelete = ["members", "schedules", "attendance"]; const batcher = writeBatch(db); let deleteCount = 0; for (const collName of collectionsToDelete) { const snapshot = await getDocs(collection(db, collName)); snapshot.forEach(docSnap => { batcher.delete(docSnap.ref); deleteCount++; }); } if (deleteCount > 0) { await batcher.commit(); } members = []; schedule = {}; attendance = {}; displayMembers(); displaySchedule(); populateAwardMonthSelect(); attendanceMarkingDiv.classList.remove('visible'); attendanceStatusDiv.innerHTML = ""; reportDisplay.innerHTML = ""; backupDataArea.value = ""; restoreDataArea.value = ""; showNotification("Reset Firestore berhasil.", "success"); } catch (err) { console.error("Error resetting data:", err); showNotification("Gagal reset Firestore", "error"); } finally { setLoading(resetButton, false); } }
 
 
         /***********************************************************************
-         *     12) INIT (Unchanged)                                           *
+         *     13) INIT (Unchanged)                                           *
          ***********************************************************************/
         initializeAppMainApp();
 
