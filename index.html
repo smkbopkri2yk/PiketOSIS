@@ -109,6 +109,7 @@
 
         /* Utility */
         .hidden { display: none !important; }
+        .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;}
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -142,10 +143,10 @@
             overflow: hidden; /* For ripple */
         }
         .md-button:disabled {
-            opacity: 0.38; /* M3 Disabled state */
             cursor: not-allowed;
         }
-        .md-button i { font-size: 1.125rem; /* 18px */ }
+        .md-button i:not(.button-spinner) { font-size: 1.125rem; /* 18px */ }
+
 
         .md-button--filled {
             background-color: var(--md-sys-color-primary);
@@ -153,16 +154,26 @@
         }
         .md-button--filled:hover:not(:disabled) {
             box-shadow: var(--md-sys-elevation-level-1);
-            /* Slightly darker/lighter shade on hover is typical, can be done with filter or new vars */
         }
         .md-button--filled:disabled {
              background-color: var(--md-sys-color-on-surface);
-             color: var(--md-sys-color-surface);
-             opacity: 0.12; /* Special opacity for disabled filled button background */
+             color: var(--md-sys-color-on-surface); 
+             opacity: 0.12; 
         }
          html[data-theme="dark"] .md-button--filled:disabled {
-             opacity: 0.12; /* Text is already low opacity, this makes bg less prominent */
+             background-color: var(--md-sys-color-on-surface);
+             color: var(--md-sys-color-on-surface);
+             opacity: 0.12;
         }
+        .md-button:disabled .button-text {
+            opacity: 0.38;
+        }
+        html[data-theme="dark"] .md-button:disabled .button-text {
+             color: var(--md-sys-color-on-surface); 
+             opacity: 0.38;
+        }
+
+
         .md-button--filled.danger { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error); }
         .md-button--filled.secondary { background-color: var(--md-sys-color-secondary); color: var(--md-sys-color-on-secondary); }
         .md-button--filled.tertiary { background-color: var(--md-sys-color-tertiary); color: var(--md-sys-color-on-tertiary); }
@@ -174,29 +185,37 @@
             border: 1px solid var(--md-sys-color-outline);
         }
         .md-button--outlined:hover:not(:disabled) {
-            background-color: rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.08); /* Using RGB for alpha */
+            background-color: rgba(103, 80, 164, 0.08); 
         }
-         .md-button--outlined:disabled {
-            border-color: rgba(var(--md-sys-color-on-surface-rgb, 28, 27, 31), 0.12);
-            color: rgba(var(--md-sys-color-on-surface-rgb, 28, 27, 31), 0.38);
+         html[data-theme="dark"] .md-button--outlined:hover:not(:disabled) {
+            background-color: rgba(208, 188, 255, 0.08); 
+        }
+
+        .md-button--outlined:disabled {
+            border-color: rgba(28, 27, 31, 0.12); 
+        }
+         html[data-theme="dark"] .md-button--outlined:disabled {
+            border-color: rgba(230,225,229, 0.12);
         }
         .md-button--outlined.danger { color: var(--md-sys-color-error); border-color: var(--md-sys-color-error); }
-        .md-button--outlined.danger:hover:not(:disabled) { background-color: rgba(var(--md-sys-color-error-rgb, 179, 38, 30), 0.08); }
+        .md-button--outlined.danger:hover:not(:disabled) { background-color: rgba(179, 38, 30, 0.08); }
+         html[data-theme="dark"] .md-button--outlined.danger:hover:not(:disabled) { background-color: rgba(242, 184, 181, 0.08); }
 
 
         .md-button--text {
             background-color: transparent;
             color: var(--md-sys-color-primary);
-            padding: 0.625rem 0.75rem; /* 10px 12px */
+            padding: 0.625rem 0.75rem;
         }
         .md-button--text:hover:not(:disabled) {
-            background-color: rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.08);
+            background-color: rgba(103, 80, 164, 0.08);
         }
-        .md-button--text:disabled {
-            color: rgba(var(--md-sys-color-on-surface-rgb, 28, 27, 31), 0.38);
+         html[data-theme="dark"] .md-button--text:hover:not(:disabled) {
+            background-color: rgba(208, 188, 255, 0.08);
         }
         .md-button--text.danger { color: var(--md-sys-color-error); }
-        .md-button--text.danger:hover:not(:disabled) { background-color: rgba(var(--md-sys-color-error-rgb, 179, 38, 30), 0.08); }
+        .md-button--text.danger:hover:not(:disabled) { background-color: rgba(179, 38, 30, 0.08); }
+         html[data-theme="dark"] .md-button--text.danger:hover:not(:disabled) { background-color: rgba(242, 184, 181, 0.08); }
 
 
         .md-icon-button {
@@ -214,9 +233,12 @@
             transition: background-color 0.2s;
         }
         .md-icon-button:hover:not(:disabled) {
-            background-color: rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.08);
+            background-color: rgba(103, 80, 164, 0.08);
         }
-        .md-icon-button i { font-size: 1.5rem; /* 24px */ }
+         html[data-theme="dark"] .md-icon-button:hover:not(:disabled) {
+            background-color: rgba(208, 188, 255, 0.08);
+        }
+        .md-icon-button i { font-size: 1.5rem; }
 
 
         /* Text Fields (Filled Style) */
@@ -471,12 +493,14 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.75rem 1rem; /* 12px 16px */
-            background-color: var(--md-sys-color-surface-container-highest);
+            background-color: transparent; /* Let card handle bg */
             border-bottom: 1px solid var(--md-sys-color-outline); /* Divider */
             transition: background-color 0.2s;
         }
         .md-list-item:last-child { border-bottom: none; }
-        .md-list-item:hover { background-color: var(--md-sys-color-surface-variant); }
+        .md-list-item:hover { background-color: rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.04); } /* Subtle hover */
+         html[data-theme="dark"] .md-list-item:hover { background-color: rgba(208, 188, 255, 0.04); }
+
 
         .md-list-item__text {
             font-size: 1rem; /* Body Large */
@@ -496,6 +520,7 @@
             width: 1.25rem; height: 1.25rem;
             margin-right: 0.5rem;
             cursor: pointer;
+            vertical-align: middle;
         }
         label.md-selection-label {
             display: inline-flex;
@@ -530,6 +555,7 @@
             color: var(--md-sys-color-error);
             font-size: 0.875rem;
             margin-top: 0.5rem;
+            text-align: center;
         }
 
         /* Main App Structure */
@@ -608,6 +634,8 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 0.75rem;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 0.5rem;
         }
         .attendance-item-md__name {
             font-size: 1rem; /* Title Medium */
@@ -632,6 +660,24 @@
             gap: 1rem;
         }
         .attendance-item-md__controls .md-selection-label { margin-right: 1rem; }
+        .attendance-item-md__controls .reason-input-container {
+            flex-grow: 1; /* Allow reason input to take space */
+            min-width: 150px; /* Ensure it's not too small */
+        }
+
+        /* Button loading state specific styles */
+        .md-button .button-icon-spinner-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center; /* Center icon/spinner */
+            /* margin-right: 0.5em; Gap is handled by .md-button gap */
+        }
+        .md-button .button-spinner {
+            display: none; /* Hidden by default */
+            width: 1.125em; /* Match icon size */
+            height: 1.125em; /* Match icon size */
+            /* animation: spin 1s linear infinite; Spinner class already has this */
+        }
 
 
         /* --- MOBILE OPTIMIZATIONS --- */
@@ -647,7 +693,6 @@
             }
              .md-dialog__title { font-size: 1.25rem; }
 
-            /* Make table cells stack or ensure horizontal scroll is very usable */
             .table-responsive-container {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -655,16 +700,14 @@
             .attendance-item-md__controls {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.5rem;
+                gap: 0.75rem; /* Reduced gap for mobile */
             }
             .attendance-item-md__controls .md-textfield-container { width: 100%; }
-            .attendance-item-md__controls .md-button { width: 100%; }
+            .attendance-item-md__controls .md-button { width: 100%; justify-content: center; } /* Full width buttons in stacked controls */
 
             /* Grid for schedule editor to stack */
-            #schedule-tab .p-4.grid {
-                grid-template-columns: 1fr;
-            }
-            #reports-tab .grid {
+            #schedule-tab .md-card > div[style*="grid-template-columns"], 
+            #reports-tab .md-card > div[style*="grid-template-columns"] {
                 grid-template-columns: 1fr;
             }
         }
@@ -680,16 +723,15 @@
 
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900"> <!-- Tailwind classes here are only for initial body bg, will be overridden by MD vars -->
-
+<body> 
     <!-- Login Form -->
-    <div id="login-form" class="fixed inset-0 flex items-center justify-center z-50 md-dialog-overlay visible"> <!-- Add visible class initially -->
-        <div> <!-- This div is now the card -->
+    <div id="login-form" class="md-dialog-overlay visible">
+        <div> 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 class="text-2xl font-bold">Program Piket OSIS</h2>
+                <h2 id="login-title-text">Program Piket OSIS</h2>
                 <button id="toggle-theme" class="md-icon-button">
-                    <i class="fas fa-moon dark-hidden"></i>
-                    <i class="fas fa-sun hidden dark-block"></i>
+                    <i class="fas fa-moon"></i> <!-- Default: Moon (for light theme) -->
+                    <i class="fas fa-sun hidden"></i> <!-- Sun (for dark theme) -->
                 </button>
             </div>
             <form id="login-form-content" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -701,13 +743,13 @@
                     <label for="password" class="md-textfield-label">Password</label>
                     <input type="password" id="password" name="password" placeholder="admin123" required class="md-textfield">
                 </div>
-                <div id="login-error" class="md-textfield-supporting-text error hidden" style="color: var(--md-sys-color-error);"></div>
-                <button type="submit" id="login-submit-btn" class="md-button md-button--filled" style="width: 100%;">
-                    <span id="login-text">Login</span>
-                    <svg id="login-spinner" class="hidden w-5 h-5 text-white spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" style="width: 1.25em; height: 1.25em;">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                <div id="login-error" class="md-textfield-supporting-text error hidden"></div>
+                <button type="submit" id="login-submit-btn" class="md-button md-button--filled" style="width: 100%;" data-default-text="Login">
+                     <span class="button-icon-spinner-container">
+                        <!-- No default icon for login button, spinner will appear here -->
+                        <i class="fas fa-spinner fa-spin button-spinner hidden"></i>
+                    </span>
+                    <span class="button-text">Login</span>
                 </button>
             </form>
         </div>
@@ -715,22 +757,22 @@
 
     <!-- Main Application (initially hidden) -->
     <div id="main-app" class="hidden">
-        <!-- Header (Top App Bar) -->
         <header>
             <div class="container">
                 <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-calendar-check"></i> <!-- Updated Icon -->
+                    <i class="fas fa-calendar-check"></i>
                     <h1>Program Piket OSIS</h1>
                 </div>
-                <button id="logout-btn" class="md-button md-button--filled danger">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                <button id="logout-btn" class="md-button md-button--filled danger" data-default-text="Logout">
+                     <span class="button-icon-spinner-container">
+                        <i class="fas fa-sign-out-alt button-icon"></i>
+                        <i class="fas fa-spinner fa-spin button-spinner hidden"></i>
+                    </span>
+                    <span class="button-text">Logout</span>
                 </button>
             </div>
         </header>
-
-        <!-- Main Content -->
         <main>
-            <!-- Tabs Navigation -->
             <div class="md-tabs">
                 <ul id="tabs" class="md-tabs__list">
                     <li><button data-tab="members" class="md-tabs__button active">Anggota</button></li>
@@ -740,10 +782,7 @@
                     <li><button data-tab="data" class="md-tabs__button">Data</button></li>
                 </ul>
             </div>
-
-            <!-- Tab Contents -->
             <div>
-                <!-- Members Tab -->
                 <div id="members-tab" class="md-tab-content active">
                     <div class="md-card">
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
@@ -752,193 +791,82 @@
                                 <div class="md-textfield-container" style="margin-bottom: 0; min-width: 200px;">
                                     <label for="search-member" class="md-textfield-label visually-hidden">Cari Anggota</label>
                                     <input type="text" id="search-member" placeholder="Cari anggota..." class="md-textfield">
-                                    <!-- Icon can be added inside or as sibling -->
                                 </div>
-                                <button id="add-member-btn" class="md-button md-button--filled">
-                                    <i class="fas fa-plus"></i> Tambah Anggota
+                                <button id="add-member-btn" class="md-button md-button--filled" data-default-text="Tambah Anggota">
+                                    <span class="button-icon-spinner-container">
+                                        <i class="fas fa-plus button-icon"></i>
+                                        <i class="fas fa-spinner fa-spin button-spinner hidden"></i>
+                                    </span>
+                                    <span class="button-text">Tambah Anggota</span>
                                 </button>
                             </div>
                         </div>
-                        <div class="table-responsive-container">
-                            <table class="md-table">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Anggota</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="members-list">
-                                    <tr id="members-loading-row"><td colspan="3" style="text-align:center; padding:1rem;">Memuat data...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="table-responsive-container"><table class="md-table"><thead><tr><th>No</th><th>Nama Anggota</th><th>Aksi</th></tr></thead><tbody id="members-list"><tr id="members-loading-row"><td colspan="3" style="text-align:center; padding:1rem;">Memuat data...</td></tr></tbody></table></div>
                     </div>
                 </div>
-
-                <!-- Schedule Tab -->
                 <div id="schedule-tab" class="md-tab-content hidden">
                     <div class="md-card">
                         <h2 class="md-card__title">Jadwal Piket Mingguan</h2>
                         <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-                            <div class="md-select-container" style="min-width: 150px;">
-                                <label for="schedule-day-select" class="md-select-label">Pilih Hari</label>
-                                <select id="schedule-day-select" class="md-select">
-                                    <option value="Senin">Senin</option> <option value="Selasa">Selasa</option> <option value="Rabu">Rabu</option> <option value="Kamis">Kamis</option> <option value="Jumat">Jumat</option> <option value="Sabtu">Sabtu</option> <option value="Minggu">Minggu</option>
-                                </select>
-                            </div>
-                            <button id="clear-day-schedule" class="md-button md-button--outlined danger">
-                                <i class="fas fa-trash-alt"></i> Hapus Jadwal Hari Ini
-                            </button>
+                            <div class="md-select-container" style="min-width: 150px;"><label for="schedule-day-select" class="md-select-label">Pilih Hari</label><select id="schedule-day-select" class="md-select"><option value="Senin">Senin</option> <option value="Selasa">Selasa</option> <option value="Rabu">Rabu</option> <option value="Kamis">Kamis</option> <option value="Jumat">Jumat</option> <option value="Sabtu">Sabtu</option> <option value="Minggu">Minggu</option></select></div>
+                            <button id="clear-day-schedule" class="md-button md-button--outlined danger" data-default-text="Hapus Jadwal Hari Ini"><span class="button-icon-spinner-container"><i class="fas fa-trash-alt button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Hapus Jadwal Hari Ini</span></button>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                            <div class="md-card" style="margin-bottom:0;"> <!-- Nested card -->
-                                <h3 class="md-card__subtitle">Anggota Tersedia</h3>
-                                <div class="space-y-2 h-64 overflow-y-auto custom-scrollbar" id="available-members-schedule" style="min-height: 150px; padding: 0.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small);">
-                                    <div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div>
-                                </div>
-                            </div>
-                            <div class="md-card" style="margin-bottom:0;"> <!-- Nested card -->
-                                <h3 class="md-card__subtitle">Jadwal Piket <span id="selected-day-name-schedule">Senin</span></h3>
-                                <div class="space-y-2 h-64 overflow-y-auto custom-scrollbar" id="scheduled-members-list" style="min-height: 150px; padding: 0.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small);">
-                                    <div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div>
-                                </div>
-                            </div>
+                            <div class="md-card" style="margin-bottom:0;"><h3 class="md-card__subtitle">Anggota Tersedia</h3><div class="space-y-2 h-64 overflow-y-auto custom-scrollbar" id="available-members-schedule" style="min-height: 150px; padding: 0.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small);"><div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div></div></div>
+                            <div class="md-card" style="margin-bottom:0;"><h3 class="md-card__subtitle">Jadwal Piket <span id="selected-day-name-schedule">Senin</span></h3><div class="space-y-2 h-64 overflow-y-auto custom-scrollbar" id="scheduled-members-list" style="min-height: 150px; padding: 0.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small);"><div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div></div></div>
                         </div>
-                        <div class="md-card" style="margin-top:1.5rem;">
-                             <h3 class="md-card__subtitle">Jadwal Lengkap Minggu Ini</h3>
-                            <div id="full-week-schedule-display" class="space-y-2 max-h-96 overflow-y-auto custom-scrollbar" style="padding: 0.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small);">
-                                <div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div>
-                            </div>
-                        </div>
+                        <div class="md-card" style="margin-top:1.5rem;"><h3 class="md-card__subtitle">Jadwal Lengkap Minggu Ini</h3><div id="full-week-schedule-display" class="space-y-2 max-h-96 overflow-y-auto custom-scrollbar" style="padding: 0.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small);"><div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div></div></div>
                     </div>
                 </div>
-
-                <!-- Attendance Tab -->
                 <div id="attendance-tab" class="md-tab-content hidden">
                     <div class="md-card">
                         <h2 class="md-card__title">Absensi Piket</h2>
                         <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-                            <div class="md-textfield-container" style="min-width: 200px; margin-bottom:0;">
-                                <label for="attendance-date" class="md-textfield-label">Tanggal Absensi</label>
-                                <input type="date" id="attendance-date" class="md-textfield">
-                            </div>
-                            <button id="load-attendance" class="md-button md-button--filled">
-                                <i class="fas fa-calendar-day"></i> Muat Jadwal
-                            </button>
+                            <div class="md-textfield-container" style="min-width: 200px; margin-bottom:0;"><label for="attendance-date" class="md-textfield-label">Tanggal Absensi</label><input type="date" id="attendance-date" class="md-textfield"></div>
+                            <button id="load-attendance" class="md-button md-button--filled" data-default-text="Muat Jadwal"><span class="button-icon-spinner-container"><i class="fas fa-calendar-day button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Muat Jadwal</span></button>
                         </div>
-                        <div id="no-schedule-attendance" class="text-center py-8 hidden" style="color: var(--md-sys-color-on-surface-variant);">
-                            <i class="fas fa-calendar-times" style="font-size: 2.5rem; margin-bottom: 0.5rem;"></i>
-                            <p>Tidak ada jadwal piket untuk tanggal ini atau belum ada anggota.</p>
-                        </div>
+                        <div id="no-schedule-attendance" class="text-center py-8 hidden" style="color: var(--md-sys-color-on-surface-variant);"><i class="fas fa-calendar-times" style="font-size: 2.5rem; margin-bottom: 0.5rem;"></i><p>Tidak ada jadwal piket untuk tanggal ini.</p></div>
                         <div id="attendance-form-container" class="hidden">
                             <h3 class="md-card__subtitle">Daftar Kehadiran untuk <span id="attendance-date-display"></span> (<span id="attendance-day-display"></span>)</h3>
-                            <div id="attendance-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
-                                <!-- Attendance items will be dynamically generated here -->
-                            </div>
+                            <div id="attendance-list" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
                             <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
-                                <button id="save-attendance" class="md-button md-button--filled">
-                                    <i class="fas fa-save"></i> Simpan Perubahan
+                                <button id="save-attendance" class="md-button md-button--filled" data-default-text="Simpan Perubahan">
+                                    <span class="button-icon-spinner-container">
+                                        <i class="fas fa-save button-icon"></i>
+                                        <i class="fas fa-spinner fa-spin button-spinner hidden"></i>
+                                    </span>
+                                    <span class="button-text">Simpan Perubahan</span>
                                 </button>
                             </div>
                         </div>
-                        <div id="attendance-status-summary" class="md-card" style="margin-top: 1.5rem;">
-                             <p style="color: var(--md-sys-color-on-surface-variant);">Status kehadiran akan muncul di sini.</p>
-                        </div>
+                        <div id="attendance-status-summary" class="md-card" style="margin-top: 1.5rem;"><p style="color: var(--md-sys-color-on-surface-variant);">Status kehadiran akan muncul di sini.</p></div>
                     </div>
                 </div>
-
-                <!-- Reports Tab -->
                 <div id="reports-tab" class="md-tab-content hidden">
-                    <div class="md-card">
+                     <div class="md-card">
                         <h2 class="md-card__title">Laporan & Statistik</h2>
                         <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end;">
-                            <div class="md-select-container" style="min-width: 150px; margin-bottom:0;">
-                                <label for="report-month" class="md-select-label">Bulan</label>
-                                <select id="report-month" class="md-select">
-                                     <option value="1">Januari</option> <option value="2">Februari</option> <option value="3">Maret</option> <option value="4">April</option> <option value="5">Mei</option> <option value="6">Juni</option> <option value="7">Juli</option> <option value="8">Agustus</option> <option value="9">September</option> <option value="10">Oktober</option> <option value="11">November</option> <option value="12">Desember</option>
-                                </select>
-                            </div>
-                            <div class="md-select-container" style="min-width: 120px; margin-bottom:0;">
-                                <label for="report-year" class="md-select-label">Tahun</label>
-                                <select id="report-year" class="md-select"></select>
-                            </div>
-                            <button id="generate-report" class="md-button md-button--filled">
-                                <i class="fas fa-chart-line"></i> Hasilkan Laporan
-                            </button>
-                            <button id="export-report" class="md-button md-button--outlined">
-                                <i class="fas fa-file-csv"></i> Ekspor CSV
-                            </button>
+                            <div class="md-select-container" style="min-width: 150px; margin-bottom:0;"><label for="report-month" class="md-select-label">Bulan</label><select id="report-month" class="md-select"><option value="1">Januari</option> <option value="2">Februari</option> <option value="3">Maret</option> <option value="4">April</option> <option value="5">Mei</option> <option value="6">Juni</option> <option value="7">Juli</option> <option value="8">Agustus</option> <option value="9">September</option> <option value="10">Oktober</option> <option value="11">November</option> <option value="12">Desember</option></select></div>
+                            <div class="md-select-container" style="min-width: 120px; margin-bottom:0;"><label for="report-year" class="md-select-label">Tahun</label><select id="report-year" class="md-select"></select></div>
+                            <button id="generate-report" class="md-button md-button--filled" data-default-text="Hasilkan Laporan"><span class="button-icon-spinner-container"><i class="fas fa-chart-line button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Hasilkan Laporan</span></button>
+                            <button id="export-report" class="md-button md-button--outlined" data-default-text="Ekspor CSV"><span class="button-icon-spinner-container"><i class="fas fa-file-csv button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Ekspor CSV</span></button>
                         </div>
                         <div id="report-results-container">
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                                <div class="md-card">
-                                    <h3 class="md-card__subtitle">Penghargaan Bulanan</h3>
-                                    <div id="monthly-award-display" style="color: var(--md-sys-color-on-surface-variant);">Pilih bulan dan tahun.</div>
-                                </div>
-                                <div class="md-card">
-                                    <h3 class="md-card__subtitle">Statistik Kehadiran Umum</h3>
-                                    <div style="height: 250px;"><canvas id="overall-attendance-chart"></canvas></div>
-                                </div>
+                                <div class="md-card"><h3 class="md-card__subtitle">Penghargaan Bulanan</h3><div id="monthly-award-display" style="color: var(--md-sys-color-on-surface-variant);">Pilih bulan dan tahun.</div></div>
+                                <div class="md-card"><h3 class="md-card__subtitle">Statistik Kehadiran Umum</h3><div style="height: 250px;"><canvas id="overall-attendance-chart"></canvas></div></div>
                             </div>
-                            <div class="md-card" style="margin-top: 1.5rem;">
-                                <h3 class="md-card__subtitle">Detail Partisipasi Anggota (<span id="report-month-year-display"></span>)</h3>
-                                <div class="table-responsive-container">
-                                    <table class="md-table">
-                                        <thead><tr><th>Nama</th><th>Dijadwalkan</th><th>Hadir</th><th>Absen</th><th>Digantikan</th><th>Menggantikan</th><th>% Hadir</th></tr></thead>
-                                        <tbody id="participation-details-table">
-                                            <tr><td colspan="7" style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Pilih bulan dan tahun.</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <div class="md-card" style="margin-top: 1.5rem;"><h3 class="md-card__subtitle">Detail Partisipasi Anggota (<span id="report-month-year-display"></span>)</h3><div class="table-responsive-container"><table class="md-table"><thead><tr><th>Nama</th><th>Dijadwalkan</th><th>Hadir</th><th>Absen</th><th>Digantikan</th><th>Menggantikan</th><th>% Hadir</th></tr></thead><tbody id="participation-details-table"><tr><td colspan="7" style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Pilih bulan dan tahun.</td></tr></tbody></table></div></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Data Management Tab -->
                 <div id="data-tab" class="md-tab-content hidden">
                     <div class="md-card">
                         <h2 class="md-card__title">Kelola Data</h2>
                         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                            <div class="md-card"> <!-- Nested card -->
-                                <h3 class="md-card__subtitle">Cadangkan Data</h3>
-                                <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">Salin data berikut untuk mencadangkan semua informasi piket.</p>
-                                <div class="md-textfield-container" style="background-color: var(--md-sys-color-surface);">
-                                    <label for="backup-data-textarea" class="md-textfield-label visually-hidden">Data Backup</label>
-                                    <textarea id="backup-data-textarea" class="md-textfield" style="min-height: 100px; resize: vertical;" readonly placeholder="Klik 'Buat Backup Data'..."></textarea>
-                                </div>
-                                <div class="md-card__actions">
-                                    <button id="create-backup-btn" class="md-button md-button--filled">
-                                        <i class="fas fa-download"></i> Buat Backup
-                                    </button>
-                                    <button id="copy-backup-btn" class="md-button md-button--outlined hidden">
-                                        <i class="fas fa-copy"></i> Salin
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="md-card"> <!-- Nested card -->
-                                <h3 class="md-card__subtitle">Pulihkan Data</h3>
-                                <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">Tempelkan data cadangan (JSON). <strong style="color: var(--md-sys-color-error);">PERHATIAN: Ini akan menimpa data yang ada!</strong></p>
-                                 <div class="md-textfield-container" style="background-color: var(--md-sys-color-surface);">
-                                    <label for="restore-data-textarea" class="md-textfield-label visually-hidden">Data Restore</label>
-                                    <textarea id="restore-data-textarea" class="md-textfield" style="min-height: 100px; resize: vertical;" placeholder="Tempel data JSON..."></textarea>
-                                </div>
-                                <div class="md-card__actions">
-                                    <button id="confirm-restore-btn" class="md-button md-button--filled tertiary">
-                                        <i class="fas fa-upload"></i> Pulihkan
-                                    </button>
-                                </div>
-                            </div>
-                             <div class="md-card" style="background-color: var(--md-sys-color-error-container);"> <!-- Nested card -->
-                                <h3 class="md-card__subtitle" style="color: var(--md-sys-color-on-error-container);">Reset Data Aplikasi</h3>
-                                <p style="color: var(--md-sys-color-on-error-container); margin-bottom: 1rem;">Tindakan ini akan menghapus semua data piket secara permanen. <strong class="uppercase">Gunakan dengan sangat hati-hati!</strong></p>
-                                <div class="md-card__actions">
-                                    <button id="reset-app-confirm-btn" class="md-button md-button--filled danger">
-                                        <i class="fas fa-exclamation-triangle"></i> Reset Semua Data
-                                    </button>
-                                </div>
-                            </div>
+                            <div class="md-card"><h3 class="md-card__subtitle">Cadangkan Data</h3><p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">Salin data ini untuk backup.</p><div class="md-textfield-container" style="background-color: var(--md-sys-color-surface);"><label for="backup-data-textarea" class="md-textfield-label visually-hidden">Data Backup</label><textarea id="backup-data-textarea" class="md-textfield" style="min-height: 100px; resize: vertical;" readonly placeholder="Klik 'Buat Backup'..."></textarea></div><div class="md-card__actions"><button id="create-backup-btn" class="md-button md-button--filled" data-default-text="Buat Backup"><span class="button-icon-spinner-container"><i class="fas fa-download button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Buat Backup</span></button><button id="copy-backup-btn" class="md-button md-button--outlined hidden" data-default-text="Salin"><span class="button-icon-spinner-container"><i class="fas fa-copy button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Salin</span></button></div></div>
+                            <div class="md-card"><h3 class="md-card__subtitle">Pulihkan Data</h3><p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 1rem;">Tempel data JSON. <strong style="color: var(--md-sys-color-error);">PERHATIAN: Timpa data!</strong></p><div class="md-textfield-container" style="background-color: var(--md-sys-color-surface);"><label for="restore-data-textarea" class="md-textfield-label visually-hidden">Data Restore</label><textarea id="restore-data-textarea" class="md-textfield" style="min-height: 100px; resize: vertical;" placeholder="Tempel JSON..."></textarea></div><div class="md-card__actions"><button id="confirm-restore-btn" class="md-button md-button--filled tertiary" data-default-text="Pulihkan"><span class="button-icon-spinner-container"><i class="fas fa-upload button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Pulihkan</span></button></div></div>
+                            <div class="md-card" style="background-color: var(--md-sys-color-error-container);"><h3 class="md-card__subtitle" style="color: var(--md-sys-color-on-error-container);">Reset Data Aplikasi</h3><p style="color: var(--md-sys-color-on-error-container); margin-bottom: 1rem;">Hapus semua data. <strong class="uppercase">Hati-hati!</strong></p><div class="md-card__actions"><button id="reset-app-confirm-btn" class="md-button md-button--filled danger" data-default-text="Reset Semua Data"><span class="button-icon-spinner-container"><i class="fas fa-exclamation-triangle button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Reset Semua Data</span></button></div></div>
                         </div>
                     </div>
                 </div>
@@ -946,86 +874,29 @@
         </main>
     </div>
 
-    <!-- Modals with MD3 Styling -->
-    <!-- Add/Edit Member Modal -->
-    <div id="member-modal" class="md-dialog-overlay hidden">
-        <div class="md-dialog">
-            <h3 class="md-dialog__title" id="member-modal-title">Tambah Anggota Baru</h3>
-            <div class="md-dialog__content">
-                <input type="hidden" id="member-id-input">
-                <div class="md-textfield-container">
-                    <label for="member-name-input" class="md-textfield-label">Nama Anggota</label>
-                    <input type="text" id="member-name-input" class="md-textfield">
-                </div>
-                <p id="member-name-error" class="md-textfield-supporting-text error hidden">Nama anggota harus diisi.</p>
-            </div>
-            <div class="md-dialog__actions">
-                <button type="button" id="cancel-member-btn" class="md-button md-button--text">Batal</button>
-                <button type="button" id="save-member-btn" class="md-button md-button--filled">Simpan</button>
-            </div>
-        </div>
-    </div>
+    <!-- Modals -->
+    <div id="member-modal" class="md-dialog-overlay hidden"><div class="md-dialog"><h3 class="md-dialog__title" id="member-modal-title"></h3><div class="md-dialog__content"><input type="hidden" id="member-id-input"><div class="md-textfield-container"><label for="member-name-input" class="md-textfield-label">Nama Anggota</label><input type="text" id="member-name-input" class="md-textfield"></div><p id="member-name-error" class="md-textfield-supporting-text error hidden">Nama harus diisi.</p></div><div class="md-dialog__actions"><button type="button" id="cancel-member-btn" class="md-button md-button--text">Batal</button><button type="button" id="save-member-btn" class="md-button md-button--filled" data-default-text="Simpan"><span class="button-icon-spinner-container"><i class="fas fa-save button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Simpan</span></button></div></div></div>
+    <div id="swap-duty-modal" class="md-dialog-overlay hidden"><div class="md-dialog"><h3 class="md-dialog__title">Gantikan Piket <strong id="swap-modal-original-member-name"></strong></h3><div class="md-dialog__content"><p style="font-size: 0.875rem; color: var(--md-sys-color-on-surface-variant); margin-bottom:1rem;">Tanggal: <span id="swap-modal-date-display"></span></p><input type="hidden" id="swap-original-member-id"><input type="hidden" id="swap-attendance-date-hidden"><div class="md-select-container" style="margin-bottom:1rem;"><label for="swap-member-select" class="md-select-label">Pilih Pengganti</label><select id="swap-member-select" class="md-select"></select></div><div class="md-textfield-container"><label for="swap-reason-input" class="md-textfield-label">Alasan (Opsional)</label><input type="text" id="swap-reason-input" class="md-textfield" placeholder="Mis: Sakit"></div></div><div class="md-dialog__actions"><button type="button" id="cancel-swap-btn" class="md-button md-button--text">Batal</button><button type="button" id="confirm-swap-btn" class="md-button md-button--filled" data-default-text="Konfirmasi"><span class="button-icon-spinner-container"><i class="fas fa-check button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Konfirmasi</span></button></div></div></div>
+    <div id="reset-data-modal" class="md-dialog-overlay hidden"><div class="md-dialog"><div class="md-dialog__icon"><i class="fas fa-exclamation-triangle" style="color: var(--md-sys-color-error);"></i></div><h3 class="md-dialog__title" id="reset-modal-title">Konfirmasi Reset</h3><div class="md-dialog__content"><p id="reset-modal-message">Yakin reset semua data? Tidak bisa dibatalkan.</p></div><div class="md-dialog__actions"><button type="button" id="cancel-reset-action-btn" class="md-button md-button--text">Batal</button><button type="button" id="confirm-reset-action-btn" class="md-button md-button--filled danger" data-default-text="Ya, Reset"><span class="button-icon-spinner-container"><i class="fas fa-trash-alt button-icon"></i><i class="fas fa-spinner fa-spin button-spinner hidden"></i></span><span class="button-text">Ya, Reset</span></button></div></div></div>
 
-    <!-- Swap Duty Modal -->
-    <div id="swap-duty-modal" class="md-dialog-overlay hidden">
-        <div class="md-dialog">
-            <h3 class="md-dialog__title">Gantikan Piket <strong id="swap-modal-original-member-name"></strong></h3>
-            <div class="md-dialog__content">
-                <p style="font-size: 0.875rem; color: var(--md-sys-color-on-surface-variant); margin-bottom:1rem;">Tanggal: <span id="swap-modal-date-display"></span></p>
-                <input type="hidden" id="swap-original-member-id">
-                <input type="hidden" id="swap-attendance-date-hidden">
-                <div class="md-select-container" style="margin-bottom:1rem;">
-                    <label for="swap-member-select" class="md-select-label">Pilih Anggota Pengganti</label>
-                    <select id="swap-member-select" class="md-select"></select>
-                </div>
-                <div class="md-textfield-container">
-                    <label for="swap-reason-input" class="md-textfield-label">Alasan Pertukaran (Opsional)</label>
-                    <input type="text" id="swap-reason-input" class="md-textfield" placeholder="Mis: Sakit, Izin">
-                </div>
-            </div>
-            <div class="md-dialog__actions">
-                <button type="button" id="cancel-swap-btn" class="md-button md-button--text">Batal</button>
-                <button type="button" id="confirm-swap-btn" class="md-button md-button--filled">Konfirmasi</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirm Reset Modal -->
-    <div id="reset-data-modal" class="md-dialog-overlay hidden">
-        <div class="md-dialog">
-            <div class="md-dialog__icon"><i class="fas fa-exclamation-triangle" style="color: var(--md-sys-color-error);"></i></div>
-            <h3 class="md-dialog__title" id="reset-modal-title">Konfirmasi Reset Data</h3>
-            <div class="md-dialog__content">
-                <p id="reset-modal-message">Anda yakin ingin mereset semua data piket? Tindakan ini akan menghapus seluruh data anggota, jadwal, dan absensi. Tindakan ini tidak dapat dibatalkan.</p>
-            </div>
-            <div class="md-dialog__actions">
-                <button type="button" id="cancel-reset-action-btn" class="md-button md-button--text">Batal</button>
-                <button type="button" id="confirm-reset-action-btn" class="md-button md-button--filled danger">Ya, Reset Data</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase and Toastify JS (unchanged) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script type="module">
-        // Firebase configuration - GANTI DENGAN KONFIGURASI ANDA
+        // --- Firebase Configuration (WAJIB GANTI!) ---
         const firebaseConfig = {
-             apiKey: "AIzaSyAsBHJoii6RBGrslUH31ix1AyLheRm6HS4",
+            apiKey: "AIzaSyAsBHJoii6RBGrslUH31ix1AyLheRm6HS4",
             authDomain: "piketosis.firebaseapp.com",
             projectId: "piketosis",
             storageBucket: "piketosis.firebasestorage.app",
             messagingSenderId: "341698253309",
             appId: "1:341698253309:web:a5ea2d83768348a7f9c994",
         };
-
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // DOM Elements
+        // --- DOM Elements ---
         const loginFormEl = document.getElementById('login-form');
         const mainAppEl = document.getElementById('main-app');
         const loginFormContentEl = document.getElementById('login-form-content');
@@ -1033,9 +904,8 @@
         const passwordInputEl = document.getElementById('password');
         const loginErrorEl = document.getElementById('login-error');
         const loginSubmitBtn = document.getElementById('login-submit-btn');
-        const loginTextEl = document.getElementById('login-text');
-        const loginSpinnerEl = document.getElementById('login-spinner');
         const logoutBtnEl = document.getElementById('logout-btn');
+        const htmlEl = document.documentElement;
         const toggleThemeBtnEl = document.getElementById('toggle-theme');
         
         // Global state
@@ -1051,15 +921,12 @@
             e.preventDefault();
             const username = usernameInputEl.value.trim();
             const password = passwordInputEl.value.trim();
-            
-            loginTextEl.style.display = 'none';
-            loginSpinnerEl.classList.remove('hidden');
-            loginSubmitBtn.disabled = true;
+            setButtonLoadingState(loginSubmitBtn, true, "Login");
             
             setTimeout(() => { 
                 if (username === 'admin' && password === 'admin123') {
                     loginErrorEl.classList.add('hidden');
-                    loginFormEl.classList.remove('visible'); // Use visible class for overlay
+                    loginFormEl.classList.remove('visible');
                     loginFormEl.classList.add('hidden');
                     mainAppEl.classList.remove('hidden');
                     initializeApp();
@@ -1067,116 +934,87 @@
                     loginErrorEl.textContent = 'Username atau password salah.';
                     loginErrorEl.classList.remove('hidden');
                 }
-                loginTextEl.style.display = 'inline';
-                loginSpinnerEl.classList.add('hidden');
-                loginSubmitBtn.disabled = false;
+                setButtonLoadingState(loginSubmitBtn, false);
             }, 500);
         });
         
         logoutBtnEl.addEventListener('click', () => {
-            mainAppEl.classList.add('hidden');
-            loginFormEl.classList.add('visible'); // Show login overlay
-            loginFormEl.classList.remove('hidden');
-            usernameInputEl.value = '';
-            passwordInputEl.value = '';
-            loginErrorEl.classList.add('hidden');
-            // Clear caches or sensitive data if needed upon logout for security
-            membersCache = [];
-            schedulesCache = {};
-            attendanceCache = {};
+            setButtonLoadingState(logoutBtnEl, true, "Logout");
+            setTimeout(() => { 
+                mainAppEl.classList.add('hidden');
+                loginFormEl.classList.add('visible');
+                loginFormEl.classList.remove('hidden');
+                usernameInputEl.value = '';
+                passwordInputEl.value = '';
+                loginErrorEl.classList.add('hidden');
+                membersCache = []; schedulesCache = {}; attendanceCache = {};
+                setButtonLoadingState(logoutBtnEl, false);
+            }, 300);
         });
         
-        const htmlEl = document.documentElement;
         toggleThemeBtnEl.addEventListener('click', () => {
-            const currentTheme = htmlEl.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                htmlEl.removeAttribute('data-theme');
-                localStorage.removeItem('piketOSIS_darkMode_MD3');
-                 toggleThemeBtnEl.querySelector('.fa-sun').classList.add('hidden');
-                 toggleThemeBtnEl.querySelector('.fa-moon').classList.remove('hidden');
-            } else {
-                htmlEl.setAttribute('data-theme', 'dark');
-                localStorage.setItem('piketOSIS_darkMode_MD3', 'true');
-                toggleThemeBtnEl.querySelector('.fa-moon').classList.add('hidden');
-                toggleThemeBtnEl.querySelector('.fa-sun').classList.remove('hidden');
-            }
+            const isDark = htmlEl.toggleAttribute('data-theme'); 
+            localStorage.setItem('piketOSIS_darkMode_MD3', isDark);
+            updateThemeIcon(isDark);
         });
-        
-        if (localStorage.getItem('piketOSIS_darkMode_MD3') === 'true') {
-            htmlEl.setAttribute('data-theme', 'dark');
-            toggleThemeBtnEl.querySelector('.fa-moon').classList.add('hidden');
-            toggleThemeBtnEl.querySelector('.fa-sun').classList.remove('hidden');
-        } else {
-            toggleThemeBtnEl.querySelector('.fa-sun').classList.add('hidden');
-            toggleThemeBtnEl.querySelector('.fa-moon').classList.remove('hidden');
+
+        function updateThemeIcon(isDark) {
+            const moonIcon = toggleThemeBtnEl.querySelector('.fa-moon');
+            const sunIcon = toggleThemeBtnEl.querySelector('.fa-sun');
+            if (isDark) {
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            } else {
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            }
         }
+        
+        const savedThemeIsDark = localStorage.getItem('piketOSIS_darkMode_MD3') === 'true';
+        if (savedThemeIsDark) htmlEl.setAttribute('data-theme', 'dark');
+        updateThemeIcon(savedThemeIsDark);
 
 
         // --- UTILITIES ---
         function showToast(message, type = 'info') {
-            let background;
-            // MD3 uses primary/error/etc. containers for toast-like elements or surface variants
+            let background, textColor;
             switch (type) {
-                case 'success': background = 'var(--md-sys-color-primary-container)'; break; // Or a success color
-                case 'error': background = 'var(--md-sys-color-error-container)'; break;
-                case 'warning': background = 'var(--md-sys-color-tertiary-container)'; break; // Example
-                default: background = 'var(--md-sys-color-inverse-surface)';
+                case 'success': background = 'var(--md-sys-color-primary-container)'; textColor = 'var(--md-sys-color-on-primary-container)'; break;
+                case 'error': background = 'var(--md-sys-color-error-container)'; textColor = 'var(--md-sys-color-on-error-container)'; break;
+                case 'warning': background = 'var(--md-sys-color-tertiary-container)'; textColor = 'var(--md-sys-color-on-tertiary-container)'; break;
+                default: background = 'var(--md-sys-color-inverse-surface)'; textColor = 'var(--md-sys-color-inverse-on-surface)';
             }
-            let textColor;
-             switch (type) {
-                case 'success': textColor = 'var(--md-sys-color-on-primary-container)'; break;
-                case 'error': textColor = 'var(--md-sys-color-on-error-container)'; break;
-                case 'warning': textColor = 'var(--md-sys-color-on-tertiary-container)'; break;
-                default: textColor = 'var(--md-sys-color-inverse-on-surface)';
-            }
-
-            Toastify({ text: message, duration: 3000, close: true, gravity: "bottom", position: "right", 
-                style: { 
-                    background: background, 
-                    color: textColor,
-                    borderRadius: "var(--md-sys-shape-corner-small)", 
-                    boxShadow: "var(--md-sys-elevation-level-2)",
-                    padding: "1rem"
-                }
-            }).showToast();
+            Toastify({ text: message, duration: 3000, close: true, gravity: "bottom", position: "right", style: { background, color: textColor, borderRadius: "var(--md-sys-shape-corner-small)", boxShadow: "var(--md-sys-elevation-level-2)", padding: "1rem" }}).showToast();
         }
-
-        function getDayNameFromDate(dateString) { 
-            const date = new Date(dateString + "T00:00:00"); 
-            return daysOfWeek[date.getDay()];
-        }
-
-        function setButtonLoadingState(button, isLoading, defaultText = "Simpan") { // Renamed for clarity
-            const textSpan = button.querySelector('span:not(.spinner-container)'); // Assuming spinner is not in a span
-            const spinnerEl = button.querySelector('svg.spinner') || button.querySelector('i.spinner'); // Adapt if spinner is an <i>
+        function getDayNameFromDate(dateString) { const date = new Date(dateString + "T00:00:00"); return daysOfWeek[date.getDay()];}
+        
+        function setButtonLoadingState(button, isLoading, loadingText = "Memproses...") {
+            const textEl = button.querySelector('.button-text');
+            const iconEl = button.querySelector('.button-icon'); 
+            const spinnerEl = button.querySelector('.button-spinner'); 
+            const defaultText = button.dataset.defaultText || "Aksi";
 
             if (isLoading) {
                 button.disabled = true;
-                if (textSpan) textSpan.style.opacity = '0'; // Hide text
-                if (spinnerEl) spinnerEl.classList.remove('hidden');
+                if (textEl) textEl.textContent = loadingText;
+                if (iconEl) iconEl.style.display = 'none';
+                if (spinnerEl) spinnerEl.style.display = 'inline-block'; 
             } else {
                 button.disabled = false;
-                if (textSpan) textSpan.style.opacity = '1'; // Show text
-                if (spinnerEl) spinnerEl.classList.add('hidden');
+                if (textEl) textEl.textContent = defaultText;
+                if (iconEl) iconEl.style.display = 'inline-block';
+                if (spinnerEl) spinnerEl.style.display = 'none';
             }
         }
         
-        // --- MAIN APP INITIALIZATION ---
+        // --- MAIN APP ---
         async function initializeApp() {
-            setupTabs();
-            await loadInitialData(); 
-            setupMemberManagement();
-            setupScheduleManagement();
-            setupAttendanceManagement();
-            setupReportManagement();
-            setupDataManagement();
-            
-            document.querySelector('[data-tab="members"]').click();
-            setDefaultAttendanceDate();
-            populateYearDropdownReport();
+            setupTabs(); await loadInitialData(); setupMemberManagement();
+            setupScheduleManagement(); setupAttendanceManagement(); setupReportManagement();
+            setupDataManagement(); document.querySelector('[data-tab="members"]').click();
+            setDefaultAttendanceDate(); populateYearDropdownReport();
         }
-
-        async function loadInitialData() {
+        async function loadInitialData() { 
             showToast('Memuat data awal...', 'info');
             try {
                 const membersSnapshot = await db.collection('members').orderBy('name').get();
@@ -1192,9 +1030,8 @@
                 console.error("Error loading initial data:", error);
                 showToast('Gagal memuat data awal.', 'error');
             }
-        }
-
-        function setupTabs() {
+         }
+        function setupTabs() { 
             const tabsContainer = document.getElementById('tabs');
             const tabButtons = tabsContainer.querySelectorAll('.md-tabs__button');
             const tabContents = document.querySelectorAll('.md-tab-content');
@@ -1215,9 +1052,9 @@
                     }
                 });
             });
-        }
-
-        // --- MEMBER MANAGEMENT (JS Logic Unchanged, but uses new CSS classes in render) ---
+         }
+        
+        // --- MEMBER MANAGEMENT ---
         const membersListEl = document.getElementById('members-list');
         const searchMemberInput = document.getElementById('search-member');
         const addMemberBtnEl = document.getElementById('add-member-btn');
@@ -1228,17 +1065,18 @@
         const memberNameErrorEl = document.getElementById('member-name-error');
         const saveMemberBtnEl = document.getElementById('save-member-btn');
         const cancelMemberBtnEl = document.getElementById('cancel-member-btn');
-
-        function setupMemberManagement() {
+        function setupMemberManagement() { 
             searchMemberInput.addEventListener('input', renderMembersTable);
             addMemberBtnEl.addEventListener('click', openAddMemberModal);
             saveMemberBtnEl.addEventListener('click', handleSaveMember);
-            cancelMemberBtnEl.addEventListener('click', () => memberModalEl.classList.add('hidden'));
-        }
-
-        function renderMembersTable() {
+            cancelMemberBtnEl.addEventListener('click', () => {
+                memberModalEl.classList.add('hidden');
+                memberModalEl.classList.remove('visible');
+            });
+         }
+        function renderMembersTable() { 
             const loadingRow = document.getElementById('members-loading-row');
-            if (loadingRow) loadingRow.classList.add('hidden'); // Hide loading row
+            if (loadingRow) loadingRow.classList.add('hidden'); 
             
             const searchTerm = searchMemberInput.value.toLowerCase();
             const filteredMembers = membersCache.filter(member => 
@@ -1271,18 +1109,18 @@
             
             document.querySelectorAll('.edit-member-btn').forEach(btn => btn.addEventListener('click', (e) => openEditMemberModal(e.currentTarget.dataset.id)));
             document.querySelectorAll('.delete-member-btn').forEach(btn => btn.addEventListener('click', (e) => handleDeleteMember(e.currentTarget.dataset.id)));
-        }
-        function openAddMemberModal() {
+         }
+        function openAddMemberModal() { 
             memberModalTitleEl.textContent = 'Tambah Anggota Baru';
             memberIdInputEl.value = '';
             memberNameInputEl.value = '';
             memberNameErrorEl.classList.add('hidden');
-            memberNameInputEl.parentElement.classList.remove('error'); // For textfield container
+            memberNameInputEl.parentElement.classList.remove('error'); 
             memberModalEl.classList.remove('hidden');
             memberModalEl.classList.add('visible');
             memberNameInputEl.focus();
-        }
-        function openEditMemberModal(memberId) {
+         }
+        function openEditMemberModal(memberId) { 
             const member = membersCache.find(m => m.id === memberId);
             if (!member) return;
             memberModalTitleEl.textContent = 'Edit Anggota';
@@ -1293,8 +1131,8 @@
             memberModalEl.classList.remove('hidden');
             memberModalEl.classList.add('visible');
             memberNameInputEl.focus();
-        }
-        async function handleSaveMember() {
+         }
+        async function handleSaveMember() { 
             const name = memberNameInputEl.value.trim();
             const id = memberIdInputEl.value;
             const nameContainer = memberNameInputEl.parentElement;
@@ -1307,7 +1145,7 @@
             nameContainer.classList.remove('error');
             memberNameErrorEl.classList.add('hidden');
 
-            setButtonLoadingState(saveMemberBtnEl, true, "Simpan");
+            setButtonLoadingState(saveMemberBtnEl, true, "Menyimpan...");
             try {
                 if (id) { 
                     await db.collection('members').doc(id).update({ name });
@@ -1330,10 +1168,10 @@
                 console.error("Error saving member:", error);
                 showToast(`Gagal menyimpan anggota: ${error.message}`, 'error');
             } finally {
-                setButtonLoadingState(saveMemberBtnEl, false, "Simpan");
+                setButtonLoadingState(saveMemberBtnEl, false);
             }
-        }
-         async function handleDeleteMember(memberId) {
+         }
+         async function handleDeleteMember(memberId) { 
             const member = membersCache.find(m => m.id === memberId);
             if (!member) return;
 
@@ -1367,7 +1205,7 @@
                 console.error("Error deleting member:", error);
                 showToast(`Gagal menghapus anggota: ${error.message}`, 'error');
             }
-        }
+          }
 
         // --- SCHEDULE MANAGEMENT ---
         const scheduleDaySelectEl = document.getElementById('schedule-day-select');
@@ -1377,14 +1215,14 @@
         const selectedDayNameScheduleEl = document.getElementById('selected-day-name-schedule');
         const fullWeekScheduleDisplayEl = document.getElementById('full-week-schedule-display');
 
-        function setupScheduleManagement() {
+        function setupScheduleManagement() { 
             scheduleDaySelectEl.addEventListener('change', (e) => {
                 renderScheduleEditor(e.target.value);
                 selectedDayNameScheduleEl.textContent = e.target.value;
             });
             clearDayScheduleBtnEl.addEventListener('click', handleClearDaySchedule);
-        }
-        function renderScheduleEditor(day) {
+         }
+        function renderScheduleEditor(day) { 
             selectedDayNameScheduleEl.textContent = day;
             const currentDayScheduledIds = schedulesCache[day] || [];
             const availableForScheduling = membersCache.filter(member => !currentDayScheduledIds.includes(member.id));
@@ -1395,8 +1233,12 @@
                 availableMembersScheduleEl.innerHTML = availableForScheduling.map(member => `
                     <div class="md-list-item">
                         <span class="md-list-item__text">${member.name}</span>
-                        <button class="md-button md-button--text assign-member-schedule-btn" data-member-id="${member.id}" data-day="${day}" title="Tambahkan">
-                            <i class="fas fa-plus"></i> Tambah
+                        <button class="md-button md-button--text assign-member-schedule-btn" data-member-id="${member.id}" data-day="${day}" title="Tambahkan" data-default-text="Tambah">
+                             <span class="button-icon-spinner-container">
+                                <i class="fas fa-plus button-icon"></i>
+                                <i class="fas fa-spinner fa-spin button-spinner hidden"></i>
+                            </span>
+                            <span class="button-text">Tambah</span>
                         </button>
                     </div>
                 `).join('');
@@ -1411,55 +1253,65 @@
                 scheduledMembersListEl.innerHTML = scheduledOnThisDay.map(member => `
                     <div class="md-list-item">
                         <span class="md-list-item__text">${member.name}</span>
-                        <button class="md-button md-button--text danger remove-member-schedule-btn" data-member-id="${member.id}" data-day="${day}" title="Hapus">
-                            <i class="fas fa-times"></i> Hapus
+                        <button class="md-button md-button--text danger remove-member-schedule-btn" data-member-id="${member.id}" data-day="${day}" title="Hapus" data-default-text="Hapus">
+                            <span class="button-icon-spinner-container">
+                                <i class="fas fa-times button-icon"></i>
+                                <i class="fas fa-spinner fa-spin button-spinner hidden"></i>
+                            </span>
+                            <span class="button-text">Hapus</span>
                         </button>
                     </div>
                 `).join('');
             }
             document.querySelectorAll('.assign-member-schedule-btn').forEach(btn => btn.addEventListener('click', handleAssignMemberToSchedule));
             document.querySelectorAll('.remove-member-schedule-btn').forEach(btn => btn.addEventListener('click', handleRemoveMemberFromSchedule));
-        }
-        async function handleAssignMemberToSchedule(event) {
+         }
+        async function handleAssignMemberToSchedule(event) { 
             const { memberId, day } = event.currentTarget.dataset;
             const currentDayScheduledIds = schedulesCache[day] || [];
             if (!currentDayScheduledIds.includes(memberId)) {
                 const newScheduledIds = [...currentDayScheduledIds, memberId];
+                setButtonLoadingState(event.currentTarget, true, "Menambah...");
                 try {
                     await db.collection('schedules').doc(day).set({ memberIds: newScheduledIds });
                     schedulesCache[day] = newScheduledIds;
                     showToast('Anggota ditambahkan ke jadwal', 'success');
                     renderScheduleEditor(day);
                     renderFullWeekSchedule();
-                } catch (error) { console.error("Error assigning member:", error); showToast('Gagal menambahkan.', 'error'); }
+                } catch (error) { console.error("Error assigning member:", error); showToast('Gagal menambahkan.', 'error'); 
+                } finally { setButtonLoadingState(event.currentTarget, false); }
             }
-        }
-        async function handleRemoveMemberFromSchedule(event) {
+         }
+        async function handleRemoveMemberFromSchedule(event) { 
             const { memberId, day } = event.currentTarget.dataset;
             const currentDayScheduledIds = schedulesCache[day] || [];
             if (currentDayScheduledIds.includes(memberId)) {
                 const newScheduledIds = currentDayScheduledIds.filter(id => id !== memberId);
+                setButtonLoadingState(event.currentTarget, true, "Menghapus...");
                  try {
                     await db.collection('schedules').doc(day).set({ memberIds: newScheduledIds });
                     schedulesCache[day] = newScheduledIds;
                     showToast('Anggota dihapus dari jadwal', 'success');
                     renderScheduleEditor(day);
                     renderFullWeekSchedule();
-                } catch (error) { console.error("Error removing member:", error); showToast('Gagal menghapus.', 'error');}
+                } catch (error) { console.error("Error removing member:", error); showToast('Gagal menghapus.', 'error');
+                } finally { setButtonLoadingState(event.currentTarget, false); }
             }
-        }
-        async function handleClearDaySchedule() {
+         }
+        async function handleClearDaySchedule() { 
             const day = scheduleDaySelectEl.value;
             if (!confirm(`Yakin hapus jadwal ${day}?`)) return;
+            setButtonLoadingState(clearDayScheduleBtnEl, true);
             try {
                 await db.collection('schedules').doc(day).set({ memberIds: [] });
                 schedulesCache[day] = [];
                 showToast(`Jadwal ${day} dikosongkan.`, 'success');
                 renderScheduleEditor(day);
                 renderFullWeekSchedule();
-            } catch (error) { console.error("Error clearing schedule:", error); showToast(`Gagal kosongkan jadwal.`, 'error');}
-        }
-        function renderFullWeekSchedule() {
+            } catch (error) { console.error("Error clearing schedule:", error); showToast(`Gagal kosongkan jadwal.`, 'error');
+            } finally { setButtonLoadingState(clearDayScheduleBtnEl, false); }
+         }
+        function renderFullWeekSchedule() { 
             fullWeekScheduleDisplayEl.innerHTML = '';
             let hasAnySchedule = false;
             daysOfWeek.forEach(day => {
@@ -1468,7 +1320,7 @@
                 const membersOnDay = memberIdsOnDay.map(id => membersCache.find(m => m.id === id))
                     .filter(Boolean).map(m => m.name).join(', ');
                 const dayDiv = document.createElement('div');
-                dayDiv.className = 'md-list-item'; // Re-use list item style
+                dayDiv.className = 'md-list-item'; 
                 dayDiv.innerHTML = `
                     <strong style="min-width: 80px; color: var(--md-sys-color-primary);">${day}:</strong> 
                     <span class="md-list-item__text">${membersOnDay || '<em>(Kosong)</em>'}</span>`;
@@ -1477,7 +1329,7 @@
              if (!hasAnySchedule) {
                 fullWeekScheduleDisplayEl.innerHTML = `<p style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Belum ada jadwal minggu ini.</p>`;
             }
-        }
+         }
 
         // --- ATTENDANCE MANAGEMENT ---
         const attendanceDateInputEl = document.getElementById('attendance-date');
@@ -1489,7 +1341,6 @@
         const attendanceListEl = document.getElementById('attendance-list');
         const saveAttendanceBtnEl = document.getElementById('save-attendance');
         const attendanceStatusSummaryEl = document.getElementById('attendance-status-summary');
-
         const swapDutyModalEl = document.getElementById('swap-duty-modal');
         const swapModalOriginalMemberNameEl = document.getElementById('swap-modal-original-member-name');
         const swapModalDateDisplayEl = document.getElementById('swap-modal-date-display');
@@ -1500,14 +1351,14 @@
         const confirmSwapBtnEl = document.getElementById('confirm-swap-btn');
         const cancelSwapBtnEl = document.getElementById('cancel-swap-btn');
 
-        function setDefaultAttendanceDate() {
+        function setDefaultAttendanceDate() { 
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
             attendanceDateInputEl.value = `${yyyy}-${mm}-${dd}`;
-        }
-        function setupAttendanceManagement() {
+         }
+        function setupAttendanceManagement() { 
             loadAttendanceBtnEl.addEventListener('click', loadAttendanceForDate);
             saveAttendanceBtnEl.addEventListener('click', handleSaveAttendance);
             confirmSwapBtnEl.addEventListener('click', handleConfirmSwap);
@@ -1515,8 +1366,8 @@
                 swapDutyModalEl.classList.add('hidden');
                 swapDutyModalEl.classList.remove('visible');
             });
-        }
-       async function loadAttendanceForDate() {
+         }
+       async function loadAttendanceForDate() { 
             const dateStr = attendanceDateInputEl.value;
             if (!dateStr) { showToast('Pilih tanggal.', 'warning'); return; }
             const dayName = getDayNameFromDate(dateStr);
@@ -1526,7 +1377,7 @@
             attendanceListEl.innerHTML = `<div style="text-align:center; padding:1rem; color: var(--md-sys-color-on-surface-variant);">Memuat...</div>`;
             attendanceFormContainerEl.classList.remove('hidden');
             noScheduleAttendanceEl.classList.add('hidden');
-            setButtonLoadingState(loadAttendanceBtnEl, true, "Muat Jadwal");
+            setButtonLoadingState(loadAttendanceBtnEl, true);
 
             try {
                 const scheduledMemberIds = schedulesCache[dayName] || [];
@@ -1534,6 +1385,7 @@
                     noScheduleAttendanceEl.classList.remove('hidden');
                     attendanceFormContainerEl.classList.add('hidden');
                     attendanceStatusSummaryEl.innerHTML = `<p style="color: var(--md-sys-color-on-surface-variant);">Tidak ada jadwal piket untuk ${dayName}, ${dateStr}.</p>`;
+                     setButtonLoadingState(loadAttendanceBtnEl, false); 
                     return;
                 }
 
@@ -1564,15 +1416,17 @@
                 showToast('Gagal memuat absensi.', 'error');
                 attendanceListEl.innerHTML = `<div style="text-align:center; padding:1rem; color: var(--md-sys-color-error);">Gagal memuat.</div>`;
             } finally {
-                 setButtonLoadingState(loadAttendanceBtnEl, false, "Muat Jadwal");
+                 setButtonLoadingState(loadAttendanceBtnEl, false);
             }
-        }
-        function renderAttendanceForm(attendanceData, dateStr) {
+         }
+        function renderAttendanceForm(attendanceData, dateStr) { 
             if (attendanceData.length === 0) {
                  attendanceListEl.innerHTML = `<p style="color: var(--md-sys-color-on-surface-variant); padding: 0.5rem;">Tidak ada anggota.`;
                  saveAttendanceBtnEl.classList.add('hidden'); return;
             }
             saveAttendanceBtnEl.classList.remove('hidden');
+            setButtonLoadingState(saveAttendanceBtnEl, false); 
+
             attendanceListEl.innerHTML = attendanceData.map(item => {
                 const { id, name, present = false, reason = '', swappedOut = false, substituteId, isSubstitute = false, replacedId } = item;
                 let statusInfo = ''; let nameClass = '';
@@ -1613,8 +1467,8 @@
                 parent.querySelector('.reason-input-container')?.classList.toggle('hidden', e.target.value === 'present');
             }));
             document.querySelectorAll('.swap-duty-btn').forEach(btn => btn.addEventListener('click', openSwapDutyModalHandler));
-        }
-        function renderAttendanceStatusSummary(dateStr, dayName, attendanceData) {
+         }
+        function renderAttendanceStatusSummary(dateStr, dayName, attendanceData) { 
             let presentCount = 0, absentCount = 0, swappedOutCount = 0, substituteCount = 0;
             const detailedStatus = attendanceData.map(item => {
                 const member = membersCache.find(m => m.id === item.id);
@@ -1641,32 +1495,51 @@
                 <p>Absen (tdk diganti): <strong style="color: var(--md-sys-color-error);">${absentCount}</strong></p>
                 <p>Digantikan: <strong style="color: var(--md-sys-color-secondary);">${swappedOutCount}</strong></p>
                 ${detailedStatus ? `<h5 class="md-card__subtitle" style="margin-top:1rem; margin-bottom:0.25rem;">Detail:</h5><ul style="list-style: disc; padding-left: 1.5rem; font-size:0.875rem; color: var(--md-sys-color-on-surface-variant);">${detailedStatus}</ul>` : ''}`;
-        }
+         }
         async function handleSaveAttendance() {
             const dateStr = attendanceDateInputEl.value;
             if (!dateStr) { showToast('Tanggal tidak valid.', 'error'); return; }
-            setButtonLoadingState(saveAttendanceBtnEl, true, "Simpan Perubahan");
+            setButtonLoadingState(saveAttendanceBtnEl, true, "Menyimpan..."); 
+
             const newRecords = { ...(attendanceCache[dateStr] || {}) }; 
             document.querySelectorAll('.attendance-item-md').forEach(itemDiv => {
                 const memberId = itemDiv.dataset.memberId;
-                const currentItemRecord = newRecords[memberId] || {};
+                const currentItemRecord = newRecords[memberId] || { 
+                    present: false, reason: '', 
+                    swappedOut: false, substituteId: null, 
+                    isSubstitute: false, replacedId: null 
+                };
+                
                 if (!currentItemRecord.swappedOut && !currentItemRecord.isSubstitute) {
                     const presentRadio = itemDiv.querySelector(`input[name="attendance-${memberId}"][value="present"]`);
-                    const isPresent = presentRadio ? presentRadio.checked : false;
+                    const isPresentValue = presentRadio ? presentRadio.checked : false; 
                     const reasonInput = itemDiv.querySelector('.reason-input');
-                    const reason = (reasonInput && !isPresent) ? reasonInput.value.trim() : '';
-                    newRecords[memberId] = { present, reason, swappedOut: false, substituteId: null, isSubstitute: false, replacedId: null };
+                    const reasonValue = (reasonInput && !isPresentValue) ? reasonInput.value.trim() : '';
+                    
+                    newRecords[memberId] = { 
+                        ...currentItemRecord, 
+                        present: isPresentValue, 
+                        reason: reasonValue,     
+                        swappedOut: false, 
+                        substituteId: null, 
+                        isSubstitute: false, 
+                        replacedId: null 
+                    };
                 }
             });
             try {
                 await db.collection('attendance').doc(dateStr).set({ records: newRecords });
-                attendanceCache[dateStr] = JSON.parse(JSON.stringify(newRecords));
+                attendanceCache[dateStr] = JSON.parse(JSON.stringify(newRecords)); 
                 showToast('Absensi disimpan.', 'success');
                 loadAttendanceForDate(); 
-            } catch (error) { console.error("Error saving attendance:", error); showToast('Gagal simpan absensi.', 'error');
-            } finally { setButtonLoadingState(saveAttendanceBtnEl, false, "Simpan Perubahan"); }
+            } catch (error) { 
+                console.error("Error saving attendance:", error); 
+                showToast('Gagal simpan absensi.', 'error');
+            } finally { 
+                setButtonLoadingState(saveAttendanceBtnEl, false); 
+            }
         }
-        function openSwapDutyModalHandler(event) { // Renamed to avoid conflict
+        function openSwapDutyModalHandler(event) { 
             const { originalMemberId, originalMemberName, date } = event.currentTarget.dataset;
             swapModalOriginalMemberNameEl.textContent = originalMemberName;
             swapModalDateDisplayEl.textContent = date;
@@ -1683,14 +1556,14 @@
             });
             swapDutyModalEl.classList.remove('hidden');
             swapDutyModalEl.classList.add('visible');
-        }
-        async function handleConfirmSwap() {
+         }
+        async function handleConfirmSwap() { 
             const originalMemberId = swapOriginalMemberIdInputEl.value;
             const dateStr = swapAttendanceDateHiddenInputEl.value;
             const substituteMemberId = swapMemberSelectEl.value;
             const reason = swapReasonInputEl.value.trim();
             if (!substituteMemberId) { showToast('Pilih pengganti.', 'warning'); return; }
-            setButtonLoadingState(confirmSwapBtnEl, true, "Konfirmasi");
+            setButtonLoadingState(confirmSwapBtnEl, true);
             try {
                 const attendanceRef = db.collection('attendance').doc(dateStr);
                 await db.runTransaction(async (transaction) => {
@@ -1709,10 +1582,10 @@
                 }
                 loadAttendanceForDate(); 
             } catch (error) { console.error("Error saving swap:", error); showToast('Gagal simpan pertukaran.', 'error');
-            } finally { setButtonLoadingState(confirmSwapBtnEl, false, "Konfirmasi"); }
-        }
+            } finally { setButtonLoadingState(confirmSwapBtnEl, false); }
+         }
 
-        // --- REPORT MANAGEMENT (JS Logic Unchanged, but uses new CSS classes in render) ---
+        // --- REPORT MANAGEMENT ---
         const reportMonthSelectEl = document.getElementById('report-month');
         const reportYearSelectEl = document.getElementById('report-year');
         const generateReportBtnEl = document.getElementById('generate-report');
@@ -1722,12 +1595,12 @@
         const participationDetailsTableEl = document.getElementById('participation-details-table');
         const reportMonthYearDisplayEl = document.getElementById('report-month-year-display');
 
-        function setupReportManagement() {
+        function setupReportManagement() { 
             generateReportBtnEl.addEventListener('click', generateReportData);
             exportReportBtnEl.addEventListener('click', exportReportToCSV);
             exportReportBtnEl.disabled = true;
-        }
-        function populateYearDropdownReport() {
+         }
+        function populateYearDropdownReport() { 
             const currentYear = new Date().getFullYear();
             reportYearSelectEl.innerHTML = '';
             for (let year = currentYear; year >= currentYear - 5; year--) {
@@ -1737,13 +1610,13 @@
             }
             reportYearSelectEl.value = currentYear;
             reportMonthSelectEl.value = new Date().getMonth() + 1;
-        }
-       async function generateReportData() {
+         }
+       async function generateReportData() { 
             const selectedMonth = parseInt(reportMonthSelectEl.value);
             const selectedYear = parseInt(reportYearSelectEl.value);
             const monthName = monthsIndonesian[selectedMonth - 1];
             reportMonthYearDisplayEl.textContent = `${monthName} ${selectedYear}`;
-            setButtonLoadingState(generateReportBtnEl, true, "Hasilkan Laporan");
+            setButtonLoadingState(generateReportBtnEl, true);
             participationDetailsTableEl.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1rem;">Memproses...</td></tr>`;
             monthlyAwardDisplayEl.innerHTML = `Memproses...`;
             const startDateStr = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-01`;
@@ -1779,9 +1652,9 @@
                 console.error("Error generating report:", error); showToast('Gagal generate laporan.', 'error');
                 participationDetailsTableEl.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1rem; color:var(--md-sys-color-error);">Gagal.</td></tr>`;
                 monthlyAwardDisplayEl.innerHTML = `<p style="color:var(--md-sys-color-error);">Gagal.</p>`;
-            } finally { setButtonLoadingState(generateReportBtnEl, false, "Hasilkan Laporan"); }
-        }
-        function renderReportTable(memberStats) {
+            } finally { setButtonLoadingState(generateReportBtnEl, false); }
+         }
+        function renderReportTable(memberStats) { 
             if (Object.keys(memberStats).length === 0) {
                 participationDetailsTableEl.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1rem;">Tidak ada data.</td></tr>`; return;
             }
@@ -1795,8 +1668,8 @@
                     <tr><td>${stats.name}</td><td>${stats.scheduled}</td><td>${stats.attended}</td><td>${stats.absentWithReason + stats.absentWithoutReason}</td><td>${stats.swappedOut}</td><td>${stats.substitutedForOthers}</td><td>${percentageAttendedOwn}%</td></tr>`;
             }
             participationDetailsTableEl.innerHTML = tableHtml;
-        }
-        function renderMonthlyAward(memberStats, monthName, year) {
+         }
+        function renderMonthlyAward(memberStats, monthName, year) { 
             let maxAttendance = 0; let winners = [];
             for (const memberId in memberStats) {
                 const attendedCount = memberStats[memberId].attended;
@@ -1806,8 +1679,8 @@
             if (winners.length > 0) {
                 monthlyAwardDisplayEl.innerHTML = `<p style="font-weight:500; color: var(--md-sys-color-primary);">Penghargaan ${monthName} ${year}:</p><p style="font-size:1.2rem; font-weight:bold;">${winners.join(', ')}</p><p>Kehadiran: ${maxAttendance}x.</p>`;
             } else { monthlyAwardDisplayEl.innerHTML = `<p>Tidak ada data untuk penghargaan ${monthName} ${year}.</p>`; }
-        }
-        function renderOverallAttendanceChart(memberStats) {
+         }
+        function renderOverallAttendanceChart(memberStats) { 
             let totalAttended = 0, totalAbsentSwapped = 0;
             for (const id in memberStats) { totalAttended += memberStats[id].attended; totalAbsentSwapped += (memberStats[id].absentWithReason + memberStats[id].absentWithoutReason + memberStats[id].swappedOut); }
             if (overallAttendanceChartInstance) overallAttendanceChartInstance.destroy();
@@ -1816,8 +1689,8 @@
                 data: { labels: ['Hadir (Incl. Pengganti)', 'Tidak Hadir/Diganti'], datasets: [{ data: [totalAttended, totalAbsentSwapped], backgroundColor: ['var(--md-sys-color-primary-container)', 'var(--md-sys-color-error-container)'], borderColor: ['var(--md-sys-color-primary)', 'var(--md-sys-color-error)'], borderWidth: 1 }] },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { color: 'var(--md-sys-color-on-surface)'} } } }
             });
-        }
-         function exportReportToCSV() {
+         }
+         function exportReportToCSV() { 
             const rows = [["Nama", "Dijadwalkan", "Hadir", "Absen", "Digantikan", "Menggantikan", "% Hadir Pribadi"]];
             participationDetailsTableEl.querySelectorAll('tr').forEach(row => {
                 const cols = Array.from(row.querySelectorAll('td')).map(td => `"${td.textContent.replace(/"/g, '""')}"`);
@@ -1831,9 +1704,9 @@
             link.setAttribute("download", `laporan_piket_${reportMonthSelectEl.options[reportMonthSelectEl.selectedIndex].text}_${reportYearSelectEl.value}.csv`);
             document.body.appendChild(link); link.click(); document.body.removeChild(link);
             showToast('Laporan CSV diunduh.', 'success');
-        }
+         }
 
-        // --- DATA MANAGEMENT (JS Logic Unchanged, uses new CSS in render) ---
+        // --- DATA MANAGEMENT ---
         const createBackupBtn = document.getElementById('create-backup-btn');
         const backupDataTextarea = document.getElementById('backup-data-textarea');
         const copyBackupBtn = document.getElementById('copy-backup-btn');
@@ -1844,7 +1717,7 @@
         const confirmResetActionBtn = document.getElementById('confirm-reset-action-btn');
         const cancelResetActionBtn = document.getElementById('cancel-reset-action-btn');
 
-        function setupDataManagement() {
+        function setupDataManagement() { 
             createBackupBtn.addEventListener('click', handleCreateBackup);
             copyBackupBtn.addEventListener('click', handleCopyBackup);
             confirmRestoreBtn.addEventListener('click', handleConfirmRestore);
@@ -1857,9 +1730,9 @@
                 resetDataModalEl.classList.add('hidden');
                 resetDataModalEl.classList.remove('visible');
             });
-        }
-        async function handleCreateBackup() {
-            setButtonLoadingState(createBackupBtn, true, "Buat Backup");
+         }
+        async function handleCreateBackup() { 
+            setButtonLoadingState(createBackupBtn, true);
             try {
                 const backupObject = { members: [], schedules: {}, attendance: {} };
                 const membersSnap = await db.collection('members').get();
@@ -1872,19 +1745,19 @@
                 copyBackupBtn.classList.remove('hidden');
                 showToast('Backup data dibuat.', 'success');
             } catch (error) { console.error("Error backup:", error); showToast('Gagal backup.', 'error');
-            } finally { setButtonLoadingState(createBackupBtn, false, "Buat Backup"); }
-        }
-        function handleCopyBackup() {
+            } finally { setButtonLoadingState(createBackupBtn, false); }
+         }
+        function handleCopyBackup() { 
             if (!backupDataTextarea.value) { showToast('Tidak ada data untuk disalin.', 'warning'); return; }
             navigator.clipboard.writeText(backupDataTextarea.value)
                 .then(() => showToast('Data disalin.', 'success'))
                 .catch(err => showToast('Gagal salin.', 'error'));
-        }
-        async function handleConfirmRestore() {
+         }
+        async function handleConfirmRestore() { 
             const jsonData = restoreDataTextarea.value.trim();
             if (!jsonData) { showToast('Tidak ada data restore.', 'warning'); return; }
             if (!confirm("PERHATIAN! Timpa data dengan backup ini?")) return;
-            setButtonLoadingState(confirmRestoreBtn, true, "Pulihkan");
+            setButtonLoadingState(confirmRestoreBtn, true);
             try {
                 const backupObject = JSON.parse(jsonData);
                 if (!backupObject.members || !backupObject.schedules || !backupObject.attendance) throw new Error("Format backup tidak valid.");
@@ -1909,19 +1782,19 @@
                 noScheduleAttendanceEl.textContent = 'Data dipulihkan. Muat jadwal absensi baru.';
                 attendanceStatusSummaryEl.innerHTML = ''; restoreDataTextarea.value = '';
             } catch (error) { console.error("Error restore:", error); showToast(`Gagal restore: ${error.message}`, 'error');
-            } finally { setButtonLoadingState(confirmRestoreBtn, false, "Pulihkan"); }
-        }
-        async function handleResetApplicationData() {
+            } finally { setButtonLoadingState(confirmRestoreBtn, false); }
+         }
+        async function handleResetApplicationData() { 
             resetDataModalEl.classList.add('hidden');
             resetDataModalEl.classList.remove('visible');
             if (!confirm("PERINGATAN KERAS! Hapus SEMUA data? Tidak bisa dibatalkan.")) return;
             showToast('Mereset data...', 'warning');
-            setButtonLoadingState(confirmResetActionBtn, true, "Ya, Reset");
+            setButtonLoadingState(confirmResetActionBtn, true);
             try {
                 const batch = db.batch();
                 const collectionsToReset = ['members', 'schedules', 'attendance'];
                 for (const collName of collectionsToReset) {
-                    const snapshot = await db.collection(collName).limit(500).get(); // Batch limit
+                    const snapshot = await db.collection(collName).limit(500).get(); 
                     snapshot.docs.forEach(doc => batch.delete(doc.ref));
                 }
                 await batch.commit();
@@ -1933,8 +1806,8 @@
                 noScheduleAttendanceEl.textContent = 'Data direset. Mulai dari awal.';
                 attendanceStatusSummaryEl.innerHTML = ''; backupDataTextarea.value = ''; copyBackupBtn.classList.add('hidden');
             } catch (error) { console.error("Error reset:", error); showToast(`Gagal reset: ${error.message}`, 'error');
-            } finally { setButtonLoadingState(confirmResetActionBtn, false, "Ya, Reset"); }
-        }
+            } finally { setButtonLoadingState(confirmResetActionBtn, false); }
+         }
 
     </script>
 </body>
